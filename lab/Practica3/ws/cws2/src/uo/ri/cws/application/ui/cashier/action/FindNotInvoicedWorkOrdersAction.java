@@ -2,6 +2,7 @@ package uo.ri.cws.application.ui.cashier.action;
 
 import java.util.List;
 
+import uo.ri.conf.Factories;
 import uo.ri.cws.application.service.ServiceFactory;
 import uo.ri.cws.application.service.invoice.InvoicingService;
 import uo.ri.cws.application.service.invoice.InvoicingService.InvoicingWorkOrderDto;
@@ -31,7 +32,7 @@ public class FindNotInvoicedWorkOrdersAction implements Action {
 		
 		Console.println("\nClient's not invoiced work orders\n");  
 		
-		InvoicingService inv = ServiceFactory.forInvoicingService();
+		InvoicingService inv = Factories.service.forInvoicingService();
 		
 		List<InvoicingWorkOrderDto> lista = inv.findNotInvoicedWorkOrdersByClientNif(nif);
 		

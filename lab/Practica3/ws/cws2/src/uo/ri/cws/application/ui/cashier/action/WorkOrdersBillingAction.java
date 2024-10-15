@@ -4,6 +4,7 @@ package uo.ri.cws.application.ui.cashier.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import uo.ri.conf.Factories;
 import uo.ri.cws.application.service.ServiceFactory;
 import uo.ri.cws.application.service.invoice.InvoicingService;
 import uo.ri.cws.application.service.invoice.InvoicingService.InvoiceDto;
@@ -24,7 +25,7 @@ public class WorkOrdersBillingAction implements Action {
 			workOrderIds.add(id);
 		} while ( nextWorkorder() );
 
-		InvoicingService inv = ServiceFactory.forInvoicingService();
+		InvoicingService inv = Factories.service.forInvoicingService();
 		
 		InvoiceDto dto =  inv.createInvoiceFor(workOrderIds);
 		displayInvoice(dto);

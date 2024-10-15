@@ -103,6 +103,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 			if (ps != null) try { ps.close(); } catch(SQLException e) { /* ignore */ }
 //			if (c != null) try { c.close(); } catch(SQLException e) { /* ignore */ }
 		}
+		//return null;
 	}
 
 	@Override
