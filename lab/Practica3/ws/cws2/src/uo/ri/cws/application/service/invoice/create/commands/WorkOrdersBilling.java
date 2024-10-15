@@ -51,7 +51,7 @@ public class WorkOrdersBilling implements Command<InvoiceDto>{
 	
 	private WorkOrderGateway wog = Factories.persistence.forWorkOrder();
 	private InvoiceGateway ing = Factories.persistence.forInvoice();
-	private Connection connection;
+//	private Connection connection;
 	private List<String> workOrderIds = new ArrayList<>();
 	
 	public WorkOrdersBilling(List<String> lista) {
@@ -94,9 +94,9 @@ public class WorkOrdersBilling implements Command<InvoiceDto>{
 		catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		finally {
-			if (connection != null) try { connection.close(); } catch(SQLException e) { /* ignore */ }
-		}
+//		finally {
+//			if (connection != null) try { connection.close(); } catch(SQLException e) { /* ignore */ }
+//		}
 		
 		return dto;
 	}
