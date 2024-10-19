@@ -8,7 +8,7 @@ import io.cucumber.core.options.Constants;
 
 @Suite
 @SelectClasspathResource("uo/ri/cws/application/service/mechanic")
-//@SelectClasspathResource("uo/ri/cws/application/service/invoice")
+@SelectClasspathResource("uo/ri/cws/application/service/invoice")
 @ConfigurationParameter(
 	key = Constants.PLUGIN_PROPERTY_NAME, 
 	value = "pretty"

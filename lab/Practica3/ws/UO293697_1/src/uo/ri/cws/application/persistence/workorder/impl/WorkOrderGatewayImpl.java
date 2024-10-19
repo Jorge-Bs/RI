@@ -1,15 +1,14 @@
 package uo.ri.cws.application.persistence.workorder.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import uo.ri.conf.Conf;
 import uo.ri.cws.application.persistence.PersistenceException;
 import uo.ri.cws.application.persistence.util.jdbc.Jdbc;
 import uo.ri.cws.application.persistence.util.jdbc.Queries;
@@ -40,7 +39,7 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 			ps = c.prepareStatement(Queries.get("TWORKORDERS_UPDATE"));
 			
 			ps.setString(1, t.vehicleId);
-			ps.setDate(2, java.sql.Date.valueOf(t.date.toString()));
+			ps.setTimestamp(2, Timestamp.valueOf(t.date));
 			ps.setString(3, t.description);
 			ps.setDouble(4, t.amount);
 			ps.setString(5, t.state);
@@ -55,7 +54,9 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 			throw new RuntimeException(e);
 		}
 		finally {
-			if (ps != null) try { ps.close(); } catch(SQLException e) { /* ignore */ }
+			if (ps != null) {
+                try { ps.close(); } catch(SQLException e) { /* ignore */ }
+            }
 		}
 	}
 
@@ -73,7 +74,9 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 			
 			
 			st = pst.executeQuery();
-			if(!st.next()) return Optional.ofNullable(null);
+			if(!st.next()) {
+                return Optional.ofNullable(null);
+            }
 			
 			return Optional.of(RecordAssembler.toWorkOrderRecord(st));
 			
@@ -82,9 +85,14 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 			throw new RuntimeException(e);
 		}
 		finally {
-			if (st != null) try { st.close(); } catch(SQLException e) { /* ignore */ }
-			if (pst != null) try { pst.close(); } catch(SQLException e) { /* ignore */ }
+			if (st != null) {
+                try { st.close(); } catch(SQLException e) { /* ignore */ }
+            }
+			if (pst != null)
+             {
+                try { pst.close(); } catch(SQLException e) { /* ignore */ }
 //			if (c != null) try { c.close(); } catch(SQLException e) { /* ignore */ }
+            }
 		}
 	}
 
@@ -117,9 +125,14 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 			throw new RuntimeException(e);
 		}
 		finally {
-			if (rs != null) try { rs.close(); } catch(SQLException e) { /* ignore */ }
-			if (pst != null) try { pst.close(); } catch(SQLException e) { /* ignore */ }
+			if (rs != null) {
+                try { rs.close(); } catch(SQLException e) { /* ignore */ }
+            }
+			if (pst != null)
+             {
+                try { pst.close(); } catch(SQLException e) { /* ignore */ }
 //			if (c != null) try { c.close(); } catch(SQLException e) { /* ignore */ }
+            }
 		}
 		
 		return lista;
@@ -162,9 +175,14 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 			throw new RuntimeException(e);
 		}
 		finally {
-			if (st != null) try { st.close(); } catch(SQLException e) { /* ignore */ }
-			if (pst != null) try { pst.close(); } catch(SQLException e) { /* ignore */ }
+			if (st != null) {
+                try { st.close(); } catch(SQLException e) { /* ignore */ }
+            }
+			if (pst != null)
+             {
+                try { pst.close(); } catch(SQLException e) { /* ignore */ }
 //			if (c != null) try { c.close(); } catch(SQLException e) { /* ignore */ }
+            }
 		}
 	}
 

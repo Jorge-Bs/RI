@@ -7,13 +7,17 @@ import java.util.Optional;
 import uo.ri.cws.application.service.invoice.InvoicingService;
 import uo.ri.cws.application.service.invoice.create.commands.FindNotInvoicedWorkOrders;
 import uo.ri.cws.application.service.invoice.create.commands.WorkOrdersBilling;
+import uo.ri.cws.application.service.util.command.executor.JdbcCommandExecutor;
 import uo.ri.util.exception.BusinessException;
 
 public class InvoicingServiceImpl implements InvoicingService {
+    
+    
+    private JdbcCommandExecutor executor = new JdbcCommandExecutor();
 
 	@Override
 	public InvoiceDto createInvoiceFor(List<String> workOrderIds) throws BusinessException {
-		return new WorkOrdersBilling(workOrderIds).execute();
+	    return executor.execute(new WorkOrdersBilling(workOrderIds));
 	}
 
 	@Override
@@ -24,7 +28,7 @@ public class InvoicingServiceImpl implements InvoicingService {
 
 	@Override
 	public List<InvoicingWorkOrderDto> findNotInvoicedWorkOrdersByClientNif(String nif) throws BusinessException {
-		return new FindNotInvoicedWorkOrders(nif).execute();
+	    return executor.execute(new FindNotInvoicedWorkOrders(nif));
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package uo.ri.cws.application.service.invoice.create.commands;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -55,21 +54,28 @@ public class WorkOrdersBilling implements Command<InvoiceDto>{
 	private List<String> workOrderIds = new ArrayList<>();
 	
 	public WorkOrdersBilling(List<String> lista) {
+	    ArgumentChecks.isNotNull(lista,"la lista de ordenes no puede "
+	        + "se nula");
+	    ArgumentChecks.isTrue(lista.size()!=0, "la lista no puede estar vacia");
 		lista.forEach((String id)->{
 			ArgumentChecks.isNotBlank(id,"El id es invalido");
+			ArgumentChecks.isNotNull(id,"El id es invalido");
 			this.workOrderIds.add(id);
 		});
 	}
 	
-	public InvoiceDto execute() throws BusinessException {
+	@Override
+    public InvoiceDto execute() throws BusinessException {
 		InvoiceDto dto = new InvoiceDto();
 		try {
 			//connection = DriverManager.getConnection(URL, USER, PASSWORD);
 
-			if (! checkWorkOrdersExist(workOrderIds) )
-				throw new BusinessException ("Workorder does not exist");
-			if (! checkWorkOrdersFinished(workOrderIds) )
-				throw new BusinessException ("Workorder is not finished yet");
+			if (! checkWorkOrdersExist(workOrderIds) ) {
+                throw new BusinessException ("Workorder does not exist");
+            }
+			if (! checkWorkOrdersFinished(workOrderIds) ) {
+                throw new BusinessException ("Workorder is not finished yet");
+            }
 
 			long numberInvoice = generateInvoiceNumber();
 			LocalDate dateInvoice = LocalDate.now();
@@ -78,14 +84,15 @@ public class WorkOrdersBilling implements Command<InvoiceDto>{
 			double total = amount * (1 + vat/100); // vat included
 			total = Round.twoCents(total);
 
-			String idInvoice = createInvoice(numberInvoice, dateInvoice, vat, total);
+			String idInvoice = createInvoice(numberInvoice, dateInvoice, total-amount, total);
 			
 			update(idInvoice);
 			
 			dto.number=numberInvoice;
 			dto.date=dateInvoice;
 			dto.amount=total;
-			dto.vat=vat;
+			dto.vat=(total-amount);
+			dto.id=idInvoice;
 			
 			//displayInvoice(numberInvoice, dateInvoice, amount, vat, total);
 
