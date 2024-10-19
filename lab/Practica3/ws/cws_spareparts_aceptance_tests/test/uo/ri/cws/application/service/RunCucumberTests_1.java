@@ -7,13 +7,13 @@ import org.junit.platform.suite.api.Suite;
 import io.cucumber.junit.platform.engine.Constants;
 
 @Suite
-@SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature")
-@SelectClasspathResource("uo/ri/cws/application/service/mechanic")
-@SelectClasspathResource("uo/ri/cws/application/service/invoice")
-@SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature")
-@SelectClasspathResource("uo/ri/cws/application/service/providers")
-@SelectClasspathResource("uo/ri/cws/application/service/supplies")
-@SelectClasspathResource("uo/ri/cws/application/service/orders/FindByProviderNif.feature")
+//@SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature")
+//@SelectClasspathResource("uo/ri/cws/application/service/mechanic")
+//@SelectClasspathResource("uo/ri/cws/application/service/invoice")
+//@SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature")
+//@SelectClasspathResource("uo/ri/cws/application/service/providers")
+//@SelectClasspathResource("uo/ri/cws/application/service/supplies")
+//@SelectClasspathResource("uo/ri/cws/application/service/orders/FindByProviderNif.feature")
 @SelectClasspathResource("uo/ri/cws/application/service/orders/FindDetailByCode.feature")
 @ConfigurationParameter(
 	key = Constants.PLUGIN_PROPERTY_NAME, 

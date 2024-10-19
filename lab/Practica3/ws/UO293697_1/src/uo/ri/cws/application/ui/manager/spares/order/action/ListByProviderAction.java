@@ -1,5 +1,6 @@
 package uo.ri.cws.application.ui.manager.spares.order.action;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class ListByProviderAction implements Action {
 	public void execute() throws Exception {
 		String nif = Console.readString("Please, type the provider nif");
 		
-		OrdersService service = Factories.service.forOrdersService();
-		List<OrderDto> orders = null;
+		OrdersService service = Factories.service.forOrdersService();	
+		List<OrderDto> orders = new ArrayList<>(service.findByProviderNif(nif));
 		
 		orders.sort( new OrdersComparator() ); 
 		

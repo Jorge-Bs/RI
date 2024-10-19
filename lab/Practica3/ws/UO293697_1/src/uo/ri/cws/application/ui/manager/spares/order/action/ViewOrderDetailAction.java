@@ -16,7 +16,7 @@ public class ViewOrderDetailAction implements Action {
 		String orderCode = Console.readString("Order code");
 		
 		OrdersService service = Factories.service.forOrdersService();
-		Optional<OrderDto> oo = Optional.empty();
+		Optional<OrderDto> oo = service.findByCode(orderCode);
 		
 		if ( oo.isEmpty()) {
 			Console.println("There is no order with such code");
