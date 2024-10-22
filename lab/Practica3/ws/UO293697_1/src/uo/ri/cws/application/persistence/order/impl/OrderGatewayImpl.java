@@ -92,6 +92,33 @@ public class OrderGatewayImpl implements OrderGateway {
         
     }
 
+    @Override
+    public List<OrderRecord> findByStateAndProviderID(OrderRecord record) {
+        Connection c = null;
+        PreparedStatement pst = null;
+        
+        try {
+            c = Jdbc.getCurrentConnection();
+            
+            pst = c.prepareStatement(
+                Queries.get("TORDER_FINDBYSTATEANDPROVIDERID"));
+            try {
+               pst.setString(1, record.state);
+               pst.setString(2, record.providerId);
+               
+               
+               return RecordAssembler.toOrderRecordList(pst.executeQuery());
+                
+            }finally{
+                if(pst!=null) {
+                    pst.close();
+                }
+            }
+        }catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
     
     
     

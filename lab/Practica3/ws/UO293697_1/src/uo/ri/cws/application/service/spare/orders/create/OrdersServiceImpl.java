@@ -1,11 +1,11 @@
-package uo.ri.cws.application.service.spare.order.create;
+package uo.ri.cws.application.service.spare.orders.create;
 
 import java.util.List;
 import java.util.Optional;
 
 import uo.ri.cws.application.service.spare.OrdersService;
-import uo.ri.cws.application.service.spare.order.create.commands.ListOrdersByCode;
-import uo.ri.cws.application.service.spare.order.create.commands.ListOrdersByProviderNif;
+import uo.ri.cws.application.service.spare.orders.create.commands.ListOrdersByCode;
+import uo.ri.cws.application.service.spare.orders.create.commands.ListOrdersByProviderNif;
 import uo.ri.cws.application.service.util.command.executor.JdbcCommandExecutor;
 import uo.ri.util.exception.BusinessException;
 

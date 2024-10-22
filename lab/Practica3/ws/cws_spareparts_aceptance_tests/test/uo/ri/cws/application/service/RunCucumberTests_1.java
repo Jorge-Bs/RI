@@ -11,10 +11,10 @@ import io.cucumber.junit.platform.engine.Constants;
 //@SelectClasspathResource("uo/ri/cws/application/service/mechanic")
 //@SelectClasspathResource("uo/ri/cws/application/service/invoice")
 //@SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature")
-//@SelectClasspathResource("uo/ri/cws/application/service/providers")
+@SelectClasspathResource("uo/ri/cws/application/service/providers")
 //@SelectClasspathResource("uo/ri/cws/application/service/supplies")
-//@SelectClasspathResource("uo/ri/cws/application/service/orders/FindByProviderNif.feature")
-@SelectClasspathResource("uo/ri/cws/application/service/orders/FindDetailByCode.feature")
+//@SelectClasspathResource("uo/ri/cws/application/service/orders/FindByProviderNif.feature") //->Pasa
+//@SelectClasspathResource("uo/ri/cws/application/service/orders/FindDetailByCode.feature")//->Pasa
 @ConfigurationParameter(
 	key = Constants.PLUGIN_PROPERTY_NAME, 
 	value = "pretty"

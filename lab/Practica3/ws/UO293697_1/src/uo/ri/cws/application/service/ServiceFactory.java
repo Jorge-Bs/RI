@@ -5,7 +5,9 @@ import uo.ri.cws.application.service.invoice.create.InvoicingServiceImpl;
 import uo.ri.cws.application.service.mechanic.MechanicCrudService;
 import uo.ri.cws.application.service.mechanic.crud.MechanicCrudServiceImpl;
 import uo.ri.cws.application.service.spare.OrdersService;
-import uo.ri.cws.application.service.spare.order.create.OrdersServiceImpl;
+import uo.ri.cws.application.service.spare.ProvidersCrudService;
+import uo.ri.cws.application.service.spare.orders.create.OrdersServiceImpl;
+import uo.ri.cws.application.service.spare.providers.crud.ProvidersCrudServiceImpl;
 
 public class ServiceFactory {
 
@@ -31,6 +33,10 @@ public class ServiceFactory {
     
     public OrdersService forOrdersService() {
         return new OrdersServiceImpl();
+    }
+    
+    public ProvidersCrudService forProvidersService() {
+        return new ProvidersCrudServiceImpl();
     }
     
 

@@ -15,27 +15,106 @@ public class ProviderGatewayImpl implements ProviderGateway {
 
     @Override
     public void add(ProviderRecord t) throws PersistenceException {
-        // TODO Auto-generated method stub
+        Connection c = null;
+        PreparedStatement pst = null;
+        
+        try {
+            c = Jdbc.getCurrentConnection();
+            
+            pst = c.prepareStatement(Queries.get("TPROVIDERS_ADD"));
+            try {
+               pst.setString(1, t.id);
+               pst.setString(2,t.email);
+               pst.setString(3, t.name);
+               pst.setString(4, t.nif);
+               pst.setString(5, t.phone);
+               pst.setLong(6,t.version);
+               
+               pst.execute();                
+            }finally{
+                if(pst!=null) {
+                    pst.close();
+                }
+            }
+        }catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
 
     }
 
     @Override
     public void remove(String id) throws PersistenceException {
-        // TODO Auto-generated method stub
-
+        Connection c = null;
+        PreparedStatement pst = null;
+        
+        try {
+            c = Jdbc.getCurrentConnection();
+            
+            pst = c.prepareStatement(Queries.get("TPROVIDERS_DELETE"));
+            try {
+               pst.setString(1, id);
+               
+               pst.execute();                
+            }finally{
+                if(pst!=null) {
+                    pst.close();
+                }
+            }
+        }catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
     public void update(ProviderRecord t) throws PersistenceException {
-        // TODO Auto-generated method stub
+        Connection c = null;
+        PreparedStatement pst = null;
+        
+        try {
+            c = Jdbc.getCurrentConnection();
+            
+            pst = c.prepareStatement(Queries.get("TPROVIDERS_UPDATE"));
+            try {
+               pst.setString(1, t.name);
+               pst.setString(2,t.email);
+               pst.setString(3, t.nif);
+               pst.setString(4, t.phone);
+               pst.setString(5,t.id);
+               
+               pst.execute();                
+            }finally{
+                if(pst!=null) {
+                    pst.close();
+                }
+            }
+        }catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
 
     }
 
     @Override
     public Optional<ProviderRecord> findById(String id)
         throws PersistenceException {
-        // TODO Auto-generated method stub
-        return Optional.empty();
+        Connection c = null;
+        PreparedStatement pst = null;
+        
+        try {
+            c = Jdbc.getCurrentConnection();
+            
+            pst = c.prepareStatement(Queries.get("TPROVIDERS_FINDBYID"));
+            try {
+               pst.setString(1, id);
+               
+               return RecordAssembler.toProviderRecord(pst.executeQuery());              
+            }finally{
+                if(pst!=null) {
+                    pst.close();
+                }
+            }
+        }catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
@@ -55,6 +134,60 @@ public class ProviderGatewayImpl implements ProviderGateway {
             pst = c.prepareStatement(Queries.get("TPROVIDERS_FINDBYNIF"));
             try {
                pst.setString(1, nif);
+               
+               
+                
+               return RecordAssembler.toProviderRecord(pst.executeQuery());
+                
+            }finally{
+                if(pst!=null) {
+                    pst.close();
+                }
+            }
+        }catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    @Override
+    public List<ProviderRecord> findByName(String name) {
+        Connection c = null;
+        PreparedStatement pst = null;
+        
+        try {
+            c = Jdbc.getCurrentConnection();
+            
+            pst = c.prepareStatement(Queries.get("TPROVIDERS_FINDBYNAME"));
+            try {
+               pst.setString(1, name);
+               
+               
+                
+               return RecordAssembler.toProviderRecordList(pst.executeQuery());
+                
+            }finally{
+                if(pst!=null) {
+                    pst.close();
+                }
+            }
+        }catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    @Override
+    public Optional<ProviderRecord> findEqualsFields(ProviderRecord record) {
+        Connection c = null;
+        PreparedStatement pst = null;
+        
+        try {
+            c = Jdbc.getCurrentConnection();
+            
+            pst = c.prepareStatement(Queries.get("TPROVIDERS_FINDEQUALSFIELDS"));
+            try {
+               pst.setString(1, record.name);
+               pst.setString(2, record.email);
+               pst.setString(3, record.phone);
                
                
                 

@@ -19,7 +19,7 @@ public class AddAction implements Action {
 		dto.phone = Console.readString("Phone: ");
 		
 		ProvidersCrudService service = Factories.service.forProvidersService();
-		dto = null;
+		dto = service.add(dto);
 		
 		Console.println("The new provider has been registered with id " +  dto.id);
 	}

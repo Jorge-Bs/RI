@@ -31,6 +31,11 @@ public class RecordAssembler {
             throws SQLException {
         ProviderRecord value = new ProviderRecord();
         value.id=rs.getString("id");
+        value.nif=rs.getString("nif");
+        value.version=rs.getLong("version");
+        value.name=rs.getString("name");
+        value.email=rs.getString("email");
+        value.phone=rs.getString("phone");
         return value;
     }
 

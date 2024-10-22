@@ -14,6 +14,8 @@ import uo.ri.cws.application.persistence.provider.ProviderGateway;
 import uo.ri.cws.application.persistence.provider.impl.ProviderGatewayImpl;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
 import uo.ri.cws.application.persistence.sparepart.impl.SparePartGatewayImpl;
+import uo.ri.cws.application.persistence.supplies.SuppliesGateway;
+import uo.ri.cws.application.persistence.supplies.impl.SuppliesGatewayImpl;
 import uo.ri.cws.application.persistence.workorder.WorkOrderGateway;
 import uo.ri.cws.application.persistence.workorder.impl.WorkOrderGatewayImpl;
 
@@ -57,5 +59,9 @@ public class PersistenceFactory {
 
     public SparePartGateway forSpareParts() {
         return new SparePartGatewayImpl();
+    }
+    
+    public SuppliesGateway forSupplies() {
+        return new SuppliesGatewayImpl();
     }
 }

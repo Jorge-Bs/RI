@@ -1,4 +1,4 @@
-package uo.ri.cws.application.service.spare.order.create.commands;
+package uo.ri.cws.application.service.spare.orders.create.commands;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import uo.ri.cws.application.persistence.sparepart.SparePartGateway.SparePartRec
 import uo.ri.cws.application.service.spare.OrdersService.OrderDto;
 import uo.ri.cws.application.service.spare.OrdersService.OrderDto.OrderLineDto;
 import uo.ri.cws.application.service.spare.OrdersService.OrderDto.OrderedSpareDto;
-import uo.ri.cws.application.service.spare.order.create.DtoAssembler;
+import uo.ri.cws.application.service.spare.orders.create.DtoAssembler;
 import uo.ri.cws.application.service.util.command.Command;
 import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.exception.BusinessException;

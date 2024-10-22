@@ -61,4 +61,28 @@ public class SparePartGatewayImpl implements SparePartGateway {
         return null;
     }
 
+    @Override
+    public Optional<SparePartRecord> findByCode(String code) {
+        Connection c = null;
+        PreparedStatement pst = null;
+        
+        try {
+            c = Jdbc.getCurrentConnection();
+            
+            pst = c.prepareStatement(Queries.get("TSPAREPARTS_FINDBYCODE"));
+            try {
+               pst.setString(1, code);
+                
+               return RecordAssembler.toSparePartRecord(pst.executeQuery());
+                
+            }finally{
+                if(pst!=null) {
+                    pst.close();
+                }
+            }
+        }catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
 }

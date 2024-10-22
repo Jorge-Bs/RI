@@ -14,6 +14,8 @@ public interface OrderGateway extends Gateway<OrderRecord> {
     
     public Optional<OrderRecord> findByCode(String code);
     
+    public List<OrderRecord> findByStateAndProviderID(OrderRecord record);
+    
     public static class OrderRecord {
 
         public String id;
