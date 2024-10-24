@@ -15,20 +15,88 @@ public class SuppliesGatewayImpl implements SuppliesGateway {
 
     @Override
     public void add(SuppliesRecord t) throws PersistenceException {
-        // TODO Auto-generated method stub
-
+        Connection c = null;
+        PreparedStatement pst = null;
+        
+        try {
+            c = Jdbc.getCurrentConnection();
+            
+            pst = c.prepareStatement(
+                Queries.get("TSUPPLIES_ADD"));
+            try {
+               pst.setString(1,t.id);
+               pst.setInt(2, t.deliveryTerm);
+               pst.setDouble(3, t.price);
+               pst.setLong(4, t.version);
+               pst.setString(5, t.providerId);
+               pst.setString(6, t.sparepartId);
+               
+               pst.execute();
+                
+            }finally{
+                if(pst!=null) {
+                    pst.close();
+                }
+            }
+        }catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
     public void remove(String id) throws PersistenceException {
-        // TODO Auto-generated method stub
-
+        Connection c = null;
+        PreparedStatement pst = null;
+        
+        try {
+            c = Jdbc.getCurrentConnection();
+            
+            pst = c.prepareStatement(
+                Queries.get("TSUPPLIES_DELETE"));
+            try {
+               pst.setString(1,id);
+  
+               pst.execute();
+                
+            }finally{
+                if(pst!=null) {
+                    pst.close();
+                }
+            }
+        }catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
     public void update(SuppliesRecord t) throws PersistenceException {
-        // TODO Auto-generated method stub
-
+        Connection c = null;
+        PreparedStatement pst = null;
+        
+        try {
+            c = Jdbc.getCurrentConnection();
+            
+            pst = c.prepareStatement(
+                Queries.get("TSUPPLIES_UPDATE"));
+            try {
+               
+               pst.setInt(1, t.deliveryTerm);
+               pst.setDouble(2, t.price);
+               pst.setString(3, t.providerId);
+               pst.setString(4, t.sparepartId);
+               
+               pst.setString(5,t.id);
+               
+               pst.execute();
+                
+            }finally{
+                if(pst!=null) {
+                    pst.close();
+                }
+            }
+        }catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
@@ -86,6 +154,34 @@ public class SuppliesGatewayImpl implements SuppliesGateway {
                
                return RecordAssembler.toSuppliesRecordList(pst.executeQuery());
                 
+            }finally{
+                if(pst!=null) {
+                    pst.close();
+                }
+            }
+        }catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    @Override
+    public Optional<SuppliesRecord> findBySparePartIdAndProviderId(
+        SuppliesRecord record) {
+        Connection c = null;
+        PreparedStatement pst = null;
+        
+        try {
+            c = Jdbc.getCurrentConnection();
+            
+            pst = c.prepareStatement(
+                Queries.get("TSUPPLIES_FINDBYSPAREPARTIDANDPROVIDERID"));
+            try {
+               pst.setString(1,record.sparepartId);
+               pst.setString(2, record.providerId);
+               
+               
+               return RecordAssembler.toSuppliesRecord(pst.executeQuery());
+               
             }finally{
                 if(pst!=null) {
                     pst.close();

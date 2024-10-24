@@ -1,0 +1,121 @@
+package uo.ri.cws.domain;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import uo.ri.util.assertion.ArgumentChecks;
+
+public class Client {
+	
+	/*Atributos naturales*/
+	private String nif;	//Clave natural
+	private String name;
+	private String surname;
+	private String email;
+	private String phone;
+	private Address address;
+	
+	private Set<Vehicle> vehiculos = new HashSet<>();
+	
+	
+	
+	public Client(String nif, String name, String surname, String email, String phone, Address address) {
+		ArgumentChecks.isNotBlank(nif,"Nif invalido");
+		ArgumentChecks.isNotBlank(name,"Nombre invalido");
+		ArgumentChecks.isNotBlank(surname,"Apellido invalido");
+		ArgumentChecks.isNotBlank(email,"Correo invalido");
+		ArgumentChecks.isNotBlank(nif,"Nif invalido");
+		ArgumentChecks.isNotNull(address, "direccion invalida");
+		
+		this.nif = nif;
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.phone = phone;
+		this.address = address;
+	}
+	
+	public Client(String nif,String name,String apellido) {
+		this(nif,name,apellido,"no-email","no-phone",new Address("no-street","no-city","no-zipCode"));
+	}
+	
+
+	public String getNif() {
+		return nif;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public String getSurname() {
+		return surname;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public String getPhone() {
+		return phone;
+	}
+
+
+	public Address getAddress() {
+		return address;
+	}
+	
+	public Set<Vehicle> getVehicles() {
+		return new HashSet<>(vehiculos);
+	}
+	
+	Set<Vehicle> _getVehicles() {
+		return vehiculos;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nif);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Client other = (Client) obj;
+		return Objects.equals(nif, other.nif);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Client [nif=");
+		builder.append(nif);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", surname=");
+		builder.append(surname);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", phone=");
+		builder.append(phone);
+		builder.append(", address=");
+		builder.append(address);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	
+
+	
+}
+
