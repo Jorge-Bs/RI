@@ -9,6 +9,8 @@ import uo.ri.cws.application.persistence.order.OrderGateway;
 import uo.ri.cws.application.persistence.order.OrderGateway.OrderRecord;
 import uo.ri.cws.application.persistence.orderline.OrderLineGateway;
 import uo.ri.cws.application.persistence.orderline.OrderLineGateway.OrderLineRecord;
+import uo.ri.cws.application.persistence.provider.ProviderGateway;
+import uo.ri.cws.application.persistence.provider.ProviderGateway.ProviderRecord;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway;
 import uo.ri.cws.application.persistence.sparepart.SparePartGateway.SparePartRecord;
 import uo.ri.cws.application.service.spare.OrdersService.OrderDto;
@@ -27,6 +29,8 @@ public class ListOrdersByCode implements Command<Optional<OrderDto>>{
     private OrderLineGateway olg = Factories.persistence.forOrderLine();
     private SparePartGateway spg = Factories.persistence.forSpareParts();
     
+    private ProviderGateway prog = Factories.persistence.forProvider();
+    
     public ListOrdersByCode(String id) {
         ArgumentChecks.isNotNull(id, "El id no puede ser null");
         this.id=id;
@@ -38,13 +42,17 @@ public class ListOrdersByCode implements Command<Optional<OrderDto>>{
         if(recor.isEmpty()) {
             return Optional.ofNullable(null);
         }
-        Optional<OrderDto> dto = DtoAssembler.toDto(recor);
-        if(dto.isPresent()) {
-            dto.get().provider.id=recor.get().providerId;
-        }
+        OrderDto dto = DtoAssembler.toDto(recor).get();
+        Optional<ProviderRecord> pr = prog.findById(recor.get().providerId);
+        
+        dto.provider.id=pr.get().id;
+        dto.provider.name=pr.get().name;
+        dto.provider.nif=pr.get().nif;
+        
+        
         List<OrderLineDto> lines = getLines(recor.get().id);
-        dto.get().lines=lines;
-        return dto;
+        dto.lines=lines;
+        return Optional.of(dto);
     }
 
     private List<OrderLineDto> getLines(String id) {

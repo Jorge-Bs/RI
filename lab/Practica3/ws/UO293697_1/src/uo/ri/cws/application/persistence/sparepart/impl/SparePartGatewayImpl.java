@@ -27,32 +27,56 @@ public class SparePartGatewayImpl implements SparePartGateway {
 
     @Override
     public void update(SparePartRecord t) throws PersistenceException {
-        // TODO Auto-generated method stub
+        Connection c = null;
+        PreparedStatement pst = null;
 
+        try {
+            c = Jdbc.getCurrentConnection();
+
+            pst = c.prepareStatement(Queries.get("TSPAREPARTS_UPDATE"));
+            try {
+                pst.setString(1, t.code);
+                pst.setString(2, t.description);
+                pst.setInt(3, t.maxStock);
+                pst.setInt(4, t.minStock);
+                pst.setDouble(5, t.price);
+                pst.setInt(6, t.stock);
+                pst.setString(7, t.id);
+                
+                pst.execute();
+
+            } finally {
+                if (pst != null) {
+                    pst.close();
+                }
+            }
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
     }
 
     @Override
-    public Optional<SparePartRecord> findById(String id){
-    Connection c = null;
-    PreparedStatement pst = null;
-    
-    try {
-        c = Jdbc.getCurrentConnection();
-        
-        pst = c.prepareStatement(Queries.get("TSPAREPARTS_FINDBYID"));
+    public Optional<SparePartRecord> findById(String id) {
+        Connection c = null;
+        PreparedStatement pst = null;
+
         try {
-           pst.setString(1, id);
-            
-           return RecordAssembler.toSparePartRecord(pst.executeQuery());
-            
-        }finally{
-            if(pst!=null) {
-                pst.close();
+            c = Jdbc.getCurrentConnection();
+
+            pst = c.prepareStatement(Queries.get("TSPAREPARTS_FINDBYID"));
+            try {
+                pst.setString(1, id);
+
+                return RecordAssembler.toSparePartRecord(pst.executeQuery());
+
+            } finally {
+                if (pst != null) {
+                    pst.close();
+                }
             }
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
-    }catch (SQLException e) {
-        throw new PersistenceException(e);
-    }
     }
 
     @Override
@@ -65,22 +89,22 @@ public class SparePartGatewayImpl implements SparePartGateway {
     public Optional<SparePartRecord> findByCode(String code) {
         Connection c = null;
         PreparedStatement pst = null;
-        
+
         try {
             c = Jdbc.getCurrentConnection();
-            
+
             pst = c.prepareStatement(Queries.get("TSPAREPARTS_FINDBYCODE"));
             try {
-               pst.setString(1, code);
-                
-               return RecordAssembler.toSparePartRecord(pst.executeQuery());
-                
-            }finally{
-                if(pst!=null) {
+                pst.setString(1, code);
+
+                return RecordAssembler.toSparePartRecord(pst.executeQuery());
+
+            } finally {
+                if (pst != null) {
                     pst.close();
                 }
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new PersistenceException(e);
         }
     }

@@ -16,7 +16,7 @@ public class ReceiveOrderAction implements Action {
 		String code = Console.readString("Please, type the order code");
 		
 		OrdersService service = Factories.service.forOrdersService();
-		Optional<OrderDto> order = Optional.empty();
+		Optional<OrderDto> order = service.findByCode(code);
 
 		if ( order.isEmpty()) {
 			Console.println("There is no order with such code");

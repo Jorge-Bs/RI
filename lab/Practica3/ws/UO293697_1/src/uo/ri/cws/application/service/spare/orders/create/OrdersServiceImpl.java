@@ -6,6 +6,7 @@ import java.util.Optional;
 import uo.ri.cws.application.service.spare.OrdersService;
 import uo.ri.cws.application.service.spare.orders.create.commands.ListOrdersByCode;
 import uo.ri.cws.application.service.spare.orders.create.commands.ListOrdersByProviderNif;
+import uo.ri.cws.application.service.spare.orders.create.commands.ReceiveOrder;
 import uo.ri.cws.application.service.util.command.executor.JdbcCommandExecutor;
 import uo.ri.util.exception.BusinessException;
 
@@ -33,8 +34,7 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public OrderDto receive(String code) throws BusinessException {
-        // TODO Auto-generated method stub
-        return null;
+        return ex.execute(new ReceiveOrder(code));
     }
 
 }

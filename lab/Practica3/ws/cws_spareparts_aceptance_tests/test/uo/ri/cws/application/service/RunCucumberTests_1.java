@@ -7,14 +7,14 @@ import org.junit.platform.suite.api.Suite;
 import io.cucumber.junit.platform.engine.Constants;
 
 @Suite
-//@SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature")
-//@SelectClasspathResource("uo/ri/cws/application/service/mechanic")// -> Pasa
-//@SelectClasspathResource("uo/ri/cws/application/service/invoice") // -> Pasa
 @SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature")
-//@SelectClasspathResource("uo/ri/cws/application/service/providers") // -> Pasa
-//@SelectClasspathResource("uo/ri/cws/application/service/supplies") //-> Pasa 
-//@SelectClasspathResource("uo/ri/cws/application/service/orders/FindByProviderNif.feature") //->Pasa
-//@SelectClasspathResource("uo/ri/cws/application/service/orders/FindDetailByCode.feature")//->Pasa
+@SelectClasspathResource("uo/ri/cws/application/service/mechanic")// -> Pasa
+@SelectClasspathResource("uo/ri/cws/application/service/invoice") // -> Pasa
+@SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature") // ->Pasa
+@SelectClasspathResource("uo/ri/cws/application/service/providers") // -> Pasa
+@SelectClasspathResource("uo/ri/cws/application/service/supplies") //-> Pasa 
+@SelectClasspathResource("uo/ri/cws/application/service/orders/FindByProviderNif.feature") //->Pasa
+@SelectClasspathResource("uo/ri/cws/application/service/orders/FindDetailByCode.feature")//->Pasa
 @ConfigurationParameter(
 	key = Constants.PLUGIN_PROPERTY_NAME, 
 	value = "pretty"
