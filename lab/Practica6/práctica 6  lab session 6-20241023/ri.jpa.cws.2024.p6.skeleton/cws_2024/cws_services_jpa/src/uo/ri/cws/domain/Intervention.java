@@ -1,12 +1,15 @@
 package uo.ri.cws.domain;
 
-import java.lang.classfile.instruction.ConstantInstruction.ArgumentConstantInstruction;
+
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import uo.ri.util.assertion.ArgumentChecks;
+import uo.ri.util.math.Round;
 
 public class Intervention {
 	// natural attributes
@@ -28,11 +31,14 @@ public class Intervention {
 		ArgumentChecks.isNotNull(mechanic, "invalid mechanic");
 		ArgumentChecks.isNotNull(workOrder, "invalid workOrder");
 		ArgumentChecks.isNotNull(date, "invalid min");
-		ArgumentChecks.isTrue(min>0,"invalid min");
+		ArgumentChecks.isTrue(min>=0,"invalid price");
+		
+		
+		Associations.Intervene.link(workOrder, this, mechanic);
 		
 		this.minutes=min;
-		this.mechanic=mechanic;
-		this.workOrder=workOrder;
+		this.date=date.truncatedTo(ChronoUnit.MILLIS);
+
 	}
 
 	void _setWorkOrder(WorkOrder workOrder) {
@@ -71,7 +77,7 @@ public class Intervention {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(date, mechanic, workOrder);
+		return Objects.hash(mechanic, workOrder, date);
 	}
 
 	@Override
@@ -94,6 +100,14 @@ public class Intervention {
 				+ ", workOrder=" + workOrder 
 				+ ", mechanic="+ mechanic 
 				+ "]";
+	}
+
+	public Double getAmount() {
+		double price= workOrder.getVehicle().getVehicleType().getPricePerHour()*(minutes/60);
+		for (Substitution substitution : substitutions) {
+			price+= substitution.getAmount();
+		}
+		 return Round.twoCents(price);
 	}
 	
 	

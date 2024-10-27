@@ -23,7 +23,6 @@ public class Mechanic {
 		ArgumentChecks.isNotEmpty(nif, "invalid nif");
 		ArgumentChecks.isNotEmpty(surname, "invalid surname");
 		ArgumentChecks.isNotEmpty(name, "invalid name");
-		ArgumentChecks.isNotNull(assigned, "invalid assigned");
 		
 		this.nif = nif;
 		this.surname = surname;

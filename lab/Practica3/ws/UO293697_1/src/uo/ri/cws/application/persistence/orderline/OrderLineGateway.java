@@ -7,6 +7,13 @@ import uo.ri.cws.application.persistence.orderline.OrderLineGateway.OrderLineRec
 
 public interface OrderLineGateway extends Gateway<OrderLineRecord> {
 
+    
+    /**
+     * Busca todas las orderlines pertenecientes a una order,
+     * para buscar dichas orderlines se da el id de la orde
+     * @param id de la orde a buscar
+     * @return lista con todas las orderlines encontradas o lista vacia
+     */
     public List<OrderLineRecord> findAllbyOrderId(String id);
     
     

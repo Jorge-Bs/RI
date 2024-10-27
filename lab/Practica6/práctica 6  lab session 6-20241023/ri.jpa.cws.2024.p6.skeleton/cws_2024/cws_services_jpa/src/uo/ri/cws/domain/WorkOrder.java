@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BooleanSupplier;
 
 import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.assertion.StateChecks;
@@ -54,6 +55,14 @@ public class WorkOrder {
 	
 	
 
+	public WorkOrder(Vehicle vehicle, LocalDateTime now) {
+		this(vehicle,now,"");
+	}
+
+	public WorkOrder(Vehicle vehicle) {
+		this(vehicle,LocalDateTime.now());
+	}
+
 	public LocalDateTime getDate() {
 		return date;
 	}
@@ -91,7 +100,9 @@ public class WorkOrder {
 	 *  - The work order is not linked with the invoice
 	 */
 	public void markAsInvoiced() {
-
+		StateChecks.isTrue(isFinished(),"the workorder is not finished");
+		StateChecks.isNotNull(invoice, "there is not link with an invoice");
+		this.state=WorkOrderState.INVOICED;
 	}
 
 	/**
@@ -104,7 +115,16 @@ public class WorkOrder {
 	 *  - The work order is not linked with a mechanic
 	 */
 	public void markAsFinished() {
+		StateChecks.isTrue(state.equals(WorkOrderState.ASSIGNED),"the workorder is not assigned");
+		StateChecks.isNotNull(mechanic, "there is not link with an mechanic");
+		this.state=WorkOrderState.FINISHED;
+		computeAmuount();
+	}
 
+	private void computeAmuount() {
+		for (Intervention inte : interventions) {
+			amount+=inte.getAmount();
+		}
 	}
 
 	/**
@@ -116,7 +136,9 @@ public class WorkOrder {
 	 *  - The work order is still linked with the invoice
 	 */
 	public void markBackToFinished() {
-
+		StateChecks.isTrue(isInvoiced(),"the workorder is not invoiced");
+		StateChecks.isNull(invoice,"is still linked with the invoice");
+		this.state=WorkOrderState.FINISHED;
 	}
 
 	/**
@@ -143,7 +165,10 @@ public class WorkOrder {
 	 * 	- The work order is not in ASSIGNED state
 	 */
 	public void desassign() {
-
+		StateChecks.isTrue(state.equals(WorkOrderState.ASSIGNED),"is not assigned");
+		
+		Associations.Assign.unlink(mechanic, this);
+		state=WorkOrderState.OPEN;
 	}
 
 	/**
@@ -154,7 +179,9 @@ public class WorkOrder {
 	 * 	- The work order is not in FINISHED state
 	 */
 	public void reopen() {
-
+		StateChecks.isTrue(isFinished(),"the workorder is finished");
+		state=WorkOrderState.ASSIGNED;
+		desassign();
 	}
 
 	public Set<Intervention> getInterventions() {
@@ -212,6 +239,10 @@ public class WorkOrder {
 	
 	public boolean isOpen() {
 		return WorkOrderState.OPEN.equals(state);
+	}
+
+	public boolean isInvoiced() {
+		return WorkOrderState.INVOICED.equals(state);
 	}
 	
 	

@@ -10,6 +10,7 @@ import java.util.function.BooleanSupplier;
 
 import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.assertion.StateChecks;
+import uo.ri.util.math.Round;
 
 public class Invoice {
 	public enum InvoiceState { NOT_YET_PAID, PAID }
@@ -52,7 +53,19 @@ public class Invoice {
 	 * Computes amount and vat (vat depends on the date)
 	 */
 	private void computeAmount() {
-
+		double precio=0;
+		for (WorkOrder order : workOrders) {
+			precio+=order.getAmount();
+		}
+		LocalDate date = LocalDate.of(2012, 7, 1);
+		if(this.date.isAfter(date)) {
+			 amount=precio*1.21;
+		}else {
+			amount=precio*1.18;
+		}
+		vat=amount-precio;
+		Round.twoCents(amount);
+		Round.twoCents(vat);
 	}
 
 	/**
@@ -63,10 +76,10 @@ public class Invoice {
 	 */
 	public void addWorkOrder(WorkOrder workOrder) {
 		StateChecks.isTrue(isNotSettled(),"invoice is settled");
-		StateChecks.isTrue(workOrder.isFinished(), "workorder is not finished");
 		
 		Associations.Bill.link(this, workOrder);
 		computeAmount();
+		workOrder.markAsInvoiced();
 	}
 
 	/**
@@ -76,7 +89,10 @@ public class Invoice {
 	 * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
 	 */
 	public void removeWorkOrder(WorkOrder workOrder) {
-
+		StateChecks.isTrue(isNotSettled(),"the workorder is finished");
+		Associations.Bill.unlink(this, workOrder);
+		computeAmount();
+		workOrder.markBackToFinished();
 	}
 
 	/**
@@ -87,7 +103,12 @@ public class Invoice {
 	 *  	the total of the invoice
 	 */
 	public void settle() {
-
+		StateChecks.isTrue(isNotSettled(),"the invoiced is settled");
+		double[] amount = {0};
+		charges.forEach(cargo->amount[0]=amount[0]+cargo.getAmount());
+		
+		StateChecks.isTrue(amount[0]>=this.amount,"invalid amount cantity");
+		this.state=InvoiceState.PAID;
 	}
 
 	public Set<WorkOrder> getWorkOrders() {

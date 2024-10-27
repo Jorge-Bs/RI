@@ -15,89 +15,91 @@ import uo.ri.cws.application.persistence.util.jdbc.Queries;
 
 public class InvoiceGatewayImpl implements InvoiceGateway {
 
-	@Override
-	public void add(InvoiceRecord t) throws PersistenceException {
-		Connection c = null;
-		PreparedStatement pst = null;
+    @Override
+    public void add(InvoiceRecord t) throws PersistenceException {
+        Connection c = null;
+        PreparedStatement pst = null;
 
-		try {
-			c = Jdbc.getCurrentConnection();
-			
-			pst = c.prepareStatement(Queries.get("TINVOICES_ADD"));
-			pst.setString(1, t.id);
-			pst.setLong(2, t.number);
-			pst.setDate(3,java.sql.Date.valueOf(t.date.toString()));
-			pst.setDouble(4, t.vat);
-			pst.setDouble(5, t.amount);
-			pst.setString(6, t.state);
-			pst.setLong(7, t.version);
-			
-			pst.executeUpdate();
-			
-			
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			if (pst != null) try { pst.close(); } catch(SQLException e) { /* ignore */ }
-		}
-	}
+        try {
+            c = Jdbc.getCurrentConnection();
 
-	@Override
-	public void remove(String id) throws PersistenceException {
-		// TODO Auto-generated method stub
+            pst = c.prepareStatement(Queries.get("TINVOICES_ADD"));
+            try {
+                pst.setString(1, t.id);
+                pst.setLong(2, t.number);
+                pst.setDate(3, java.sql.Date.valueOf(t.date.toString()));
+                pst.setDouble(4, t.vat);
+                pst.setDouble(5, t.amount);
+                pst.setString(6, t.state);
+                pst.setLong(7, t.version);
 
-	}
+                pst.executeUpdate();
+            } finally {
+                if (pst != null) {
+                    pst.close();
+                }
+            }
 
-	@Override
-	public void update(InvoiceRecord t) throws PersistenceException {
-		// TODO Auto-generated method stub
-	}
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	public Optional<InvoiceRecord> findById(String id) throws PersistenceException {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
+    @Override
+    public void remove(String id) throws PersistenceException {
+    }
 
-	@Override
-	public List<InvoiceRecord> findAll() throws PersistenceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public void update(InvoiceRecord t) throws PersistenceException {
+    }
 
-	@Override
-	public Optional<InvoiceRecord> findByNumber(Long number) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
+    @Override
+    public Optional<InvoiceRecord> findById(String id)
+        throws PersistenceException {
+        return Optional.empty();
+    }
 
-	@Override
-	public Long getNextInvoiceNumber() throws PersistenceException {
-		Connection c = null;
-		Statement st = null;
-		ResultSet rt = null;
+    @Override
+    public List<InvoiceRecord> findAll() throws PersistenceException {
+        return null;
+    }
 
-		try {
+    @Override
+    public Optional<InvoiceRecord> findByNumber(Long number) {
+        return Optional.empty();
+    }
 
-			c = Jdbc.getCurrentConnection();		
-			st = c.createStatement();			
-			rt = st.executeQuery(Queries.get("TINVOICES_GETNEXTINVOICENUMBER"));
-			
-			if (rt.next()) {
-				return rt.getLong(1) + 1; // +1, next
-			} else { // there is none yet
-				return 1L;
-			}
-			
-			
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			if (rt != null) try { rt.close(); } catch(SQLException e) { /* ignore */ }
-			if (st != null) try { st.close(); } catch(SQLException e) { /* ignore */ }
-		}
-	}
+    @Override
+    public Long getNextInvoiceNumber() throws PersistenceException {
+        Connection c = null;
+        Statement st = null;
+        ResultSet rt = null;
+
+        try {
+
+            c = Jdbc.getCurrentConnection();
+            st = c.createStatement();
+            try {
+                rt = st.executeQuery(
+                    Queries.get("TINVOICES_GETNEXTINVOICENUMBER"));
+
+                if (rt.next()) {
+                    return rt.getLong(1) + 1;
+                } else {
+                    return 1L;
+                }
+            } finally {
+                if (rt != null) {
+                    rt.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

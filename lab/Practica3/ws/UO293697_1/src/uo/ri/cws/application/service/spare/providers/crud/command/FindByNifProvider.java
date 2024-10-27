@@ -15,19 +15,19 @@ public class FindByNifProvider implements Command<Optional<ProviderDto>> {
 
     private ProviderGateway pg = Factories.persistence.forProvider();
     private String nif;
-    
+
     public FindByNifProvider(String nif) {
-        ArgumentChecks.isNotBlank(nif,"El nif no puede estar vacio");
-        this.nif=nif;
+        ArgumentChecks.isNotBlank(nif, "El nif no puede estar vacio");
+        this.nif = nif;
     }
-    
+
     @Override
     public Optional<ProviderDto> execute() throws BusinessException {
-       Optional<ProviderRecord> rec = pg.findByNif(nif);
-       if(rec.isPresent()) {
-           return Optional.of(DtoAssembler.toDto(rec.get()));
-       }
-       return Optional.ofNullable(null);
+        Optional<ProviderRecord> rec = pg.findByNif(nif);
+        if (rec.isPresent()) {
+            return Optional.of(DtoAssembler.toDto(rec.get()));
+        }
+        return Optional.ofNullable(null);
     }
 
 }

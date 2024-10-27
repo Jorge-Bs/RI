@@ -10,8 +10,6 @@ import uo.ri.cws.application.service.invoice.InvoicingService.InvoicingWorkOrder
 
 public class DtoAssembler {
 
-
-
     public static InvoiceDto toDto(InvoiceRecord arg) {
         InvoiceDto result = new InvoiceDto();
         result.id = arg.id;
@@ -24,7 +22,7 @@ public class DtoAssembler {
     }
 
     public static List<InvoicingWorkOrderDto> toInvoicingWorkOrderList(
-            List<WorkOrderRecord> arg) {
+        List<WorkOrderRecord> arg) {
         List<InvoicingWorkOrderDto> result = new ArrayList<>();
         for (WorkOrderRecord record : arg) {
             result.add(toDto(record));

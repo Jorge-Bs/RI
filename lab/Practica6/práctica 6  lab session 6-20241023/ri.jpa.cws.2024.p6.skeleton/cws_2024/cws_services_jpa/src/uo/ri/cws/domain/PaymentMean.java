@@ -11,11 +11,23 @@ public abstract class PaymentMean {
 	// accidental attributes
 	private Client client;
 	private Set<Charge> charges = new HashSet<>();
+	
+	
+
+	public double getAccumulated() {
+		return accumulated;
+	}
+
+	public Client getClient() {
+		return client;
+	}
 
 	public abstract boolean canPay(Double amount);
 
 	public void pay(double importe) {
-		this.accumulated += importe;
+		if(canPay(importe)) {
+			this.accumulated += importe;
+		}
 	}
 
 	void _setClient(Client client) {

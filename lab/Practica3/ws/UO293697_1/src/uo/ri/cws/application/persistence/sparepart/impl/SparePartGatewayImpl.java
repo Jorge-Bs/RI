@@ -2,6 +2,7 @@ package uo.ri.cws.application.persistence.sparepart.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -15,14 +16,10 @@ public class SparePartGatewayImpl implements SparePartGateway {
 
     @Override
     public void add(SparePartRecord t) throws PersistenceException {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void remove(String id) throws PersistenceException {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -42,7 +39,7 @@ public class SparePartGatewayImpl implements SparePartGateway {
                 pst.setDouble(5, t.price);
                 pst.setInt(6, t.stock);
                 pst.setString(7, t.id);
-                
+
                 pst.execute();
 
             } finally {
@@ -59,6 +56,7 @@ public class SparePartGatewayImpl implements SparePartGateway {
     public Optional<SparePartRecord> findById(String id) {
         Connection c = null;
         PreparedStatement pst = null;
+        ResultSet st = null;
 
         try {
             c = Jdbc.getCurrentConnection();
@@ -67,9 +65,14 @@ public class SparePartGatewayImpl implements SparePartGateway {
             try {
                 pst.setString(1, id);
 
-                return RecordAssembler.toSparePartRecord(pst.executeQuery());
+                st = pst.executeQuery();
+
+                return RecordAssembler.toSparePartRecord(st);
 
             } finally {
+                if (st != null) {
+                    st.close();
+                }
                 if (pst != null) {
                     pst.close();
                 }
@@ -81,7 +84,6 @@ public class SparePartGatewayImpl implements SparePartGateway {
 
     @Override
     public List<SparePartRecord> findAll() throws PersistenceException {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -89,6 +91,7 @@ public class SparePartGatewayImpl implements SparePartGateway {
     public Optional<SparePartRecord> findByCode(String code) {
         Connection c = null;
         PreparedStatement pst = null;
+        ResultSet st = null;
 
         try {
             c = Jdbc.getCurrentConnection();
@@ -96,10 +99,14 @@ public class SparePartGatewayImpl implements SparePartGateway {
             pst = c.prepareStatement(Queries.get("TSPAREPARTS_FINDBYCODE"));
             try {
                 pst.setString(1, code);
+                st = pst.executeQuery();
 
-                return RecordAssembler.toSparePartRecord(pst.executeQuery());
+                return RecordAssembler.toSparePartRecord(st);
 
             } finally {
+                if (st != null) {
+                    st.close();
+                }
                 if (pst != null) {
                     pst.close();
                 }

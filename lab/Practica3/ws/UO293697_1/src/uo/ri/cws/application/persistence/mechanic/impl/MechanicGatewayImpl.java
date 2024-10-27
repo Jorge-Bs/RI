@@ -14,213 +14,174 @@ import uo.ri.cws.application.persistence.util.jdbc.Jdbc;
 import uo.ri.cws.application.persistence.util.jdbc.Queries;
 
 public class MechanicGatewayImpl implements MechanicGateway {
-    /*
-     * HAcer esta estructura en todos los metodos de todos los gateways
-     * 
-     */
+    @Override
+    public void add(MechanicRecord t) throws PersistenceException {
+        Connection c = null;
+        PreparedStatement pst = null;
 
-	@Override
-	public void add(MechanicRecord t) throws PersistenceException {
-		Connection c = null;
-		PreparedStatement pst = null;
-		
-		
-		try {
-		    c = Jdbc.getCurrentConnection();
-            
+        try {
+            c = Jdbc.getCurrentConnection();
+
             pst = c.prepareStatement(Queries.get("TMECHANICS_ADD"));
-		    try {
-	            pst.setString(1, t.id);
-	            pst.setString(2, t.nif);
-	            pst.setString(3, t.name);
-	            pst.setString(4, t.surname);
-	            pst.setLong(5, t.version);
-	            
-	            pst.executeUpdate();
-		    }finally{
-		        if(pst!=null) {
+            try {
+                pst.setString(1, t.id);
+                pst.setString(2, t.nif);
+                pst.setString(3, t.name);
+                pst.setString(4, t.surname);
+                pst.setLong(5, t.version);
+
+                pst.executeUpdate();
+            } finally {
+                if (pst != null) {
                     pst.close();
                 }
-		    }
-		}catch (SQLException e) {
+            }
+        } catch (SQLException e) {
             throw new PersistenceException(e);
         }
-		
-		
-	}
 
-	@Override
-	public void remove(String id) throws PersistenceException {
-		Connection c = null;
-		PreparedStatement ps = null;
+    }
 
-		try {
-//			c = DriverManager.getConnection(
-//					Conf.getProperty("DB_URL"),
-//					Conf.getProperty("DB_USER"),
-//					Conf.getProperty("DB_PASS"));
-			c = Jdbc.getCurrentConnection();
-			
-			ps = c.prepareStatement(Queries.get("TMECHANICS_REMOVE"));
-			ps.setString(1, id);
-			
-			ps.executeUpdate();
-			
-			
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			if (ps != null)
-             {
-                try { ps.close(); } catch(SQLException e) { /* ignore */ }
-//			if (c != null) try { c.close(); } catch(SQLException e) { /* ignore */ }
+    @Override
+    public void remove(String id) throws PersistenceException {
+        Connection c = null;
+        PreparedStatement ps = null;
+
+        try {
+            c = Jdbc.getCurrentConnection();
+
+            ps = c.prepareStatement(Queries.get("TMECHANICS_REMOVE"));
+            try {
+                ps.setString(1, id);
+
+                ps.executeUpdate();
+            } finally {
+                if (ps != null) {
+                    ps.close();
+                }
             }
-		}
-	}
 
-	@Override
-	public void update(MechanicRecord t) throws PersistenceException {
-		Connection c = null;
-		PreparedStatement ps = null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-		try {
-//			c = DriverManager.getConnection(
-//					Conf.getProperty("DB_URL"),
-//					Conf.getProperty("DB_USER"),
-//					Conf.getProperty("DB_PASS"));
-			c = Jdbc.getCurrentConnection();
-			
-			ps = c.prepareStatement(Queries.get("TMECHANICS_UPDATE"));
-			ps.setString(1, t.name);
-			ps.setString(2, t.surname);
-			ps.setString(3, t.id);
-			
-			ps.executeUpdate();
-			
-			
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			if (ps != null)
-             {
-                try { ps.close(); } catch(SQLException e) { /* ignore */ }
-//			if (c != null) try { c.close(); } catch(SQLException e) { /* ignore */ }
+    @Override
+    public void update(MechanicRecord t) throws PersistenceException {
+        Connection c = null;
+        PreparedStatement ps = null;
+
+        try {
+            c = Jdbc.getCurrentConnection();
+
+            ps = c.prepareStatement(Queries.get("TMECHANICS_UPDATE"));
+            try {
+                ps.setString(1, t.name);
+                ps.setString(2, t.surname);
+                ps.setString(3, t.id);
+
+                ps.executeUpdate();
+            } finally {
+                if (ps != null) {
+                    ps.close();
+                }
             }
-		}
-		//return null;
-	}
 
-	@Override
-	public Optional<MechanicRecord> findById(String id) throws PersistenceException {
-		Connection c = null;
-		PreparedStatement pst = null;
-		ResultSet st = null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-		try {
-//			c = DriverManager.getConnection(
-//					Conf.getProperty("DB_URL"),
-//					Conf.getProperty("DB_USER"),
-//					Conf.getProperty("DB_PASS"));
-			
-			c = Jdbc.getCurrentConnection();
-			pst = c.prepareStatement(Queries.get("TMECHANICS_FINDBYID"));
-			pst.setString(1, id);
-			
-			
-			st = pst.executeQuery();
-			
-			return RecordAssembler.toMechanicRecord(st);
-			
-			
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			if (st != null) {
-                try { st.close(); } catch(SQLException e) { /* ignore */ }
-            }
-			if (pst != null)
-             {
-                try { pst.close(); } catch(SQLException e) { /* ignore */ }
-//			if (c != null) try { c.close(); } catch(SQLException e) { /* ignore */ }
-            }
-		}
-	}
+    @Override
+    public Optional<MechanicRecord> findById(String id)
+        throws PersistenceException {
+        Connection c = null;
+        PreparedStatement pst = null;
+        ResultSet st = null;
 
-	@Override
-	public List<MechanicRecord> findAll() throws PersistenceException {
-		Connection c = null;
-		Statement st = null;
-		ResultSet rt = null;
+        try {
 
-		try {
-//			c = DriverManager.getConnection(
-//					Conf.getProperty("DB_URL"),
-//					Conf.getProperty("DB_USER"),
-//					Conf.getProperty("DB_PASS"));
-			c = Jdbc.getCurrentConnection();
-//			
-			st = c.createStatement();	
-			
-			rt = st.executeQuery(Queries.get("TMECHANICS_FINDALL"));
-			
-			
-			return RecordAssembler.toMechanicRecordList(rt);
-			
-			
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			if (rt != null) {
-                try { rt.close(); } catch(SQLException e) { /* ignore */ }
-            }
-			if (st != null)
-             {
-                try { st.close(); } catch(SQLException e) { /* ignore */ }
-//			if (c != null) try { c.close(); } catch(SQLException e) { /* ignore */ }
-            }
-		}
-	}
+            c = Jdbc.getCurrentConnection();
+            pst = c.prepareStatement(Queries.get("TMECHANICS_FINDBYID"));
+            try {
+                pst.setString(1, id);
 
-	@Override
-	public Optional<MechanicRecord> findByNif(String nif) throws PersistenceException {
-		Connection c = null;
-		PreparedStatement pst = null;
-		ResultSet st = null;
+                st = pst.executeQuery();
 
-		try {
-//			c = DriverManager.getConnection(
-//					Conf.getProperty("DB_URL"),
-//					Conf.getProperty("DB_USER"),
-//					Conf.getProperty("DB_PASS"));
-			
-			c = Jdbc.getCurrentConnection();
-			
-			pst = c.prepareStatement(Queries.get("TMECHANICS_FINDBYNIF"));
-			pst.setString(1, nif);
-			
-			
-			st = pst.executeQuery();
-			
-			return RecordAssembler.toMechanicRecord(st);
-			
-			
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			if (st != null) {
-                try { st.close(); } catch(SQLException e) { /* ignore */ }
+                return RecordAssembler.toMechanicRecord(st);
+            } finally {
+                if (st != null) {
+                    st.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
             }
-			if (pst != null)
-             {
-                try { pst.close(); } catch(SQLException e) { /* ignore */ }
-//			if (c != null) try { c.close(); } catch(SQLException e) { /* ignore */ }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<MechanicRecord> findAll() throws PersistenceException {
+        Connection c = null;
+        Statement st = null;
+        ResultSet rt = null;
+
+        try {
+
+            c = Jdbc.getCurrentConnection();
+
+            st = c.createStatement();
+
+            try {
+                rt = st.executeQuery(Queries.get("TMECHANICS_FINDALL"));
+
+                return RecordAssembler.toMechanicRecordList(rt);
+            } finally {
+                if (rt != null) {
+                    rt.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
             }
-		}
-	}
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Optional<MechanicRecord> findByNif(String nif)
+        throws PersistenceException {
+        Connection c = null;
+        PreparedStatement pst = null;
+        ResultSet st = null;
+
+        try {
+            c = Jdbc.getCurrentConnection();
+
+            pst = c.prepareStatement(Queries.get("TMECHANICS_FINDBYNIF"));
+            try {
+                pst.setString(1, nif);
+
+                st = pst.executeQuery();
+
+                return RecordAssembler.toMechanicRecord(st);
+            } finally {
+                if (st != null) {
+                    st.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

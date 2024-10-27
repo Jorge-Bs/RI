@@ -18,7 +18,7 @@ public class Client {
 	
 	private Set<Vehicle> vehiculos = new HashSet<>();
 	
-	
+	private Set<PaymentMean> paymentMeans = new HashSet<>();
 	
 	public Client(String nif, String name, String surname, String email, String phone, Address address) {
 		ArgumentChecks.isNotBlank(nif,"Nif invalido");
@@ -74,6 +74,15 @@ public class Client {
 		return new HashSet<>(vehiculos);
 	}
 	
+	
+	public Set<PaymentMean> getPaymentMeans() {
+		return new HashSet<>(paymentMeans) ;
+	}
+
+	public void setPaymentMeans(Set<PaymentMean> paymentMeans) {
+		this.paymentMeans = paymentMeans;
+	}
+
 	Set<Vehicle> _getVehicles() {
 		return vehiculos;
 	}
@@ -112,6 +121,10 @@ public class Client {
 		builder.append(address);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public Set<PaymentMean> _getPaymentMeans() {
+		return paymentMeans;
 	}
 
 	

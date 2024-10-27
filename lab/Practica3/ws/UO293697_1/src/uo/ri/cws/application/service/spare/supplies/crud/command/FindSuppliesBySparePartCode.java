@@ -18,53 +18,56 @@ import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.exception.BusinessChecks;
 import uo.ri.util.exception.BusinessException;
 
-public class FindSuppliesBySparePartCode implements Command<List<SupplyDto>>{
+public class FindSuppliesBySparePartCode implements Command<List<SupplyDto>> {
 
     private String code;
-    
+
     private SparePartRecord record;
-    
+
     private ProviderGateway pg = Factories.persistence.forProvider();
     private SparePartGateway sp = Factories.persistence.forSpareParts();
     private SuppliesGateway supg = Factories.persistence.forSupplies();
-    
+
     public FindSuppliesBySparePartCode(String code) {
         ArgumentChecks.isNotEmpty(code, "invalid nif");
-        this.code=code;
+        this.code = code;
     }
-    
-    
+
     @Override
     public List<SupplyDto> execute() throws BusinessException {
         try {
             findSparePart();
-        }catch(BusinessException e) {
+        } catch (BusinessException e) {
             return new ArrayList<>();
         }
-        
+
         List<SuppliesRecord> lista = supg.findBySparePartId(record.id);
         List<SupplyDto> resultado = new ArrayList<>();
-        
-        lista.forEach(t->{
+
+        lista.forEach(t -> {
             ProviderRecord rec = pg.findById(t.providerId).get();
             SupplyDto dto = DtoAssembler.toDto(t);
-            dto.provider.name=rec.name;
-            dto.provider.id=rec.id;
-            dto.provider.nif=rec.nif;
-            
-            dto.sparePart.code=record.code;
-            dto.sparePart.description=record.description;
-            dto.sparePart.id=record.id;
+            dto.provider.name = rec.name;
+            dto.provider.id = rec.id;
+            dto.provider.nif = rec.nif;
+
+            dto.sparePart.code = record.code;
+            dto.sparePart.description = record.description;
+            dto.sparePart.id = record.id;
             resultado.add(dto);
         });
         return resultado;
     }
 
-
+    /**
+     * Obtiene la sparePart
+     * 
+     * @throws BusinessException si no existe
+     */
     private void findSparePart() throws BusinessException {
-       Optional<SparePartRecord> rec = sp.findByCode(code);
+        Optional<SparePartRecord> rec = sp.findByCode(code);
         BusinessChecks.exists(rec, "no existen datos para ese codigo");
-       this.record=rec.get();
+        this.record = rec.get();
     }
 
 }

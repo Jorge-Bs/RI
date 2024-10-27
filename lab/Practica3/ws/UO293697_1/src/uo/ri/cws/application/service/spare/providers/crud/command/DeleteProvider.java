@@ -15,58 +15,65 @@ import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.exception.BusinessChecks;
 import uo.ri.util.exception.BusinessException;
 
-public class DeleteProvider implements Command<Void>{
-    
-    
-    
+public class DeleteProvider implements Command<Void> {
+
     private ProviderGateway pg = Factories.persistence.forProvider();
     private OrderGateway og = Factories.persistence.forOrder();
     private SuppliesGateway sg = Factories.persistence.forSupplies();
-    
-    
+
     private String nif;
     private Optional<ProviderRecord> provider;
-    
+
     public DeleteProvider(String nif) {
         ArgumentChecks.isNotBlank(nif, "El nif es invalido");
-        this.nif=nif;
+        this.nif = nif;
     }
-    
-    
+
     @Override
     public Void execute() throws BusinessException {
         checkNifExist();
         checkOrdersLinesProvider();
         checkProviderSupplier();
-        
+
         pg.remove(provider.get().id);
-        
+
         return null;
     }
-    
-    
+
+    /**
+     * Comprueba que no este registrado como proveedor de suministros
+     * 
+     * @throws BusinessException si lo esta
+     */
     private void checkProviderSupplier() throws BusinessException {
         List<SuppliesRecord> lista = sg.findByProviderId(provider.get().id);
-        BusinessChecks.isTrue(lista.size()==0,
+        BusinessChecks.isTrue(lista.size() == 0,
             "No se puede eliminar, es proveedor");
     }
 
-
+    /**
+     * Comprueba que no tenga una ordeline el proveedor
+     * 
+     * @throws BusinessException si la tiene
+     */
     private void checkOrdersLinesProvider() throws BusinessException {
         OrderRecord or = new OrderRecord();
         or.state = "PENDING";
-        or.providerId=provider.get().id;
-        List<OrderRecord> lista= og.findByStateAndProviderID(or);
-        BusinessChecks.isTrue(lista.size()==0,
+        or.providerId = provider.get().id;
+        List<OrderRecord> lista = og.findByStateAndProviderID(or);
+        BusinessChecks.isTrue(lista.size() == 0,
             "No se puede eliminar, posee pedidos en progreso");
     }
 
-
+    /**
+     * Comprueba que exista el proveedor
+     * 
+     * @throws BusinessException si no existe
+     */
     private void checkNifExist() throws BusinessException {
         provider = pg.findByNif(nif);
-        BusinessChecks.exists(provider ,
-            "Ya existe un proveedor con ese nif");
-         
-     }
+        BusinessChecks.exists(provider, "No existe un proveedor con ese nif");
+
+    }
 
 }

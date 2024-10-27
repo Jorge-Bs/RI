@@ -2,6 +2,9 @@ package uo.ri.cws.domain;
 
 import java.util.Objects;
 
+import uo.ri.util.assertion.ArgumentChecks;
+import uo.ri.util.math.Round;
+
 public class Substitution {
 	// natural attributes
 	private int quantity;
@@ -12,7 +15,10 @@ public class Substitution {
 
 
 	public Substitution( SparePart sparePart, Intervention intervention,int quantity) {
-		//validaciones
+		ArgumentChecks.isNotNull(sparePart,"invalid sparePart");
+		ArgumentChecks.isNotNull(intervention,"invalid intervention");
+		ArgumentChecks.isTrue(quantity>0,"invalid quantity");
+		
 		this.quantity = quantity;
 		Associations.Substitute.link(sparePart, this, intervention);
 	}
@@ -52,6 +58,10 @@ public class Substitution {
 
 	void _setIntervention(Intervention intervention) {
 		this.intervention = intervention;
+	}
+
+	public double getAmount() {
+		return Round.twoCents(quantity*sparePart.getPrice());
 	}
 
 }

@@ -13,11 +13,9 @@ import uo.ri.util.exception.BusinessException;
 public class OrdersServiceImpl implements OrdersService {
 
     private JdbcCommandExecutor ex = new JdbcCommandExecutor();
-    
-    
+
     @Override
     public List<OrderDto> generateOrders() throws BusinessException {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -29,7 +27,7 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public Optional<OrderDto> findByCode(String code) throws BusinessException {
-       return ex.execute(new ListOrdersByCode(code));
+        return ex.execute(new ListOrdersByCode(code));
     }
 
     @Override

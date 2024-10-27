@@ -1,6 +1,9 @@
 package uo.ri.cws.domain;
 
+
 import java.util.Objects;
+
+import uo.ri.util.assertion.ArgumentChecks;
 
 public class Voucher extends PaymentMean {
 	private String code; //clave
@@ -10,8 +13,12 @@ public class Voucher extends PaymentMean {
 	
 	
 	
-	public Voucher(String code, double available, String description) {
-		//Validaciones
+	public Voucher(String code,  String description,double available) {
+		ArgumentChecks.isNotEmpty(code, "invalid code");
+		ArgumentChecks.isTrue(available>=0,"invalid availabe");
+		ArgumentChecks.isNotEmpty(description, "invalid description");
+		
+		
 		this.code = code;
 		this.available = available;
 		this.description = description;
@@ -26,7 +33,8 @@ public class Voucher extends PaymentMean {
 	 */
 	@Override
 	public void pay(double amount) {
-
+		super.pay(amount);
+		available-=amount;
 	}
 
 
@@ -73,6 +81,15 @@ public class Voucher extends PaymentMean {
 
 	public String getDescription() {
 		return description;
+	}
+
+
+
+
+	@Override
+	public boolean canPay(Double amount) {
+		if(amount>available) throw new IllegalStateException("invalid amount");
+		return true;
 	}
 	
 	

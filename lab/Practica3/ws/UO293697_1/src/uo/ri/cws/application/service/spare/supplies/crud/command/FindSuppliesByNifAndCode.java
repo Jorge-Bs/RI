@@ -15,7 +15,6 @@ import uo.ri.cws.application.service.spare.SuppliesCrudService.SupplyDto.Supplie
 import uo.ri.cws.application.service.spare.supplies.crud.DtoAssembler;
 import uo.ri.cws.application.service.util.command.Command;
 import uo.ri.util.assertion.ArgumentChecks;
-import uo.ri.util.exception.BusinessChecks;
 import uo.ri.util.exception.BusinessException;
 
 public class FindSuppliesByNifAndCode implements Command<Optional<SupplyDto>> {
@@ -27,8 +26,7 @@ public class FindSuppliesByNifAndCode implements Command<Optional<SupplyDto>> {
     private ProviderGateway pg = Factories.persistence.forProvider();
     private SuppliesGateway supg = Factories.persistence.forSupplies();
 
-    public FindSuppliesByNifAndCode(String nif, String code)
-        throws BusinessException {
+    public FindSuppliesByNifAndCode(String nif, String code) {
         ArgumentChecks.isNotEmpty(nif, "nif invalido");
         ArgumentChecks.isNotEmpty(code, "code invalido");
 
@@ -41,29 +39,36 @@ public class FindSuppliesByNifAndCode implements Command<Optional<SupplyDto>> {
         SparePartRecord spr = obtainSparePart();
         ProviderRecord pr = obtainProvider();
         Optional<SuppliesRecord> sup;
-        sup= checkExistSupply(spr.id, pr.id);
+        sup = checkExistSupply(spr.id, pr.id);
 
-        if(sup.isEmpty()) {
+        if (sup.isEmpty()) {
             return Optional.ofNullable(null);
         }
-        
-        SupplyDto dto =DtoAssembler.toDto(sup.get());
-        dto.provider=new SupplierProviderDto();
-        dto.provider.id=pr.id;
-        dto.provider.nif=pr.nif;
-        dto.provider.name=pr.name;
-        
-        dto.sparePart=new SuppliedSparePartDto();
-        dto.sparePart.id=spr.id;
-        dto.sparePart.code=spr.code;
-        dto.sparePart.description=spr.description;
-        
+
+        SupplyDto dto = DtoAssembler.toDto(sup.get());
+        dto.provider = new SupplierProviderDto();
+        dto.provider.id = pr.id;
+        dto.provider.nif = pr.nif;
+        dto.provider.name = pr.name;
+
+        dto.sparePart = new SuppliedSparePartDto();
+        dto.sparePart.id = spr.id;
+        dto.sparePart.code = spr.code;
+        dto.sparePart.description = spr.description;
+
         return Optional.of(dto);
     }
 
+    /**
+     * Comprueba que exista el supply
+     * 
+     * @param spareId
+     * @param providerId
+     * @return supply
+     */
     private Optional<SuppliesRecord> checkExistSupply(String spareId,
-        String providerId) throws BusinessException {
-        
+        String providerId) {
+
         Optional<SuppliesRecord> rec;
         SuppliesRecord record = new SuppliesRecord();
         record.providerId = providerId;
@@ -72,15 +77,23 @@ public class FindSuppliesByNifAndCode implements Command<Optional<SupplyDto>> {
         return rec;
     }
 
-    private ProviderRecord obtainProvider() throws BusinessException {
+    /**
+     * Obtiene el proveedor
+     * 
+     * @return provider
+     */
+    private ProviderRecord obtainProvider() {
         Optional<ProviderRecord> rec = pg.findByNif(nif);
-        BusinessChecks.exists(rec, "no existe la pieza");
         return rec.get();
     }
 
-    private SparePartRecord obtainSparePart() throws BusinessException {
+    /**
+     * Obtiene el sparePart
+     * 
+     * @return sparePart
+     */
+    private SparePartRecord obtainSparePart() {
         Optional<SparePartRecord> rec = spg.findByCode(code);
-        BusinessChecks.exists(rec, "no existe la pieza");
         return rec.get();
     }
 

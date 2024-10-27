@@ -18,53 +18,56 @@ import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.exception.BusinessChecks;
 import uo.ri.util.exception.BusinessException;
 
-public class FindSuppliesByProviderNif implements Command<List<SupplyDto>>{
+public class FindSuppliesByProviderNif implements Command<List<SupplyDto>> {
 
     private String nif;
-    
+
     private ProviderRecord providerRec;
-    
+
     private ProviderGateway pg = Factories.persistence.forProvider();
     private SparePartGateway sp = Factories.persistence.forSpareParts();
     private SuppliesGateway supg = Factories.persistence.forSupplies();
-    
+
     public FindSuppliesByProviderNif(String nif) {
         ArgumentChecks.isNotEmpty(nif, "invalid nif");
-        this.nif=nif;
+        this.nif = nif;
     }
-    
-    
+
     @Override
     public List<SupplyDto> execute() throws BusinessException {
         try {
             findSupplier();
-        }catch(BusinessException e) {
+        } catch (BusinessException e) {
             return new ArrayList<>();
         }
-        
+
         List<SuppliesRecord> lista = supg.findByProviderId(providerRec.id);
         List<SupplyDto> resultado = new ArrayList<>();
-        
-        lista.forEach(t->{
+
+        lista.forEach(t -> {
             SparePartRecord rec = sp.findById(t.sparepartId).get();
             SupplyDto dto = DtoAssembler.toDto(t);
-            dto.provider.name=providerRec.name;
-            dto.provider.id=providerRec.id;
-            dto.provider.nif=providerRec.nif;
-            
-            dto.sparePart.code=rec.code;
-            dto.sparePart.description=rec.description;
-            dto.sparePart.id=rec.id;
+            dto.provider.name = providerRec.name;
+            dto.provider.id = providerRec.id;
+            dto.provider.nif = providerRec.nif;
+
+            dto.sparePart.code = rec.code;
+            dto.sparePart.description = rec.description;
+            dto.sparePart.id = rec.id;
             resultado.add(dto);
         });
         return resultado;
     }
 
-
+    /**
+     * Obtiene el proveedor
+     * 
+     * @throws BusinessException si no existe
+     */
     private void findSupplier() throws BusinessException {
-       Optional<ProviderRecord> rec = pg.findByNif(nif);
+        Optional<ProviderRecord> rec = pg.findByNif(nif);
         BusinessChecks.exists(rec, "no existen datos para ese nif");
-        providerRec=rec.get();
+        providerRec = rec.get();
     }
 
 }
