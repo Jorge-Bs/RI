@@ -16,7 +16,7 @@ public class ListBySparePartsSuppliedAction implements Action {
 		String code = Console.readString("Spare part code");
 		
 		ProvidersCrudService service = Factories.service.forProvidersService();
-		List<ProviderDto> providers = null;
+        List<ProviderDto> providers = service.findBySparePartCode(code);
 		
 		Console.println("There are " + providers.size() + " providers");
 		for(ProviderDto p: providers) {

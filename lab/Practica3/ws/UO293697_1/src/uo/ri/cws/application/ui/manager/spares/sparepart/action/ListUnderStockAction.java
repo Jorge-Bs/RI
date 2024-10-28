@@ -11,15 +11,16 @@ import uo.ri.util.menu.Action;
 
 public class ListUnderStockAction implements Action {
 
-	@Override
-	public void execute() throws Exception {
-		SparePartReportService service = null;
-		List<SparePartReportDto> spares = service.findUnderStock();
-		
-		Console.println("There are " + spares.size() + " spares under stock");
-		for(SparePartReportDto sp: spares) {
-			Printer.print(sp);
-		}
-	}
+    @Override
+    public void execute() throws Exception {
+        SparePartReportService service;
+        service = Factories.service.forSparePartReportService();
+        List<SparePartReportDto> spares = service.findUnderStock();
+
+        Console.println("There are " + spares.size() + " spares under stock");
+        for (SparePartReportDto sp : spares) {
+            Printer.print(sp);
+        }
+    }
 
 }

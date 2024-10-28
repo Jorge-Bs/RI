@@ -17,8 +17,9 @@ public class UpdateAction implements Action {
 		String nif = Console.readString("Supply nif");
 		String code = Console.readString("Spare part code");
 
-		SuppliesCrudService service = null;
-		Optional<SupplyDto> op = Optional.empty();
+		SuppliesCrudService service;
+		service = Factories.service.forSuppliesCrudService();
+		Optional<SupplyDto> op = service.findByNifAndCode(nif, code);
 		
 		if ( op.isEmpty() ) {
 			Console.println("There is no such supply.");
@@ -33,7 +34,7 @@ public class UpdateAction implements Action {
 		dto.price = Console.readDouble("new price", dto.price);
 		dto.deliveryTerm = Console.readInt("new delivery term", dto.deliveryTerm);
 		
-		service.update(dto); // dto keeps the id and version
+		service.update(dto);
 		
 		Console.println("The supply has been updated");
 	}

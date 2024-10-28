@@ -17,7 +17,7 @@ public class FindAllMechanicsAction implements Action {
         Console.println("\nList of mechanics \n");
 
         List<MechanicDto> result = Factories.service.forMechanicService()
-                                                    .findAllMechanics();
+            .findAllMechanics();
         Printer.printMechanics(result);
     }
 }

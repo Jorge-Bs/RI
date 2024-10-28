@@ -13,31 +13,30 @@ import uo.ri.util.menu.Action;
 
 public class ListByProviderAction implements Action {
 
-	@Override
-	public void execute() throws Exception {
-		String nif = Console.readString("Please, type the provider nif");
-		
-		OrdersService service = Factories.service.forOrdersService();	
-		List<OrderDto> orders = new ArrayList<>(service.findByProviderNif(nif));
-		
-		orders.sort( new OrdersComparator() ); 
-		
-		for(OrderDto o: orders) {
-			Printer.printSummary(o);
-		}
-		
+    @Override
+    public void execute() throws Exception {
+        String nif = Console.readString("Please, type the provider nif");
 
-	}
+        OrdersService service = Factories.service.forOrdersService();
+        List<OrderDto> orders = new ArrayList<>(service.findByProviderNif(nif));
 
-	public class OrdersComparator implements Comparator<OrderDto> {
-		@Override
-		public int compare(OrderDto o1, OrderDto o2) {
-			int diff = o1.state.compareTo( o2.state );
-			if ( diff == 0) {
-				diff = o1.orderedDate.compareTo( o2.orderedDate );
-			}
-			return diff;
-		}
-	}
+        orders.sort(new OrdersComparator());
+
+        for (OrderDto o : orders) {
+            Printer.printSummary(o);
+        }
+
+    }
+
+    public class OrdersComparator implements Comparator<OrderDto> {
+        @Override
+        public int compare(OrderDto o1, OrderDto o2) {
+            int diff = o1.state.compareTo(o2.state);
+            if (diff == 0) {
+                diff = o1.orderedDate.compareTo(o2.orderedDate);
+            }
+            return diff;
+        }
+    }
 
 }

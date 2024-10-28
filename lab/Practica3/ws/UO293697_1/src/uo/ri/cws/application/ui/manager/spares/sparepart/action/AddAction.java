@@ -8,21 +8,25 @@ import uo.ri.util.menu.Action;
 
 public class AddAction implements Action {
 
-	@Override
-	public void execute() throws Exception {
-		SparePartDto dto = new SparePartDto();
-		
-		Console.println("Please, provide the following data");
-		dto.code = Console.readString("Code");
-		dto.description = Console.readString("Description");
-		dto.stock = Console.readInt("Current stock");
-		dto.minStock = Console.readInt("Minimum stock");
-		dto.maxStock = Console.readInt("Maximum stock");
-		dto.price = Console.readDouble("Price");
-		
-		SparePartCrudService service = null;
-		
-		Console.println("The new spare part has been registered with id " +  dto.id);
-	}
+    @Override
+    public void execute() throws Exception {
+        SparePartDto dto = new SparePartDto();
+
+        Console.println("Please, provide the following data");
+        dto.code = Console.readString("Code");
+        dto.description = Console.readString("Description");
+        dto.stock = Console.readInt("Current stock");
+        dto.minStock = Console.readInt("Minimum stock");
+        dto.maxStock = Console.readInt("Maximum stock");
+        dto.price = Console.readDouble("Price");
+
+        SparePartCrudService service = Factories.service
+            .forSparePartCrudService();
+
+        service.add(dto);
+
+        Console.println(
+            "The new spare part has been registered with id " + dto.id);
+    }
 
 }

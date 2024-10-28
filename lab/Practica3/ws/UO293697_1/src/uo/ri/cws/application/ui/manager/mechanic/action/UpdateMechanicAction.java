@@ -11,7 +11,6 @@ public class UpdateMechanicAction implements Action {
     @Override
     public void execute() throws BusinessException {
 
-        // Get info
         String id = Console.readString("Type mechahic id to update");
         String name = Console.readString("Name");
         String surname = Console.readString("Surname");
@@ -22,7 +21,7 @@ public class UpdateMechanicAction implements Action {
         dto.surname = surname;
 
         Factories.service.forMechanicService().updateMechanic(dto);
-        // Print result
+
         Console.println("Mechanic updated");
     }
 

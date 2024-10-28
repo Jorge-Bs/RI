@@ -11,17 +11,19 @@ import uo.ri.util.menu.Action;
 
 public class ListByDescriptionAction implements Action {
 
-	@Override
-	public void execute() throws Exception {
-		String desc = Console.readString("Spare part description (may be partial)");
-		
-		SparePartReportService service = null;
-		List<SparePartReportDto> spares = null;
-		
-		Console.println("There are " + spares.size() + " spare parts");
-		for(SparePartReportDto p: spares) {
-			Printer.print(p);
-		}
-	}
+    @Override
+    public void execute() throws Exception {
+        String desc = Console
+            .readString("Spare part description (may be partial)");
+
+        SparePartReportService service;
+        service = Factories.service.forSparePartReportService();
+        List<SparePartReportDto> spares = service.findByDescription(desc);
+
+        Console.println("There are " + spares.size() + " spare parts");
+        for (SparePartReportDto p : spares) {
+            Printer.print(p);
+        }
+    }
 
 }

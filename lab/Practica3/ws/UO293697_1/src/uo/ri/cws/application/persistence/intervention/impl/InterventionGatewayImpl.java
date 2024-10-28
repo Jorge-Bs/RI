@@ -65,7 +65,7 @@ public class InterventionGatewayImpl implements InterventionGateway {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new PersistenceException(e);
         }
     }
 

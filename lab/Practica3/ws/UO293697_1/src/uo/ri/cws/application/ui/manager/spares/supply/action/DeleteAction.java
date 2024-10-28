@@ -7,15 +7,18 @@ import uo.ri.util.menu.Action;
 
 public class DeleteAction implements Action {
 
-	@Override
-	public void execute() throws Exception {
-		Console.println("Please, provide the following data");
-		String nif = Console.readString("Provider nif");
-		String code = Console.readString("Spare part code");
+    @Override
+    public void execute() throws Exception {
+        Console.println("Please, provide the following data");
+        String nif = Console.readString("Provider nif");
+        String code = Console.readString("Spare part code");
 
-		SuppliesCrudService service = null;
+        SuppliesCrudService service;
+        service = Factories.service.forSuppliesCrudService();
 
-		Console.println("The supply has been deleted");
-	}
+        service.delete(nif, code);
+
+        Console.println("The supply has been deleted");
+    }
 
 }

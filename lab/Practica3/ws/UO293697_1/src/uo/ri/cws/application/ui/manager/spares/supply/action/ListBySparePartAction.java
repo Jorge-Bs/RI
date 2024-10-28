@@ -11,17 +11,19 @@ import uo.ri.util.menu.Action;
 
 public class ListBySparePartAction implements Action {
 
-	@Override
-	public void execute() throws Exception {
-		String code = Console.readString("Spare part code");
-		
-		SuppliesCrudService service = Factories.service.forSuppliesCrudService();
-		List<SupplyDto> supplies = null;
-		
-		Console.println("There are " + supplies.size() + " supplies for the spare part");
-		for(SupplyDto p: supplies) {
-			Printer.print(p);
-		}
-	}
+    @Override
+    public void execute() throws Exception {
+        String code = Console.readString("Spare part code");
+
+        SuppliesCrudService service;
+        service = Factories.service.forSuppliesCrudService();
+        List<SupplyDto> supplies = service.findBySparePartCode(code);
+
+        Console.println(
+            "There are " + supplies.size() + " supplies for the spare part");
+        for (SupplyDto p : supplies) {
+            Printer.print(p);
+        }
+    }
 
 }

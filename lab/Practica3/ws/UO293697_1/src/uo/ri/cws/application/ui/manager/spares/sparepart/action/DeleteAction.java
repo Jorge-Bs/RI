@@ -7,13 +7,16 @@ import uo.ri.util.menu.Action;
 
 public class DeleteAction implements Action {
 
-	@Override
-	public void execute() throws Exception {
-		String code = Console.readString("Code");
-		
-		SparePartCrudService service =  null;
+    @Override
+    public void execute() throws Exception {
+        String code = Console.readString("Code");
 
-		Console.println("The spare part has been deleted");
-	}
+        SparePartCrudService service;
+        service = Factories.service.forSparePartCrudService();
+
+        service.delete(code);
+
+        Console.println("The spare part has been deleted");
+    }
 
 }

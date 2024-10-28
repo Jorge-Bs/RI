@@ -17,7 +17,7 @@ public class UpdateAction implements Action {
 		String nif = Console.readString("Nif: ");
 		
 		ProvidersCrudService service = Factories.service.forProvidersService();
-		Optional<ProviderDto> op = Optional.empty();
+		Optional<ProviderDto> op = service.findByNif(nif);
 		
 		if ( op.isEmpty() ) {
 			Console.println("There is no such provider.");
@@ -34,7 +34,7 @@ public class UpdateAction implements Action {
 		dto.phone = Console.readString("new phone: ", dto.phone);
 		
 		
-		
+        service.update(dto);
 		
 		Console.println("The provider has been updated");
 	}

@@ -17,8 +17,9 @@ public class ViewDetailAction implements Action {
         String nif = Console.readString("Provider Nif ");
         String code = Console.readString("Spare part code ");
 
-        SuppliesCrudService service = Factories.service.forSuppliesCrudService();
-        Optional<SupplyDto> op = null;
+        SuppliesCrudService service;
+        service= Factories.service.forSuppliesCrudService();
+        Optional<SupplyDto> op = service.findByNifAndCode(nif, code);
 
         if (op.isEmpty()) {
             Console.println("There is no such supply.");

@@ -16,7 +16,7 @@ public class ListByNameAction implements Action {
 		String name = Console.readString("Please, type the name or part");
 		
 		ProvidersCrudService service = Factories.service.forProvidersService();
-		List<ProviderDto> providers = null;
+        List<ProviderDto> providers = service.findByName(name);
 		
 		Console.println("There are " + providers.size() + " providers");
 		for(ProviderDto p: providers) {

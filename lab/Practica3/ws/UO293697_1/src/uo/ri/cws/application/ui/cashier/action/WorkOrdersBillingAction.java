@@ -17,7 +17,6 @@ public class WorkOrdersBillingAction implements Action {
     public void execute() throws BusinessException {
         List<String> workOrderIds = new ArrayList<String>();
 
-        // type work order ids to be invoiced in the invoice
         do {
             String id = Console.readString("Type work order ids:  ");
             workOrderIds.add(id);
@@ -30,7 +29,7 @@ public class WorkOrdersBillingAction implements Action {
 
     private boolean nextWorkorder() {
         return Console.readString(" Any other workorder? (y/n) ")
-                      .equalsIgnoreCase("y");
+            .equalsIgnoreCase("y");
     }
 
 }

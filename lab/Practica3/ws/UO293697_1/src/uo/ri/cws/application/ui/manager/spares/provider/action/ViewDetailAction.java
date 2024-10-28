@@ -11,21 +11,21 @@ import uo.ri.util.menu.Action;
 
 public class ViewDetailAction implements Action {
 
-	@Override
-	public void execute() throws Exception {
-		Console.println("Please, provide the following data");
-		String nif = Console.readString("Nif: ");
-		
-		ProvidersCrudService service = Factories.service.forProvidersService();
-		Optional<ProviderDto> op = Optional.empty();
-		
-		if ( op.isEmpty() ) {
-			Console.println("There is no such provider.");
-			Console.println("Please mind the nif and try again.");
-			return;
-		}
-		
-		Printer.print( op.get() );
-	}
+    @Override
+    public void execute() throws Exception {
+        Console.println("Please, provide the following data");
+        String nif = Console.readString("Nif: ");
+
+        ProvidersCrudService service = Factories.service.forProvidersService();
+        Optional<ProviderDto> op = service.findByNif(nif);
+
+        if (op.isEmpty()) {
+            Console.println("There is no such provider.");
+            Console.println("Please mind the nif and try again.");
+            return;
+        }
+
+        Printer.print(op.get());
+    }
 
 }

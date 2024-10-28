@@ -8,19 +8,22 @@ import uo.ri.util.menu.Action;
 
 public class AddAction implements Action {
 
-	@Override
-	public void execute() throws Exception {
-		SupplyDto dto = new SupplyDto();
-		
-		Console.println("Please, provide the following data:");
-		dto.provider.nif = Console.readString("Provider nif");
-		dto.sparePart.code = Console.readString("Spare part code");
-		dto.price = Console.readDouble("Price");
-		dto.deliveryTerm = Console.readInt("Delivery term");
-		
-		SuppliesCrudService service = null;
-		
-		Console.println("The new supply has been registered with id " +  dto.id);
-	}
+    @Override
+    public void execute() throws Exception {
+        SupplyDto dto = new SupplyDto();
+
+        Console.println("Please, provide the following data:");
+        dto.provider.nif = Console.readString("Provider nif");
+        dto.sparePart.code = Console.readString("Spare part code");
+        dto.price = Console.readDouble("Price");
+        dto.deliveryTerm = Console.readInt("Delivery term");
+
+        SuppliesCrudService service;
+        service = Factories.service.forSuppliesCrudService();
+
+        service.add(dto);
+
+        Console.println("The new supply has been registered with id " + dto.id);
+    }
 
 }

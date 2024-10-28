@@ -5,10 +5,8 @@ import uo.ri.util.menu.Action;
 
 public class UpdateWorkOrderAction implements Action {
 
-	@Override
-	public void execute() throws BusinessException {
-		// TODO Auto-generated method stub
-
-	}
+    @Override
+    public void execute() throws BusinessException {
+    }
 
 }

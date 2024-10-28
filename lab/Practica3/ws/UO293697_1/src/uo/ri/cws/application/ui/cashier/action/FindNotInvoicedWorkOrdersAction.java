@@ -8,14 +8,6 @@ import uo.ri.util.exception.BusinessException;
 import uo.ri.util.menu.Action;
 
 public class FindNotInvoicedWorkOrdersAction implements Action {
-    /**
-     * Process:
-     * 
-     * - Ask customer nif
-     * 
-     * - Display all uncharged workorder (status <> 'INVOICED'). For each
-     * workorder, display id, vehicle id, date, status, amount and description
-     */
 
     @Override
     public void execute() throws BusinessException {
@@ -25,7 +17,7 @@ public class FindNotInvoicedWorkOrdersAction implements Action {
 
         InvoicingService service = Factories.service.forInvoicingService();
         Printer.printInvoicingWorkOrders(
-                service.findNotInvoicedWorkOrdersByClientNif(nif));
+            service.findNotInvoicedWorkOrdersByClientNif(nif));
 
     }
 

@@ -13,6 +13,8 @@ public class DeleteAction implements Action {
 		String nif = Console.readString("Nif");
 		
 		ProvidersCrudService service = Factories.service.forProvidersService();
+		
+        service.delete(nif);
 
 
 		Console.println("The provider has been deleted");

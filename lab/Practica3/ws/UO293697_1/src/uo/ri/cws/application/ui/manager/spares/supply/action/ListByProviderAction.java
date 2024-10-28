@@ -11,17 +11,19 @@ import uo.ri.util.menu.Action;
 
 public class ListByProviderAction implements Action {
 
-	@Override
-	public void execute() throws Exception {
-		String nif = Console.readString("Please, type Supply nif");
-		
-		SuppliesCrudService service = null;
-		List<SupplyDto> supplies = null;
-		
-		Console.println("There are " + supplies.size() + " supplies from the provider");
-		for(SupplyDto p: supplies) {
-			Printer.print(p);
-		}
-	}
+    @Override
+    public void execute() throws Exception {
+        String nif = Console.readString("Please, type Supply nif");
+
+        SuppliesCrudService service;
+        service = Factories.service.forSuppliesCrudService();
+        List<SupplyDto> supplies = service.findByProviderNif(nif);
+
+        Console.println(
+            "There are " + supplies.size() + " supplies from the provider");
+        for (SupplyDto p : supplies) {
+            Printer.print(p);
+        }
+    }
 
 }

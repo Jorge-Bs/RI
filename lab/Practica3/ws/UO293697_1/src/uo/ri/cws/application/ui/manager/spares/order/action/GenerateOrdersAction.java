@@ -11,19 +11,19 @@ import uo.ri.util.menu.Action;
 
 public class GenerateOrdersAction implements Action {
 
-	@Override
-	public void execute() throws Exception {
-		Console.println("New orders are about to be generated");
-		
-		OrdersService service = Factories.service.forOrdersService();
-		
-		List<OrderDto> orders = null;
+    @Override
+    public void execute() throws Exception {
+        Console.println("New orders are about to be generated");
 
-		Console.println( orders.size() + " have been generated.");
-		for(OrderDto order: orders) {
-			Printer.printSummary(order);
-		}
+        OrdersService service = Factories.service.forOrdersService();
 
-	}
+        List<OrderDto> orders = service.generateOrders();
+
+        Console.println(orders.size() + " have been generated.");
+        for (OrderDto order : orders) {
+            Printer.printSummary(order);
+        }
+
+    }
 
 }

@@ -62,7 +62,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new PersistenceException(e);
         }
     }
 
@@ -88,7 +88,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new PersistenceException(e);
         }
     }
 
@@ -119,7 +119,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new PersistenceException(e);
         }
     }
 
@@ -149,7 +149,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new PersistenceException(e);
         }
     }
 
@@ -180,7 +180,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new PersistenceException(e);
         }
     }
 
