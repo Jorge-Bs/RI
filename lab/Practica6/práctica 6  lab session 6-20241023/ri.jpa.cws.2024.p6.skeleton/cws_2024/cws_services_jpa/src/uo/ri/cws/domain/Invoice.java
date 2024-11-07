@@ -64,8 +64,8 @@ public class Invoice {
 			amount=precio*1.18;
 		}
 		vat=amount-precio;
-		Round.twoCents(amount);
-		Round.twoCents(vat);
+		amount=Round.twoCents(amount);
+		vat=Round.twoCents(vat);
 	}
 
 	/**

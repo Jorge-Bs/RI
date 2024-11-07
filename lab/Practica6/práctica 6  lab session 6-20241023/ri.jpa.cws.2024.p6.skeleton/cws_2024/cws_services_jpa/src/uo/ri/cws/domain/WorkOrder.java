@@ -122,9 +122,11 @@ public class WorkOrder {
 	}
 
 	private void computeAmuount() {
+		double amount=0.0;
 		for (Intervention inte : interventions) {
 			amount+=inte.getAmount();
 		}
+		this.amount=amount;
 	}
 
 	/**

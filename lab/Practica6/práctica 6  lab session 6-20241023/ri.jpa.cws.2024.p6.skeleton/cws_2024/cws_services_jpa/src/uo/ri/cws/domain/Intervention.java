@@ -103,11 +103,12 @@ public class Intervention {
 	}
 
 	public Double getAmount() {
-		double price= workOrder.getVehicle().getVehicleType().getPricePerHour()*(minutes/60);
+		double mins = minutes/60.0;
+		double price= workOrder.getVehicle().getVehicleType().getPricePerHour()*mins;
 		for (Substitution substitution : substitutions) {
 			price+= substitution.getAmount();
 		}
-		 return Round.twoCents(price);
+		 return price;
 	}
 	
 	

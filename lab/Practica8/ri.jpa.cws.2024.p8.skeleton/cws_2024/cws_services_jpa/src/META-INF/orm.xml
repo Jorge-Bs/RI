@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd"
+	version="3.1">
+	
+	<!-- Vehicle queries -->
+	<named-query name="Vehicle.findByPlate">
+		<query>select v from Vehicle v where v.plateNumber = ?1</query>
+	</named-query>
+
+	<!-- WorkOrder queries -->
+	<named-query name="WorkOrder.findByIds">
+		<query>select w from WorkOrder w where w.id in ?1</query>
+	</named-query>
+
+	<!-- PaymentMean queries -->
+	<named-query name="PaymentMean.findByInvoiceId">
+		<query>
+			select m
+			from Invoice f
+				join f.workOrders w
+				join w.vehicle.client c
+				join c.paymentMeans m
+			where f.id = ?1
+		</query>
+	</named-query>
+
+	<!-- Mechanic queries -->
+	<named-query name="Mechanic.findByNif">
+		<query>
+			select m
+			from Mechanic m
+			where m.nif = ?1
+		</query>
+	</named-query>
+
+	<!-- Invoice queries -->
+	<named-query name="Invoice.findByNumber">
+		<query>select f from Invoice f where f.number = ?1</query>
+	</named-query>
+
+	<named-query name="Invoice.getNextInvoiceNumber">
+		<!-- 	
+		This breaks if there is none invoice in the database.
+		<query>select max(f.number) + 1 from Invoice f</query>
+		-->
+		<query>
+			select cast( coalesce(max(f.number) + 1, 1L) as bigint ) 
+			from Invoice f
+		</query>
+	</named-query>
+
+<!-- 
+	Use this format if your query has "greater than" (&gt;) numeric comparisons as 
+	the one in this example
+	
+	<named-query name="findItemsOnSaleByCategoryId">
+	<query>
+			<![CDATA[
+			select i 
+			from Item i join i.categories c
+			where c.id = ?2
+				and i.startDate <= ?1
+				and i.endDate >= ?1 
+			]]>
+	</query>
+	</named-query>
+ -->
+<!-- 
+	Supper-Class Mapping
+-->
+
+
+ <mapped-superclass class="uo.ri.cws.domain.base.BaseEntity">
+    <attributes>
+        <id name="id">
+            <column length="36"/>
+        </id>
+        <basic name="version"/>
+    </attributes>
+</mapped-superclass>
+ 
+ <!--
+	Class mapping
+ -->
+
+
+
+ <entity class="uo.ri.cws.domain.Client">
+	<table name="TClients"/>
+	<attributes>
+		<basic name="nif" optional="false">
+			<column unique="true"/>
+		</basic>
+		<basic name="name" optional="false"/>
+		<basic name="surname" optional="false"/>
+		<basic name="email" optional="false"/>
+		<basic name="phone" optional="false"/>		
+		<one-to-many name="vehiculos" mapped-by="client"/>
+		<one-to-many name="paymentMeans" mapped-by="client"/>
+		<embedded name="address"/>
+	</attributes>
+</entity>
+
+<entity class="uo.ri.cws.domain.Intervention">
+    <table name="TInterventions">
+        <unique-constraint>
+			<column-name>workOrder_id</column-name>
+			<column-name>mechanic_id</column-name>
+			<column-name>date</column-name>
+		</unique-constraint> 
+    </table>
+    <attributes>
+        <basic name="date" optional="false"/>
+        <basic name="minutes" optional="false"/>
+        <many-to-one name="workOrder" optional="false"/>
+        <many-to-one name="mechanic" optional="false"/>
+        <one-to-many name="substitutions" mapped-by="intervention"/>
+    </attributes>
+</entity>
+
+
+<entity class="uo.ri.cws.domain.Invoice">
+    <table name="TInvoices"/>
+    <attributes>
+        <basic name="number" optional="false">
+			<column unique="true"/>
+		</basic>
+        <basic name="date" optional="false"/>
+        <basic name="amount" optional="false"/>
+        <basic name="vat" optional="false"/>
+        <basic name="status" optional="false"/>
+        <one-to-many name="workOrders" mapped-by="invoice"/>
+		<one-to-many name="charges" mapped-by="invoice"/>
+    </attributes>
+</entity>
+
+<entity class="uo.ri.cws.domain.Mechanic">
+	<table name="TMechanics"/>
+	<attributes>
+		<basic name="nif" optional="false">
+			<column unique="true"/>
+		</basic>
+		<basic name="name" optional="false"/>
+		<basic name="surname" optional="false"/>
+		<one-to-many name="interventions" mapped-by="mechanic"/>
+		<one-to-many name="assigned" mapped-by="mechanic"/>
+	</attributes>
+</entity>
+
+<entity class="uo.ri.cws.domain.SparePart">
+    <table name="TSpareParts"/>
+    <attributes>
+        <basic name="code" optional="false">
+            <column unique="true"/>
+        </basic>
+        <basic name="description" optional="false"/>
+        <basic name="price" optional="false"/>
+        <one-to-many name="substitutions" mapped-by="sparePart"/>
+    </attributes>
+</entity>
+
+<entity class="uo.ri.cws.domain.Substitution">
+	<table name="TSubstitutions">
+		<unique-constraint>
+			<column-name>intervention_id</column-name>
+			<column-name>sparePart_id</column-name>
+		</unique-constraint>
+	</table>
+	<attributes>
+		<basic name="quantity" optional="false"/>
+		<many-to-one name="intervention"/>
+		<many-to-one name="sparePart"/>
+	</attributes>
+</entity>
+
+
+<entity class="uo.ri.cws.domain.Vehicle">
+	<table name="TVehicles"/>
+	<attributes>
+		<basic name="plateNumber" optional="false">
+			<column unique="true"/>
+		</basic>
+		<basic name="make" optional="false"/>
+		<basic name="model" optional="false"/>
+		
+		<many-to-one name="client"/>
+		<many-to-one name="type"/>
+		<one-to-many name="workOrders" mapped-by="vehicle"/>
+	</attributes>
+</entity>	
+
+<entity class="uo.ri.cws.domain.VehicleType">
+	<table name="TVehicleTypes"/>
+	<attributes>
+		<basic name="name" optional="false">
+			<column unique="true"/>
+		</basic>
+		<basic name="pricePerHour" optional="false"/>
+		<one-to-many name="vehicles" mapped-by="type"/>
+	</attributes>
+</entity>	
+
+<entity class="uo.ri.cws.domain.WorkOrder">
+    <table name="TWorkOrders">
+        <unique-constraint>
+			<column-name>date</column-name>
+			<column-name>vehicle_id</column-name>
+		</unique-constraint>
+    </table>
+    <attributes>
+        <basic name="date" optional="false"/>
+        <basic name="description" optional="false"/>
+        <basic name="amount" optional="false"/>
+        <basic name="state" optional="false"/>
+        <many-to-one name="vehicle"/>
+        <many-to-one name="mechanic"/>
+        <many-to-one name="invoice"/>
+        <one-to-many name="interventions" mapped-by="workOrder"/>
+    </attributes>
+</entity>
+
+<entity class="uo.ri.cws.domain.Charge">
+	<table name="TCharges">
+		<unique-constraint>
+			<column-name>invoice_id</column-name>
+			<column-name>paymentmean_id</column-name>
+		</unique-constraint>
+	</table>
+	<attributes>
+		<basic name="amount" optional="false"/>
+		<many-to-one name="invoice"/>
+		<many-to-one name="paymentMean"/>
+	</attributes>
+</entity>
+
+
+<!-- 
+	Hereditance mapping
+-->
+<entity class="uo.ri.cws.domain.PaymentMean">
+    <table name="TPaymentMeans"/>
+    <inheritance strategy="JOINED"/>
+    <attributes>
+        <basic name="accumulated" optional="false"/>
+        <many-to-one name="client"/>
+		<one-to-many name="charges" mapped-by="paymentMean"/>
+    </attributes>
+</entity>
+
+<entity class="uo.ri.cws.domain.Cash">
+	<table name="TCashes"/>
+</entity>
+
+<entity class="uo.ri.cws.domain.CreditCard">
+	<table name="TCreditCards"/>
+	<attributes>
+		<basic name="number" optional="false">
+			<column unique="true"/>
+		</basic>
+		<basic name="type" optional="false"/>
+		<basic name="validThru" optional="false"/>
+	</attributes>
+</entity>
+
+<entity class="uo.ri.cws.domain.Voucher">
+	<table name="TVouchers"/>
+	<attributes>
+		<basic name="code" optional="false">
+			<column unique="true"/>
+		</basic>
+		<basic name="available" optional="false"/>
+		<basic name="description" optional="false"/>
+	</attributes>
+</entity>
+
+<!-- 
+	Embeddable class mapping
+-->	
+ 
+ 	<embeddable class="uo.ri.cws.domain.Addres">
+ 		<attributes>
+ 			<basic name="street" optional="false"/>
+ 			<basic name="city" optional="false"/>
+ 			<basic name="zipCode" optional="false"/>
+ 		</attributes>
+ 	</embeddable>
+
+</entity-mappings>

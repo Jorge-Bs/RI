@@ -61,7 +61,7 @@ public class Substitution {
 	}
 
 	public double getAmount() {
-		return Round.twoCents(quantity*sparePart.getPrice());
+		return quantity*sparePart.getPrice();
 	}
 
 }
