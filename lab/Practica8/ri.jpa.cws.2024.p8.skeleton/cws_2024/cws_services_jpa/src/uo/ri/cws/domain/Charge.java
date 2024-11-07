@@ -1,6 +1,5 @@
 package uo.ri.cws.domain;
 
-import java.util.Objects;
 
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
@@ -12,6 +11,10 @@ public class Charge extends BaseEntity{
 	// accidental attributes
 	private Invoice invoice;
 	private PaymentMean paymentMean;
+	
+	Charge(){
+		
+	}
 
 	public Charge(Invoice invoice, PaymentMean paymentMean, double amount) {
 		ArgumentChecks.isNotNull(invoice,"invoice is null");

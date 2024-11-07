@@ -3,17 +3,12 @@ package uo.ri.cws.domain;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.*;
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.assertion.StateChecks;
-@Entity
-@Table(name = "TWorkOrder", uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"date","vehicle_id"})
-		})
+
 public class WorkOrder extends BaseEntity{
 	public enum WorkOrderState {
 		OPEN,
@@ -23,16 +18,16 @@ public class WorkOrder extends BaseEntity{
 	}
 
 	// natural attributes
-	@Basic(optional = false)  private LocalDateTime date;
-	@Basic(optional = false)private String description;
-	@Basic(optional = false)private double amount = 0.0;
-	@Basic(optional = false)private WorkOrderState state = WorkOrderState.OPEN;
+	private LocalDateTime date;
+	private String description;
+	private double amount = 0.0;
+	private WorkOrderState state = WorkOrderState.OPEN;
 
 	// accidental attributes
-	@ManyToOne private Vehicle vehicle;
-	@ManyToOne private Mechanic mechanic;
-	@ManyToOne private Invoice invoice;
-	@OneToMany(mappedBy = "workOrder") private Set<Intervention> interventions = new HashSet<>();
+	private Vehicle vehicle;
+	private Mechanic mechanic;
+	private Invoice invoice;
+	private Set<Intervention> interventions = new HashSet<>();
 
 	
 	WorkOrder(){

@@ -1,20 +1,16 @@
 package uo.ri.cws.domain;
 
 
-import java.util.Objects;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+
+
 import uo.ri.util.assertion.ArgumentChecks;
 
-@Entity
-@Table(name = "TVoucher")
+
 public class Voucher extends PaymentMean {
-	@Column(unique =  true) private String code; //clave
-	@Basic(optional = false)private double available = 0.0;
-	@Basic(optional = false)private String description;
+	private String code; //clave
+	private double available = 0.0;
+	private String description;
 
 	
 	 Voucher() {

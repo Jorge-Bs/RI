@@ -1,22 +1,19 @@
 package uo.ri.cws.domain;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.*;
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
-@Entity
-@Table(name = "TVehicleType")
+
 public class VehicleType extends BaseEntity{
 	// natural attributes
-	@Column(unique = true) private String name;
-	@Basic(optional = false) private double pricePerHour;
+	private String name;
+	private double pricePerHour;
 
 	// accidental attributes
-	@OneToMany(mappedBy = "type") private Set<Vehicle> vehicles = new HashSet<>();
+	private Set<Vehicle> vehicles = new HashSet<>();
 
 	
 	VehicleType() {
@@ -30,6 +27,10 @@ public class VehicleType extends BaseEntity{
 		this.pricePerHour = pricePerHour;
 	}
 
+
+	public VehicleType(String name) {
+		this(name,0.0);
+	}
 
 	public String getName() {
 		return name;

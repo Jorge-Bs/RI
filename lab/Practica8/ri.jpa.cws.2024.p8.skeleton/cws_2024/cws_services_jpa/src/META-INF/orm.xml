@@ -87,7 +87,7 @@
 
 
 
- <entity class="uo.ri.cws.domain.Client">
+<entity class="uo.ri.cws.domain.Client">
 	<table name="TClients"/>
 	<attributes>
 		<basic name="nif" optional="false">
@@ -97,7 +97,7 @@
 		<basic name="surname" optional="false"/>
 		<basic name="email" optional="false"/>
 		<basic name="phone" optional="false"/>		
-		<one-to-many name="vehiculos" mapped-by="client"/>
+		<one-to-many name="vehicles" mapped-by="client"/>
 		<one-to-many name="paymentMeans" mapped-by="client"/>
 		<embedded name="address"/>
 	</attributes>
@@ -130,7 +130,7 @@
         <basic name="date" optional="false"/>
         <basic name="amount" optional="false"/>
         <basic name="vat" optional="false"/>
-        <basic name="status" optional="false"/>
+        <basic name="state" optional="false"/>
         <one-to-many name="workOrders" mapped-by="invoice"/>
 		<one-to-many name="charges" mapped-by="invoice"/>
     </attributes>
@@ -186,7 +186,7 @@
 		<basic name="model" optional="false"/>
 		
 		<many-to-one name="client"/>
-		<many-to-one name="type"/>
+		<many-to-one name="vehicleType"/>
 		<one-to-many name="workOrders" mapped-by="vehicle"/>
 	</attributes>
 </entity>	
@@ -198,7 +198,7 @@
 			<column unique="true"/>
 		</basic>
 		<basic name="pricePerHour" optional="false"/>
-		<one-to-many name="vehicles" mapped-by="type"/>
+		<one-to-many name="vehicles" mapped-by="vehicleType"/>
 	</attributes>
 </entity>	
 
@@ -279,7 +279,7 @@
 	Embeddable class mapping
 -->	
  
- 	<embeddable class="uo.ri.cws.domain.Addres">
+ 	<embeddable class="uo.ri.cws.domain.Address">
  		<attributes>
  			<basic name="street" optional="false"/>
  			<basic name="city" optional="false"/>

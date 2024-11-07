@@ -42,6 +42,10 @@ public class Mechanic extends BaseEntity{
 
 
 
+	public Mechanic(String nif) {
+		this(nif,"no-surname","no-name");
+	}
+
 	public Set<WorkOrder> getAssigned() {
 		return new HashSet<>( assigned );
 	}

@@ -1,22 +1,18 @@
 package uo.ri.cws.domain;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.*;
 import uo.ri.cws.domain.base.BaseEntity;
 
-@Entity
-@Table(name = "TPaymentMean")
-@Inheritance(strategy = InheritanceType.JOINED)
+
 public abstract class PaymentMean extends BaseEntity {
 	// natural attributes
-	@Basic(optional = false)private double accumulated = 0.0;
+	private double accumulated = 0.0;
 
 	// accidental attributes
-	@Transient private Client client;
-	@Transient private Set<Charge> charges = new HashSet<>();
+	private Client client;
+	private Set<Charge> charges = new HashSet<>();
 	
 	PaymentMean() {
 	}

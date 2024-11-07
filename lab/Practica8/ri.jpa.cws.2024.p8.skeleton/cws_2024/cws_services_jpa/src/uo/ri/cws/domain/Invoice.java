@@ -3,30 +3,27 @@ package uo.ri.cws.domain;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.*;
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.assertion.StateChecks;
 import uo.ri.util.math.Round;
 
-@Entity
-@Table(name = "TInvoice")
+
 public class Invoice extends BaseEntity{
 	public enum InvoiceState { NOT_YET_PAID, PAID }
 
 	// natural attributes
-	@Column(unique = true) private Long number;
-	@Basic(optional = false) private LocalDate date;
-	@Basic(optional = false) private double amount;
-	@Basic(optional = false) private double vat;
-	@Basic(optional = false) private InvoiceState state = InvoiceState.NOT_YET_PAID;
+	private Long number;
+	private LocalDate date;
+	private double amount;
+	private double vat;
+	private InvoiceState state = InvoiceState.NOT_YET_PAID;
 
 	// accidental attributes
-	@OneToMany(mappedBy = "invoice") private Set<WorkOrder> workOrders = new HashSet<>();
-	@OneToMany(mappedBy="invoice") private Set<Charge> charges = new HashSet<>();
+	private Set<WorkOrder> workOrders = new HashSet<>();
+	private Set<Charge> charges = new HashSet<>();
 
 	Invoice(){
 		
@@ -173,6 +170,10 @@ public class Invoice extends BaseEntity{
 		builder.append(state);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public InvoiceState getState() {
+		return state;
 	}
 
 

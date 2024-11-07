@@ -1,26 +1,18 @@
 package uo.ri.cws.domain;
 
-import java.util.Objects;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
-@Entity
-@Table(name="TSubstitution",uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"intervention_id","sparePart_id"})
-		})
+
 public class Substitution extends BaseEntity{
 	// natural attributes
-	@Basic(optional = false) private int quantity;
+	private int quantity;
 
 	// accidental attributes
-	@ManyToOne private SparePart sparePart;
-	@ManyToOne private Intervention intervention;
+	private SparePart sparePart;
+	Intervention intervention;
 
 	Substitution(){
 		
