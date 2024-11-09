@@ -149,5 +149,41 @@ public class Associations {
             substitution._setSparePart(null);
         }
     }
+	
+	public static class Supplies{
+		public static void link(SparePart sparePart,Supply supply,Provider provider) {
+			supply._setProvider(provider);
+			supply._setSparePart(sparePart);
+			
+			sparePart._getSupplies().add(supply);
+			provider._getSupplies().add(supply);
+		}
+		
+		public static void unlink(Supply supply) {
+			SparePart part = supply.getSparePart();
+			Provider prov = supply.getProvider();
+			
+			part._getSupplies().remove(supply);
+			prov._getSupplies().remove(supply);
+			
+			supply._setProvider(null);
+			supply._setSparePart(null);
+			
+		}
+	}
+	
+	public static class Deliver{
+		public static void link(Provider provider,Order order) {
+			order._setProvider(provider);
+			provider._getOrders().add(order);
+		}
+		
+		public static void unlink(Order order) {
+			Provider pr = order.getProvider();
+			pr._getOrders().remove(order);
+			
+			order._setProvider(null);
+		}
+	}
 
 }

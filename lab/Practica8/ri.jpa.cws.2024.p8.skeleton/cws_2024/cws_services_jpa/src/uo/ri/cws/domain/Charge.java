@@ -27,7 +27,7 @@ public class Charge extends BaseEntity{
 		// store the amount
 		// increment the paymentMean accumulated -> paymentMean.pay( amount )
 		// link invoice, this and paymentMean
-		Associations.Settle.link(invoice, this, paymentMean);
+		//Associations.Settle.link(invoice, this, paymentMean);
 		
 		paymentMean.pay(amount);
 		

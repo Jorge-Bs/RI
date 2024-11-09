@@ -157,7 +157,11 @@
         </basic>
         <basic name="description" optional="false"/>
         <basic name="price" optional="false"/>
+		<basic name="stock" optional="false"/>
+		<basic name="minStock" optional="false"/>
+		<basic name="maxStock" optional="false"/>
         <one-to-many name="substitutions" mapped-by="sparePart"/>
+		<one-to-many name="supplies" mapped-by="sparePart"/>
     </attributes>
 </entity>
 
@@ -235,6 +239,51 @@
 	</attributes>
 </entity>
 
+<entity class="uo.ri.cws.domain.Supply">
+	<table name="TSupplies">
+		<unique-constraint>
+			<column-name>sparePart_id</column-name>
+			<column-name>provider_id</column-name>
+		</unique-constraint>
+	</table>		
+	<attributes>
+		<basic name="deliveryTerm" optional="false"/>
+		<basic name="price" optional="false"/>
+		<many-to-one name="sparePart"/>
+		<many-to-one name="provider"/>
+	</attributes>
+</entity>
+
+<entity class="uo.ri.cws.domain.Provider">
+	<table name="TProviders"/>
+	<attributes>
+		<basic name="nif" optional="false">
+			<column unique="true"/>
+		</basic>
+		<basic name="name" optional="false"/>
+		<basic name="email" optional="false"/>
+		<basic name="phone" optional="false"/>
+		<one-to-many name="supplies" mapped-by="provider"/>
+		<one-to-many name="orders" mapped-by="provider"/>
+	</attributes>
+</entity>
+
+<entity class="uo.ri.cws.domain.Order">
+	<table name="TOrders"/>
+	<attributes>
+		<basic name="code" optional="false">
+			<column unique="true"/>
+		</basic>	
+		<basic name="orderedDate" optional="false"/>
+		<basic name="amount" optional="false"/>
+		<basic name="receptionDate"/>
+		<basic name="state" optional="false"/>
+		<many-to-one name="provider"/>
+		<element-collection name="orderLines">
+			<collection-table name="TOrderLines"/>
+		</element-collection>
+	</attributes>
+</entity>
 
 <!-- 
 	Hereditance mapping
@@ -286,5 +335,13 @@
  			<basic name="zipCode" optional="false"/>
  		</attributes>
  	</embeddable>
+
+	<embeddable class="uo.ri.cws.domain.OrderLine">
+        <attributes>
+            <basic name="quantity" optional="false"/>
+            <basic name="price" optional="false"/>
+            <one-to-one name="sparePart"/>
+        </attributes>
+    </embeddable>
 
 </entity-mappings>
