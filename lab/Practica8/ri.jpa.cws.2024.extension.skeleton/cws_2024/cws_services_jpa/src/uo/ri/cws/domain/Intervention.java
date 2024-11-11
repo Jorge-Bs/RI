@@ -4,33 +4,20 @@ package uo.ri.cws.domain;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-import jakarta.persistence.UniqueConstraint;
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
-@Entity
-@Table(name="TIntervention",uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"workOrder_id","mechanic_id","date"})
-		})
+
 public class Intervention extends BaseEntity{
 	// natural attributes
-	@Column(unique = true) private LocalDateTime date;
-	@Basic(optional = false) private int minutes;
+	private LocalDateTime date;
+	private int minutes;
 
 	// accidental attributes
-	@ManyToOne private WorkOrder workOrder;
-	@ManyToOne private Mechanic mechanic;
-	@OneToMany(mappedBy = "intervention") private Set<Substitution> substitutions = new HashSet<>();
+	private WorkOrder workOrder;
+	private Mechanic mechanic;
+	private Set<Substitution> substitutions = new HashSet<>();
 	
 	Intervention() {
 	}
@@ -85,24 +72,6 @@ public class Intervention extends BaseEntity{
 
 	public Mechanic getMechanic() {
 		return mechanic;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(mechanic, workOrder, date);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Intervention other = (Intervention) obj;
-		return Objects.equals(date, other.date) && Objects.equals(mechanic, other.mechanic)
-				&& Objects.equals(workOrder, other.workOrder);
 	}
 
 	@Override

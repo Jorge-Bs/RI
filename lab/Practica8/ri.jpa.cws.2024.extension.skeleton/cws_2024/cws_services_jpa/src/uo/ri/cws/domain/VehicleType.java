@@ -1,22 +1,19 @@
 package uo.ri.cws.domain;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.*;
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
-@Entity
-@Table(name = "TVehicleType")
+
 public class VehicleType extends BaseEntity{
 	// natural attributes
-	@Column(unique = true) private String name;
-	@Basic(optional = false) private double pricePerHour;
+	private String name;
+	private double pricePerHour;
 
 	// accidental attributes
-	@OneToMany(mappedBy = "type") private Set<Vehicle> vehicles = new HashSet<>();
+	private Set<Vehicle> vehicles = new HashSet<>();
 
 	
 	VehicleType() {
@@ -30,6 +27,10 @@ public class VehicleType extends BaseEntity{
 		this.pricePerHour = pricePerHour;
 	}
 
+
+	public VehicleType(String name) {
+		this(name,0.0);
+	}
 
 	public String getName() {
 		return name;
@@ -60,23 +61,6 @@ public class VehicleType extends BaseEntity{
 		builder.append(pricePerHour);
 		builder.append("]");
 		return builder.toString();
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(name);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		VehicleType other = (VehicleType) obj;
-		return Objects.equals(name, other.name);
 	}
 	
 	

@@ -1,27 +1,24 @@
 package uo.ri.cws.domain;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-import jakarta.persistence.*;
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
-@Entity
-@Table(name="TClient")
+
 public class Client extends BaseEntity{
 	
 	/*Atributos naturales*/
-	@Column(unique = true) private String nif;	//Clave natural
-	@Basic(optional = false) private String name;
-	@Basic(optional = false) private String surname;
-	@Basic(optional = false) private String email;
-	@Basic(optional = false) private String phone;
-	@Embedded private Address address;
+	private String nif;	//Clave natural
+	private String name;
+	private String surname;
+	private String email;
+	private String phone;
+	private Address address;
 	
-	@OneToMany(mappedBy="client") private Set<Vehicle> vehiculos = new HashSet<>();
+	private Set<Vehicle> vehicles = new HashSet<>();
 	
-	@Transient private Set<PaymentMean> paymentMeans = new HashSet<>();
+	private Set<PaymentMean> paymentMeans = new HashSet<>();
 	
 	Client(){
 		
@@ -82,7 +79,7 @@ public class Client extends BaseEntity{
 	}
 	
 	public Set<Vehicle> getVehicles() {
-		return new HashSet<>(vehiculos);
+		return new HashSet<>(vehicles);
 	}
 	
 	
@@ -95,25 +92,9 @@ public class Client extends BaseEntity{
 	}
 
 	Set<Vehicle> _getVehicles() {
-		return vehiculos;
+		return vehicles;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(nif);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Client other = (Client) obj;
-		return Objects.equals(nif, other.nif);
-	}
 
 	@Override
 	public String toString() {

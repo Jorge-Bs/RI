@@ -231,6 +231,8 @@ public class WorkOrder extends BaseEntity{
 		return WorkOrderState.INVOICED.equals(state);
 	}
 	
-	
+	void setState(WorkOrderState state) {
+		this.state=state;
+	}
 
 }

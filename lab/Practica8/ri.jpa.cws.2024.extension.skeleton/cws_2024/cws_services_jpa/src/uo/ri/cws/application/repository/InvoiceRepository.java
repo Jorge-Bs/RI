@@ -1,5 +1,6 @@
 package uo.ri.cws.application.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import uo.ri.cws.domain.Invoice;

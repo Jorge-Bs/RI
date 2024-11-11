@@ -7,8 +7,8 @@ import uo.ri.cws.application.repository.InvoiceRepository;
 import uo.ri.cws.application.repository.MechanicRepository;
 import uo.ri.cws.application.repository.OrderRepository;
 import uo.ri.cws.application.repository.PaymentMeanRepository;
-import uo.ri.cws.application.repository.ProviderRepository;
 import uo.ri.cws.application.repository.PersistenceFactory;
+import uo.ri.cws.application.repository.ProviderRepository;
 import uo.ri.cws.application.repository.SparePartRepository;
 import uo.ri.cws.application.repository.SupplyRepository;
 import uo.ri.cws.application.repository.VehicleRepository;
@@ -63,23 +63,25 @@ public class JpaRepositoryFactory implements PersistenceFactory {
 	}
 
 	@Override
+	public ChargeRepository forCharge() {
+		return new ChargeJpaRepository();
+	}
+
+	@Override
 	public OrderRepository forOrder() {
 		return new OrderJpaRepository();
 	}
 
 	@Override
 	public SupplyRepository forSupply() {
-		return new SupplyJpaRepository();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public ProviderRepository forProvider() {
-		return new ProviderJpaRepository();
-	}
-
-	@Override
-	public ChargeRepository forCharge() {
-		return new ChargeJpaRepository();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

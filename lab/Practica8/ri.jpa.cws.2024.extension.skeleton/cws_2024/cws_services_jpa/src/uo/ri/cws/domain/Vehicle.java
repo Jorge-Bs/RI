@@ -1,28 +1,25 @@
 package uo.ri.cws.domain;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.*;
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
-@Entity
-@Table(name = "TVehicle")
+
 public class Vehicle extends BaseEntity{
 	
-	@Column(unique = true) private String plateNumber;
-	@Basic(optional = false) private String make;
-	@Basic(optional = false) private String model;
+	private String plateNumber;
+	private String make;
+	private String model;
 	
 	//atributo accidental
 	
-	@ManyToOne private Client client;
+	private Client client;
 	
-	@ManyToOne private VehicleType type;
+	private VehicleType vehicleType;
 	
-	@OneToMany(mappedBy = "vehicle") private Set<WorkOrder> workOrders = new HashSet<>();
+	private Set<WorkOrder> workOrders = new HashSet<>();
 	
 	Vehicle(){
 		
@@ -38,6 +35,10 @@ public class Vehicle extends BaseEntity{
 		this.model = model;
 	}
 	
+	public Vehicle(String plateNumber) {
+		this(plateNumber,"no-make","no-model");
+	}
+
 	Set<WorkOrder> _getWorkOrders() {
 		return workOrders;
 	}
@@ -69,36 +70,17 @@ public class Vehicle extends BaseEntity{
 	}
 	
 	void _setVehicleType(VehicleType type) {
-		this.type=type;
+		this.vehicleType=type;
 	}
 
 
 	public VehicleType getVehicleType() {
-		return type;
+		return vehicleType;
 	}
 
 
 	public Client getClient() {
 		return client;
-	}
-
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(plateNumber);
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Vehicle other = (Vehicle) obj;
-		return Objects.equals(plateNumber, other.plateNumber);
 	}
 
 

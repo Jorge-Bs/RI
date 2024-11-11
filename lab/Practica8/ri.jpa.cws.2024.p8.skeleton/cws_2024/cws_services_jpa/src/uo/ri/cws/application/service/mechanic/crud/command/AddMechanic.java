@@ -1,6 +1,5 @@
 package uo.ri.cws.application.service.mechanic.crud.command;
 
-import java.util.Optional;
 
 import uo.ri.conf.Factories;
 import uo.ri.cws.application.repository.MechanicRepository;

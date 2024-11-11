@@ -2,19 +2,12 @@ package uo.ri.cws.domain.base;
 
 import java.util.UUID;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Version;
 
-@MappedSuperclass
 public abstract class BaseEntity {
 
-	@Id
-	@Column(length = 36)
 	private String id = UUID.randomUUID().toString();
 
-	@Version private long version;
+	private long version;
 
 	public BaseEntity() {
 		super();
@@ -26,6 +19,10 @@ public abstract class BaseEntity {
 
 	public long getVersion() {
 		return version;
+	}
+	
+	void setId(String id){
+		this.id=id;
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package uo.ri.cws.domain;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Embeddable;
+import java.util.Objects;
+
 import uo.ri.util.assertion.ArgumentChecks;
 
 /**
@@ -9,11 +9,10 @@ import uo.ri.util.assertion.ArgumentChecks;
  *    - no setters
  *	  - hashcode and equals over all attributes
  */
-@Embeddable
-public class Address {
-	@Basic(optional = false) private String street;
-	@Basic(optional = false) private String city;
-	@Basic(optional = false) private String zipCode;
+public class Address{
+	private String street;
+	private String city;
+	private String zipCode;
 	
 	Address(){
 		
@@ -44,8 +43,34 @@ public class Address {
 	public String getZipCode() {
 		return zipCode;
 	}
-	
-	
 
-	
+
+	@Override
+	public String toString() {
+		return "Address [street=" + street 
+				+ ", city=" + city 
+				+ ", zipCode=" + zipCode 
+				+ "]";
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(city, street, zipCode);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Address other = (Address) obj;
+		return Objects.equals(city, other.city) && Objects.equals(street, other.street)
+				&& Objects.equals(zipCode, other.zipCode);
+	}
+
 }

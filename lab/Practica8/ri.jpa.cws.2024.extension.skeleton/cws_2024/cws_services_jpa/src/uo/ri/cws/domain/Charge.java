@@ -1,16 +1,20 @@
 package uo.ri.cws.domain;
 
-import java.util.Objects;
 
+import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
-public class Charge {
+public class Charge extends BaseEntity{
 	// natural attributes
 	private double amount = 0.0;
 
 	// accidental attributes
 	private Invoice invoice;
 	private PaymentMean paymentMean;
+	
+	Charge(){
+		
+	}
 
 	public Charge(Invoice invoice, PaymentMean paymentMean, double amount) {
 		ArgumentChecks.isNotNull(invoice,"invoice is null");
@@ -23,7 +27,7 @@ public class Charge {
 		// store the amount
 		// increment the paymentMean accumulated -> paymentMean.pay( amount )
 		// link invoice, this and paymentMean
-		Associations.Settle.link(invoice, this, paymentMean);
+		//Associations.Settle.link(invoice, this, paymentMean);
 		
 		paymentMean.pay(amount);
 		
@@ -63,23 +67,6 @@ public class Charge {
 	}
 	
 	
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(invoice, paymentMean);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Charge other = (Charge) obj;
-		return Objects.equals(invoice, other.invoice) && Objects.equals(paymentMean, other.paymentMean);
-	}
 
 	/**
 	 * Unlinks this charge and restores the accumulated to the payment mean

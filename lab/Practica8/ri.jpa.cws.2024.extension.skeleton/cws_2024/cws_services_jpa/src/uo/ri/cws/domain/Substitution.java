@@ -1,26 +1,18 @@
 package uo.ri.cws.domain;
 
-import java.util.Objects;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
-@Entity
-@Table(name="TSubstitution",uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"intervention_id","sparePart_id"})
-		})
+
 public class Substitution extends BaseEntity{
 	// natural attributes
-	@Basic(optional = false) private int quantity;
+	private int quantity;
 
 	// accidental attributes
-	@ManyToOne private SparePart sparePart;
-	@ManyToOne private Intervention intervention;
+	private SparePart sparePart;
+	Intervention intervention;
 
 	Substitution(){
 		
@@ -35,22 +27,6 @@ public class Substitution extends BaseEntity{
 		Associations.Substitute.link(sparePart, this, intervention);
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(intervention, sparePart);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Substitution other = (Substitution) obj;
-		return Objects.equals(intervention, other.intervention) && Objects.equals(sparePart, other.sparePart);
-	}
 
 	public int getQuantity() {
 		return quantity;
