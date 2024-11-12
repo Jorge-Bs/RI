@@ -96,6 +96,41 @@
 			where m.nif = ?1
 		</query>
 	</named-query>
+	
+	<!--SparePart queries-->
+	<named-query name="SparePart.findByCode">
+		<query>
+			select s
+			from SparePart s
+			where s.code = ?1
+		</query>
+	</named-query>
+	
+	<!--Supply queries-->
+	<named-query name="Supply.findByCodeAndNif">
+		<query>
+			select s
+			from Supply s
+			where s.sparePart.code = ?1
+				and s.provider.nif = ?2		
+		</query>
+	</named-query>
+	
+	<named-query name="Supply.findByProviderNif">
+		<query>
+			select s
+			from Supply s
+			where s.provider.nif = ?1		
+		</query>
+	</named-query>
+	
+	<named-query name="Supply.findBySparePartCode">
+		<query>
+			select s
+			from Supply s
+			where s.sparePart.code = ?1	
+		</query>
+	</named-query>
 
 	<!-- Invoice queries -->
 	<named-query name="Invoice.findByNumber">
@@ -108,7 +143,7 @@
 		<query>select max(f.number) + 1 from Invoice f</query>
 		-->
 		<query>
-			select cast( coalesce(max(f.number) + 1, 1L) as bigint ) 
+			select cast( coalesce(max(f.number) + 1, 1L) as bigint ) <!--bigint por defecto-->
 			from Invoice f
 		</query>
 	</named-query>

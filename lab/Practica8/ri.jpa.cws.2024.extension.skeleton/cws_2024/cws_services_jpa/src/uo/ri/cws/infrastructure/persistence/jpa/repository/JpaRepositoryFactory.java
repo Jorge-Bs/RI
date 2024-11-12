@@ -74,8 +74,7 @@ public class JpaRepositoryFactory implements PersistenceFactory {
 
 	@Override
 	public SupplyRepository forSupply() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SupplyJpaRepository();
 	}
 
 	@Override

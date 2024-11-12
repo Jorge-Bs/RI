@@ -7,6 +7,7 @@ import uo.ri.conf.Factories;
 import uo.ri.cws.application.service.spare.OrdersService;
 import uo.ri.cws.application.service.spare.order.command.FindByCode;
 import uo.ri.cws.application.service.spare.order.command.FindByProviderNif;
+import uo.ri.cws.application.service.spare.order.command.Receive;
 import uo.ri.cws.application.util.command.CommandExecutor;
 import uo.ri.util.exception.BusinessException;
 
@@ -32,8 +33,7 @@ public class OrdersServiceImpl implements OrdersService {
 
 	@Override
 	public OrderDto receive(String code) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		return executor.execute(new Receive(code));
 	}
 
 }

@@ -57,9 +57,13 @@ public class Supply extends BaseEntity{
 	public String toString() {
 		return "Supply [deliveryTerm=" + deliveryTerm + ", price=" + price + "]";
 	}
-	
-	
-	
-	
+
+	public void setDeliveryTerm(int deliveryTerm) {
+		this.deliveryTerm = deliveryTerm;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
 
 }

@@ -6,10 +6,11 @@
 
     <persistence-unit name="carworkshop">
     	
-        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		
+        
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<!--
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		
 		-->
         <mapping-file>META-INF/orm.xml</mapping-file>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
@@ -37,7 +38,7 @@
     		<property name="hibernate.cache.use_query_cache" value="false"/>
     		-->
     		
-    		<!-- 
+    		 <!--
 			<property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.highlight_sql" value="true" />
