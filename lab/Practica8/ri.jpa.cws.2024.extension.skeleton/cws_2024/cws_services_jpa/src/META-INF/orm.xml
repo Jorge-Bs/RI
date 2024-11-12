@@ -52,6 +52,41 @@
 			where f.id = ?1
 		</query>
 	</named-query>
+	
+	<!-- Provider queries -->
+	<named-query name="Provider.finByNif">
+		<query>
+			select p
+			from Provider p
+			where p.nif = ?1
+		</query>
+	</named-query>
+	
+	<named-query name="Provider.finByName">
+		<query>
+			select p
+			from Provider p
+			where p.name = ?1
+		</query>
+	</named-query>
+	
+	<named-query name="Provider.findByNameMailPhone">
+		<query>
+			select p
+			from Provider p
+			where p.name = ?1 
+				and p.email = ?2
+				and p.phone = ?3
+		</query>
+	</named-query>
+	
+	<named-query name="Provider.findBySparePartCode">
+		<query>
+			select s.provider
+			from Supply s
+			where s.sparePart.code = ?1
+		</query>
+	</named-query>
 
 	<!-- Mechanic queries -->
 	<named-query name="Mechanic.findByNif">
@@ -105,7 +140,7 @@
         <id name="id">
             <column length="36"/>
         </id>
-        <basic name="version"  access="FIELD"/>
+        <version name="version"  access="FIELD"/>
     </attributes>
 </mapped-superclass>
  

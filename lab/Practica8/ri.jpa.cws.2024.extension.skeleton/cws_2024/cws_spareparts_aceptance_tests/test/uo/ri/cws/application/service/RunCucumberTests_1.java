@@ -10,8 +10,8 @@ import io.cucumber.junit.platform.engine.Constants;
 //@SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature")
 //@SelectClasspathResource("uo/ri/cws/application/service/mechanic") // Pasa
 //@SelectClasspathResource("uo/ri/cws/application/service/invoice") //Pasa
-//@SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature")
-@SelectClasspathResource("uo/ri/cws/application/service/providers")
+@SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature")
+//@SelectClasspathResource("uo/ri/cws/application/service/providers") //Pasa
 //@SelectClasspathResource("uo/ri/cws/application/service/supplies")
 //@SelectClasspathResource("uo/ri/cws/application/service/orders/FindByProviderNif.feature") //Pasa
 //@SelectClasspathResource("uo/ri/cws/application/service/orders/FindDetailByCode.feature") //Pasa

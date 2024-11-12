@@ -74,6 +74,21 @@ public class Provider extends BaseEntity{
 	public String toString() {
 		return "Provider [nif=" + nif + ", name=" + name + ", phone=" + phone + ", email=" + email + "]";
 	}
+
+
+	public void setName(String name) {
+		this.name=name;
+	}
+
+
+	public void setEmail(String email) {
+		this.email=email;
+	}
+
+
+	public void setPhone(String phone) {
+		this.phone=phone;
+	}
 	
 	
 	

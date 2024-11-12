@@ -80,8 +80,7 @@ public class JpaRepositoryFactory implements PersistenceFactory {
 
 	@Override
 	public ProviderRepository forProvider() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ProviderJpaRepository();
 	}
 
 }
