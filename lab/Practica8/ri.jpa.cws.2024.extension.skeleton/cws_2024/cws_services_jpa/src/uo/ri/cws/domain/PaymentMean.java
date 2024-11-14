@@ -5,46 +5,42 @@ import java.util.Set;
 
 import uo.ri.cws.domain.base.BaseEntity;
 
-
 public abstract class PaymentMean extends BaseEntity {
-	// natural attributes
-	private double accumulated = 0.0;
 
-	// accidental attributes
-	private Client client;
-	private Set<Charge> charges = new HashSet<>();
-	
-	PaymentMean() {
-	}
+    private double accumulated = 0.0;
 
-	public double getAccumulated() {
-		return accumulated;
-	}
+    private Client client;
+    private Set<Charge> charges = new HashSet<>();
 
-	public Client getClient() {
-		return client;
-	}
+    PaymentMean() {
+    }
 
-	public abstract boolean canPay(Double amount);
+    public double getAccumulated() {
+        return accumulated;
+    }
 
-	public void pay(double importe) {
-		if(canPay(importe)) {
-			this.accumulated += importe;
-		}
-	}
+    public Client getClient() {
+        return client;
+    }
 
-	void _setClient(Client client) {
-		this.client = client;
-	}
+    public abstract boolean canPay(Double amount);
 
-	public Set<Charge> getCharges() {
-		return new HashSet<>( charges );
-	}
+    public void pay(double importe) {
+        if (canPay(importe)) {
+            this.accumulated += importe;
+        }
+    }
 
-	Set<Charge> _getCharges() {
-		return charges;
-	}
-	
-	
+    void _setClient(Client client) {
+        this.client = client;
+    }
+
+    public Set<Charge> getCharges() {
+        return new HashSet<>(charges);
+    }
+
+    Set<Charge> _getCharges() {
+        return charges;
+    }
 
 }

@@ -7,7 +7,7 @@ import org.junit.platform.suite.api.Suite;
 import io.cucumber.junit.platform.engine.Constants;
 
 @Suite
-@SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature") //Pasa
+//@SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature") //Pasa
 @SelectClasspathResource("uo/ri/cws/application/service/mechanic") // Pasa
 @SelectClasspathResource("uo/ri/cws/application/service/invoice") //Pasa
 @SelectClasspathResource("uo/ri/cws/application/service/orders/Reception.feature") //Pasa

@@ -1,97 +1,88 @@
 package uo.ri.cws.domain;
 
-
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Set;
+
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
+public class Intervention extends BaseEntity {
+    private LocalDateTime date;
+    private int minutes;
 
-public class Intervention extends BaseEntity{
-	// natural attributes
-	private LocalDateTime date;
-	private int minutes;
+    private WorkOrder workOrder;
+    private Mechanic mechanic;
+    private Set<Substitution> substitutions = new HashSet<>();
 
-	// accidental attributes
-	private WorkOrder workOrder;
-	private Mechanic mechanic;
-	private Set<Substitution> substitutions = new HashSet<>();
-	
-	Intervention() {
-	}
+    Intervention() {
+    }
 
-	public Intervention(Mechanic mechanic, WorkOrder workOrder, int min) {
-		this(mechanic,workOrder,LocalDateTime.now(),min);
-	}
-	
-	public Intervention(Mechanic mechanic, WorkOrder workOrder,LocalDateTime date, int min) {
-		ArgumentChecks.isNotNull(mechanic, "invalid mechanic");
-		ArgumentChecks.isNotNull(workOrder, "invalid workOrder");
-		ArgumentChecks.isNotNull(date, "invalid min");
-		ArgumentChecks.isTrue(min>=0,"invalid price");
-		
-		
-		Associations.Intervene.link(workOrder, this, mechanic);
-		
-		this.minutes=min;
-		this.date=date.truncatedTo(ChronoUnit.MILLIS);
+    public Intervention(Mechanic mechanic, WorkOrder workOrder, int min) {
+        this(mechanic, workOrder, LocalDateTime.now(), min);
+    }
 
-	}
+    public Intervention(Mechanic mechanic, WorkOrder workOrder,
+        LocalDateTime date, int min) {
+        ArgumentChecks.isNotNull(mechanic, "invalid mechanic");
+        ArgumentChecks.isNotNull(workOrder, "invalid workOrder");
+        ArgumentChecks.isNotNull(date, "invalid min");
+        ArgumentChecks.isTrue(min >= 0, "invalid price");
 
-	void _setWorkOrder(WorkOrder workOrder) {
-		this.workOrder = workOrder;
-	}
+        Associations.Intervene.link(workOrder, this, mechanic);
 
-	void _setMechanic(Mechanic mechanic) {
-		this.mechanic = mechanic;
-	}
+        this.minutes = min;
+        this.date = date.truncatedTo(ChronoUnit.MILLIS);
 
-	public Set<Substitution> getSubstitutions() {
-		return new HashSet<>( substitutions );
-	}
+    }
 
-	Set<Substitution> _getSubstitutions() {
-		return substitutions;
-	}
-	
-	
+    void _setWorkOrder(WorkOrder workOrder) {
+        this.workOrder = workOrder;
+    }
 
-	public LocalDateTime getDate() {
-		return date;
-	}
+    void _setMechanic(Mechanic mechanic) {
+        this.mechanic = mechanic;
+    }
 
-	public int getMinutes() {
-		return minutes;
-	}
+    public Set<Substitution> getSubstitutions() {
+        return new HashSet<>(substitutions);
+    }
 
-	public WorkOrder getWorkOrder() {
-		return workOrder;
-	}
+    Set<Substitution> _getSubstitutions() {
+        return substitutions;
+    }
 
-	public Mechanic getMechanic() {
-		return mechanic;
-	}
+    public LocalDateTime getDate() {
+        return date;
+    }
 
-	@Override
-	public String toString() {
-		return "Intervention [date=" + date 
-				+ ", minutes=" + minutes 
-				+ ", workOrder=" + workOrder 
-				+ ", mechanic="+ mechanic 
-				+ "]";
-	}
+    public int getMinutes() {
+        return minutes;
+    }
 
-	public Double getAmount() {
-		double mins = minutes/60.0;
-		double price= workOrder.getVehicle().getVehicleType().getPricePerHour()*mins;
-		for (Substitution substitution : substitutions) {
-			price+= substitution.getAmount();
-		}
-		 return price;
-	}
-	
-	
+    public WorkOrder getWorkOrder() {
+        return workOrder;
+    }
+
+    public Mechanic getMechanic() {
+        return mechanic;
+    }
+
+    @Override
+    public String toString() {
+        return "Intervention [date=" + date + ", minutes=" + minutes
+            + ", workOrder=" + workOrder + ", mechanic=" + mechanic + "]";
+    }
+
+    public Double getAmount() {
+        double mins = minutes / 60.0;
+        double price = workOrder.getVehicle().getVehicleType().getPricePerHour()
+            * mins;
+        for (Substitution substitution : substitutions) {
+            price += substitution.getAmount();
+        }
+        return price;
+    }
 
 }

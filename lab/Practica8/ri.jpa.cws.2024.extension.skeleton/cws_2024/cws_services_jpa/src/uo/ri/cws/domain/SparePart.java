@@ -3,137 +3,129 @@ package uo.ri.cws.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import uo.ri.cws.domain.Associations.Supplies;
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
+public class SparePart extends BaseEntity {
 
-public class SparePart extends BaseEntity{
-	// natural attributes
-	private String code;
-	private String description;
-	private double price;
-	
-	private int stock;
-	private int minStock;
-	private int maxStock;
+    private String code;
+    private String description;
+    private double price;
 
-	// accidental attributes
-	private Set<Substitution> substitutions = new HashSet<>();
-	
-	private Set<Supply> supplies = new HashSet<>();
+    private int stock;
+    private int minStock;
+    private int maxStock;
 
-	
-	SparePart() {}
+    private Set<Substitution> substitutions = new HashSet<>();
 
-	public SparePart(String code, String description, double price) {
-		this(code,description,price,0,0,0);
+    private Set<Supply> supplies = new HashSet<>();
 
-	}
-	
-	public SparePart(String code, String description, double price,int stock,int minStock,int maxStock) {
-		ArgumentChecks.isNotEmpty(code, "invalid code");
-		ArgumentChecks.isNotEmpty(description, "invalid description");
-		ArgumentChecks.isTrue(price>=0.0, "invalid price");
-		
-		ArgumentChecks.isTrue(stock>=0,"invalid stock");
-		ArgumentChecks.isTrue(minStock>=0, "invalid minStock");
-		ArgumentChecks.isTrue(maxStock>=0, "invalid maxStock");
-		
-		this.code = code;
-		this.description = description;
-		this.price = price;
-		this.stock=stock;
-		this.minStock=minStock;
-		this.maxStock=maxStock;
+    SparePart() {
+    }
 
-	}
+    public SparePart(String code, String description, double price) {
+        this(code, description, price, 0, 0, 0);
 
-	Set<Supply> _getSupplies(){
-		return supplies;
-	}
-	
-	public Set<Supply> getSupplies(){
-		return new HashSet<>(supplies);
-	}
+    }
 
-	public SparePart(String code) {
-		this(code,"no-description",0.0);
-	}
+    public SparePart(String code, String description, double price, int stock,
+        int minStock, int maxStock) {
+        ArgumentChecks.isNotEmpty(code, "invalid code");
+        ArgumentChecks.isNotEmpty(description, "invalid description");
+        ArgumentChecks.isTrue(price >= 0.0, "invalid price");
 
-	public Set<Substitution> getSubstitutions() {
-		return new HashSet<>( substitutions );
-	}
+        ArgumentChecks.isTrue(stock >= 0, "invalid stock");
+        ArgumentChecks.isTrue(minStock >= 0, "invalid minStock");
+        ArgumentChecks.isTrue(maxStock >= 0, "invalid maxStock");
 
-	public String getCode() {
-		return code;
-	}
+        this.code = code;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.minStock = minStock;
+        this.maxStock = maxStock;
 
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
+    }
 
-	public void setMinStock(int minStock) {
-		this.minStock = minStock;
-	}
+    Set<Supply> _getSupplies() {
+        return supplies;
+    }
 
-	public void setMaxStock(int maxStock) {
-		this.maxStock = maxStock;
-	}
+    public Set<Supply> getSupplies() {
+        return new HashSet<>(supplies);
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public SparePart(String code) {
+        this(code, "no-description", 0.0);
+    }
 
+    public Set<Substitution> getSubstitutions() {
+        return new HashSet<>(substitutions);
+    }
 
+    public String getCode() {
+        return code;
+    }
 
-	public double getPrice() {
-		return price;
-	}
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
+    public void setMinStock(int minStock) {
+        this.minStock = minStock;
+    }
 
+    public void setMaxStock(int maxStock) {
+        this.maxStock = maxStock;
+    }
 
-	Set<Substitution> _getSubstitutions() {
-		return substitutions;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public int getStock() {
-		return stock;
-	}
+    public double getPrice() {
+        return price;
+    }
 
-	public int getMinStock() {
-		return minStock;
-	}
+    Set<Substitution> _getSubstitutions() {
+        return substitutions;
+    }
 
-	public int getMaxStock() {
-		return maxStock;
-	}
+    public int getStock() {
+        return stock;
+    }
 
-	public int getQuantityToOrder() {
-		int value = getMaxStock()-getStock();
-		if(isUnderStock()) {
-			return value >0 ? value:0;
-		}
-		return 0;
-	}
-	
-	public void updatePriceAndStock(double price,int cantidad) {
-		ArgumentChecks.isTrue(price>=0.0,"invalid price");
-		ArgumentChecks.isTrue(cantidad>0,"invalid stock");
-		this.price = (this.price*this.stock + price*cantidad*1.2); 
-		this.stock+=cantidad;
-		this.price /= stock;
-	}
-	
-	public boolean isUnderStock() {
-		return getStock()<getMinStock();
-	}
-	
-	
+    public int getMinStock() {
+        return minStock;
+    }
 
+    public int getMaxStock() {
+        return maxStock;
+    }
 
-	public int getTotalUnitsSold() {
-		return substitutions.stream().mapToInt(substitution->substitution.getQuantity()).sum();
-	}
+    public int getQuantityToOrder() {
+        int value = getMaxStock() - getStock();
+        if (isUnderStock()) {
+            return value > 0 ? value : 0;
+        }
+        return 0;
+    }
+
+    public void updatePriceAndStock(double price, int cantidad) {
+        ArgumentChecks.isTrue(price >= 0.0, "invalid price");
+        ArgumentChecks.isTrue(cantidad > 0, "invalid stock");
+        this.price = (this.price * this.stock + price * cantidad * 1.2);
+        this.stock += cantidad;
+        this.price /= stock;
+    }
+
+    public boolean isUnderStock() {
+        return getStock() < getMinStock();
+    }
+
+    public int getTotalUnitsSold() {
+        return substitutions.stream()
+            .mapToInt(substitution -> substitution.getQuantity()).sum();
+    }
 
 }

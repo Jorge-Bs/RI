@@ -2,7 +2,6 @@ package uo.ri.cws.infrastructure.persistence.jpa.repository;
 
 import java.util.Optional;
 
-import jakarta.persistence.EntityManager;
 import uo.ri.cws.application.repository.MechanicRepository;
 import uo.ri.cws.domain.Mechanic;
 import uo.ri.cws.infrastructure.persistence.jpa.util.BaseJpaRepository;

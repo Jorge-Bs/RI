@@ -6,100 +6,84 @@ import java.util.Set;
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
+public class Vehicle extends BaseEntity {
 
-public class Vehicle extends BaseEntity{
-	
-	private String plateNumber;
-	private String make;
-	private String model;
-	
-	//atributo accidental
-	
-	private Client client;
-	
-	private VehicleType vehicleType;
-	
-	private Set<WorkOrder> workOrders = new HashSet<>();
-	
-	Vehicle(){
-		
-	}
-	
-	public Vehicle(String plateNumber, String make, String model) {
-		ArgumentChecks.isNotBlank(plateNumber, "invalid plate");
-		ArgumentChecks.isNotBlank(make, "invalid make");
-		ArgumentChecks.isNotBlank(model, "invalid model");
-		
-		this.plateNumber = plateNumber;
-		this.make = make;
-		this.model = model;
-	}
-	
-	public Vehicle(String plateNumber) {
-		this(plateNumber,"no-make","no-model");
-	}
+    private String plateNumber;
+    private String make;
+    private String model;
 
-	Set<WorkOrder> _getWorkOrders() {
-		return workOrders;
-	}
-	
+    private Client client;
 
-	public Set<WorkOrder> getWorkOrders() {
-		return new HashSet<>(workOrders);
-	}
+    private VehicleType vehicleType;
 
+    private Set<WorkOrder> workOrders = new HashSet<>();
 
+    Vehicle() {
 
-	public String getPlateNumber() {
-		return plateNumber;
-	}
+    }
 
+    public Vehicle(String plateNumber, String make, String model) {
+        ArgumentChecks.isNotBlank(plateNumber, "invalid plate");
+        ArgumentChecks.isNotBlank(make, "invalid make");
+        ArgumentChecks.isNotBlank(model, "invalid model");
 
-	public String getMake() {
-		return make;
-	}
+        this.plateNumber = plateNumber;
+        this.make = make;
+        this.model = model;
+    }
 
+    public Vehicle(String plateNumber) {
+        this(plateNumber, "no-make", "no-model");
+    }
 
-	public String getModel() {
-		return model;
-	}
-	
-	void _setClient(Client client) {
-		this.client=client;
-		
-	}
-	
-	void _setVehicleType(VehicleType type) {
-		this.vehicleType=type;
-	}
+    Set<WorkOrder> _getWorkOrders() {
+        return workOrders;
+    }
 
+    public Set<WorkOrder> getWorkOrders() {
+        return new HashSet<>(workOrders);
+    }
 
-	public VehicleType getVehicleType() {
-		return vehicleType;
-	}
+    public String getPlateNumber() {
+        return plateNumber;
+    }
 
+    public String getMake() {
+        return make;
+    }
 
-	public Client getClient() {
-		return client;
-	}
+    public String getModel() {
+        return model;
+    }
 
+    void _setClient(Client client) {
+        this.client = client;
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Vehicle [plateNumber=");
-		builder.append(plateNumber);
-		builder.append(", make=");
-		builder.append(make);
-		builder.append(", model=");
-		builder.append(model);
-		builder.append("]");
-		return builder.toString();
-	}
+    }
 
+    void _setVehicleType(VehicleType type) {
+        this.vehicleType = type;
+    }
 
-	
-	
-	
+    public VehicleType getVehicleType() {
+        return vehicleType;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Vehicle [plateNumber=");
+        builder.append(plateNumber);
+        builder.append(", make=");
+        builder.append(make);
+        builder.append(", model=");
+        builder.append(model);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

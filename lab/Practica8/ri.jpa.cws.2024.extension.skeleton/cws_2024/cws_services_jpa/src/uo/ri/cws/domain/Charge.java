@@ -1,81 +1,67 @@
 package uo.ri.cws.domain;
 
-
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
-public class Charge extends BaseEntity{
-	// natural attributes
-	private double amount = 0.0;
+public class Charge extends BaseEntity {
+    private double amount = 0.0;
 
-	// accidental attributes
-	private Invoice invoice;
-	private PaymentMean paymentMean;
-	
-	Charge(){
-		
-	}
+    private Invoice invoice;
+    private PaymentMean paymentMean;
 
-	public Charge(Invoice invoice, PaymentMean paymentMean, double amount) {
-		ArgumentChecks.isNotNull(invoice,"invoice is null");
-		ArgumentChecks.isNotNull(paymentMean,"payment is null");
-		ArgumentChecks.isTrue(amount>=0,"can't be negative");
-		
-		Associations.Settle.link(invoice, this, paymentMean);
-		
-		this.amount = amount;
-		// store the amount
-		// increment the paymentMean accumulated -> paymentMean.pay( amount )
-		// link invoice, this and paymentMean
-		//Associations.Settle.link(invoice, this, paymentMean);
-		
-		paymentMean.pay(amount);
-		
-	}
-	
-	void _setInvoice(Invoice invoice) {
-		this.invoice=invoice;
-	}
-	
-	void _setPaymentMean(PaymentMean payment) {
-		this.paymentMean=payment;
-	}
+    Charge() {
 
-	public double getAmount() {
-		return amount;
-	}
+    }
 
+    public Charge(Invoice invoice, PaymentMean paymentMean, double amount) {
+        ArgumentChecks.isNotNull(invoice, "invoice is null");
+        ArgumentChecks.isNotNull(paymentMean, "payment is null");
+        ArgumentChecks.isTrue(amount >= 0, "can't be negative");
 
+        Associations.Settle.link(invoice, this, paymentMean);
 
-	public Invoice getInvoice() {
-		return invoice;
-	}
+        this.amount = amount;
 
+        paymentMean.pay(amount);
 
+    }
 
-	public PaymentMean getPaymentMean() {
-		return paymentMean;
-	}
+    void _setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
 
+    void _setPaymentMean(PaymentMean payment) {
+        this.paymentMean = payment;
+    }
 
-	@Override
-	public String toString() {
-		return "Charge [amount=" + amount 
-				+ ", invoice=" + invoice 
-				+ ", paymentMean=" + paymentMean 
-				+"]";
-	}
-	
-	
+    public double getAmount() {
+        return amount;
+    }
 
-	/**
-	 * Unlinks this charge and restores the accumulated to the payment mean
-	 * @throws IllegalStateException if the invoice is already settled
-	 */
-	public void rewind() {
-		// asserts the invoice is not in PAID status
-		// decrements the payment mean accumulated ( paymentMean.pay( -amount) )
-		// unlinks invoice, this and paymentMean
-	}
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public PaymentMean getPaymentMean() {
+        return paymentMean;
+    }
+
+    @Override
+    public String toString() {
+        return "Charge [amount=" + amount + ", invoice=" + invoice
+            + ", paymentMean=" + paymentMean + "]";
+    }
+
+    /**
+     * Unlinks this charge and restores the accumulated to the payment mean
+     * 
+     * @throws IllegalStateException if the invoice is already settled
+     */
+    public void rewind() {
+        // TODO
+        // asserts the invoice is not in PAID status
+        // decrements the payment mean accumulated ( paymentMean.pay( -amount) )
+        // unlinks invoice, this and paymentMean
+    }
 
 }

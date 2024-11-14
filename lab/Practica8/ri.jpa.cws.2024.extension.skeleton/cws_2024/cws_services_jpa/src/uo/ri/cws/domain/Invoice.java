@@ -10,174 +10,171 @@ import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.assertion.StateChecks;
 import uo.ri.util.math.Round;
 
+public class Invoice extends BaseEntity {
+    public enum InvoiceState {
+        NOT_YET_PAID, PAID
+    }
 
-public class Invoice extends BaseEntity{
-	public enum InvoiceState { NOT_YET_PAID, PAID }
+    private Long number;
+    private LocalDate date;
+    private double amount;
+    private double vat;
+    private InvoiceState state = InvoiceState.NOT_YET_PAID;
 
-	// natural attributes
-	private Long number;
-	private LocalDate date;
-	private double amount;
-	private double vat;
-	private InvoiceState state = InvoiceState.NOT_YET_PAID;
+    private Set<WorkOrder> workOrders = new HashSet<>();
+    private Set<Charge> charges = new HashSet<>();
 
-	// accidental attributes
-	private Set<WorkOrder> workOrders = new HashSet<>();
-	private Set<Charge> charges = new HashSet<>();
+    Invoice() {
 
-	Invoice(){
-		
-	}
-	
-	public Invoice(Long number) {
-		this(number,LocalDate.now(),List.of());
-	}
+    }
 
-	public Invoice(Long number, LocalDate date) {
-		this(number,date,List.of());
-	}
+    public Invoice(Long number) {
+        this(number, LocalDate.now(), List.of());
+    }
 
-	public Invoice(Long number, List<WorkOrder> workOrders) {
-		this(number, LocalDate.now(), workOrders);
-	}
+    public Invoice(Long number, LocalDate date) {
+        this(number, date, List.of());
+    }
 
-	public Invoice(Long number, LocalDate date, List<WorkOrder> workOrders) {
-		ArgumentChecks.isNotNull(number, "invalid number");
-		ArgumentChecks.isTrue(number>=0,"precio invalido");
-		ArgumentChecks.isNotNull(date, "invalid date");
-		ArgumentChecks.isNotNull(workOrders, "invalid workOrders");
-		
-		this.number=number;
-		this.date=date;
-		workOrders.forEach(t->addWorkOrder(t));
-	}
+    public Invoice(Long number, List<WorkOrder> workOrders) {
+        this(number, LocalDate.now(), workOrders);
+    }
 
-	/**
-	 * Computes amount and vat (vat depends on the date)
-	 */
-	private void computeAmount() {
-		double precio=0;
-		for (WorkOrder order : workOrders) {
-			precio+=order.getAmount();
-		}
-		LocalDate date = LocalDate.of(2012, 7, 1);
-		if(this.date.isAfter(date)) {
-			 amount=precio*1.21;
-		}else {
-			amount=precio*1.18;
-		}
-		vat=amount-precio;
-		amount=Round.twoCents(amount);
-		vat=Round.twoCents(vat);
-	}
+    public Invoice(Long number, LocalDate date, List<WorkOrder> workOrders) {
+        ArgumentChecks.isNotNull(number, "invalid number");
+        ArgumentChecks.isTrue(number >= 0, "precio invalido");
+        ArgumentChecks.isNotNull(date, "invalid date");
+        ArgumentChecks.isNotNull(workOrders, "invalid workOrders");
 
-	/**
-	 * Adds (double links) the workOrder to the invoice and updates the amount and vat
-	 * @param workOrder
-	 * @see UML_State diagrams on the problem statement document
-	 * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
-	 */
-	public void addWorkOrder(WorkOrder workOrder) {
-		StateChecks.isTrue(isNotSettled(),"invoice is settled");
-		
-		Associations.Bill.link(this, workOrder);
-		computeAmount();
-		workOrder.markAsInvoiced();
-	}
+        this.number = number;
+        this.date = date;
+        workOrders.forEach(t -> addWorkOrder(t));
+    }
 
-	/**
-	 * Removes a work order from the invoice and recomputes amount and vat
-	 * @param workOrder
-	 * @see UML_State diagrams on the problem statement document
-	 * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
-	 */
-	public void removeWorkOrder(WorkOrder workOrder) {
-		StateChecks.isTrue(isNotSettled(),"the workorder is finished");
-		Associations.Bill.unlink(this, workOrder);
-		computeAmount();
-		workOrder.markBackToFinished();
-	}
+    /**
+     * Computes amount and vat (vat depends on the date)
+     */
+    private void computeAmount() {
+        double precio = 0;
+        for (WorkOrder order : workOrders) {
+            precio += order.getAmount();
+        }
+        LocalDate date = LocalDate.of(2012, 7, 1);
+        if (this.date.isAfter(date)) {
+            amount = precio * 1.21;
+        } else {
+            amount = precio * 1.18;
+        }
+        vat = amount - precio;
+        amount = Round.twoCents(amount);
+        vat = Round.twoCents(vat);
+    }
 
-	/**
-	 * Marks the invoice as PAID, but
-	 * @throws IllegalStateException if
-	 * 	- Is already settled
-	 *  - Or the amounts paid with charges to payment means do not cover
-	 *  	the total of the invoice
-	 */
-	public void settle() {
-		StateChecks.isTrue(isNotSettled(),"the invoiced is settled");
-		double[] amount = {0};
-		charges.forEach(cargo->amount[0]=amount[0]+cargo.getAmount());
-		
-		StateChecks.isTrue(amount[0]>=this.amount,"invalid amount cantity");
-		this.state=InvoiceState.PAID;
-	}
+    /**
+     * Adds (double links) the workOrder to the invoice and updates the amount
+     * and vat
+     * 
+     * @param workOrder
+     * @see UML_State diagrams on the problem statement document
+     * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
+     */
+    public void addWorkOrder(WorkOrder workOrder) {
+        StateChecks.isTrue(isNotSettled(), "invoice is settled");
 
-	public Set<WorkOrder> getWorkOrders() {
-		return new HashSet<>( workOrders );
-	}
+        Associations.Bill.link(this, workOrder);
+        computeAmount();
+        workOrder.markAsInvoiced();
+    }
 
-	Set<WorkOrder> _getWorkOrders() {
-		return workOrders;
-	}
+    /**
+     * Removes a work order from the invoice and recomputes amount and vat
+     * 
+     * @param workOrder
+     * @see UML_State diagrams on the problem statement document
+     * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
+     */
+    public void removeWorkOrder(WorkOrder workOrder) {
+        StateChecks.isTrue(isNotSettled(), "the workorder is finished");
+        Associations.Bill.unlink(this, workOrder);
+        computeAmount();
+        workOrder.markBackToFinished();
+    }
 
-	public Set<Charge> getCharges() {
-		return new HashSet<>( charges );
-	}
+    /**
+     * Marks the invoice as PAID, but
+     * 
+     * @throws IllegalStateException if - Is already settled - Or the amounts
+     *                               paid with charges to payment means do not
+     *                               cover the total of the invoice
+     */
+    public void settle() {
+        StateChecks.isTrue(isNotSettled(), "the invoiced is settled");
+        double[] amount = { 0 };
+        charges.forEach(cargo -> amount[0] = amount[0] + cargo.getAmount());
 
-	Set<Charge> _getCharges() {
-		return charges;
-	}
+        StateChecks.isTrue(amount[0] >= this.amount, "invalid amount cantity");
+        this.state = InvoiceState.PAID;
+    }
 
-	public Long getNumber() {
-		return number;
-	}
+    public Set<WorkOrder> getWorkOrders() {
+        return new HashSet<>(workOrders);
+    }
 
-	public LocalDate getDate() {
-		return date;
-	}
+    Set<WorkOrder> _getWorkOrders() {
+        return workOrders;
+    }
 
-	public double getAmount() {
-		return amount;
-	}
+    public Set<Charge> getCharges() {
+        return new HashSet<>(charges);
+    }
 
-	public double getVat() {
-		return vat;
-	}
-	
-	public boolean isNotSettled() {
-		return InvoiceState.NOT_YET_PAID.equals(state);
-	}
-	
-	public boolean isSettled() {
-		return InvoiceState.PAID.equals(state);
-	}
+    Set<Charge> _getCharges() {
+        return charges;
+    }
 
+    public Long getNumber() {
+        return number;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Invoice [number=");
-		builder.append(number);
-		builder.append(", date=");
-		builder.append(date);
-		builder.append(", amount=");
-		builder.append(amount);
-		builder.append(", vat=");
-		builder.append(vat);
-		builder.append(", state=");
-		builder.append(state);
-		builder.append("]");
-		return builder.toString();
-	}
+    public LocalDate getDate() {
+        return date;
+    }
 
-	public InvoiceState getState() {
-		return state;
-	}
+    public double getAmount() {
+        return amount;
+    }
 
+    public double getVat() {
+        return vat;
+    }
 
-	
-	
+    public boolean isNotSettled() {
+        return InvoiceState.NOT_YET_PAID.equals(state);
+    }
+
+    public boolean isSettled() {
+        return InvoiceState.PAID.equals(state);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Invoice [number=");
+        builder.append(number);
+        builder.append(", date=");
+        builder.append(date);
+        builder.append(", amount=");
+        builder.append(amount);
+        builder.append(", vat=");
+        builder.append(vat);
+        builder.append(", state=");
+        builder.append(state);
+        builder.append("]");
+        return builder.toString();
+    }
+
+    public InvoiceState getState() {
+        return state;
+    }
 
 }

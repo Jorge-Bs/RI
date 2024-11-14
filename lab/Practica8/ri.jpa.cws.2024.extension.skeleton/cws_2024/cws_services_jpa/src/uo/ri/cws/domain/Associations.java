@@ -2,34 +2,34 @@ package uo.ri.cws.domain;
 
 public class Associations {
 
-	public static class Own {
+    public static class Own {
 
-		public static void link(Client client, Vehicle vehicle) {
-			vehicle._setClient(client);
-			client._getVehicles().add(vehicle);
-		}
+        public static void link(Client client, Vehicle vehicle) {
+            vehicle._setClient(client);
+            client._getVehicles().add(vehicle);
+        }
 
-		public static void unlink(Client cliente, Vehicle vehicle) {
-			cliente._getVehicles().remove(vehicle);
-			vehicle._setClient(null);
-		}
+        public static void unlink(Client cliente, Vehicle vehicle) {
+            cliente._getVehicles().remove(vehicle);
+            vehicle._setClient(null);
+        }
 
-	}
+    }
 
-	public static class Classify {
+    public static class Classify {
 
-		public static void link(VehicleType vehicleType, Vehicle vehicle) {
-			vehicle._setVehicleType(vehicleType);
-			vehicleType._getVehicles().add(vehicle);
-		}
+        public static void link(VehicleType vehicleType, Vehicle vehicle) {
+            vehicle._setVehicleType(vehicleType);
+            vehicleType._getVehicles().add(vehicle);
+        }
 
-		public static void unlink(VehicleType tipoVehicle, Vehicle vehicle) {
-			tipoVehicle._getVehicles().remove(vehicle);
-			vehicle._setVehicleType(null);
-		}
-	}
+        public static void unlink(VehicleType tipoVehicle, Vehicle vehicle) {
+            tipoVehicle._getVehicles().remove(vehicle);
+            vehicle._setVehicleType(null);
+        }
+    }
 
-	public static class Hold {
+    public static class Hold {
 
         public static void link(PaymentMean mean, Client client) {
             mean._setClient(client);
@@ -42,91 +42,91 @@ public class Associations {
         }
     }
 
-	public static class Fix {
+    public static class Fix {
 
-		public static void link(Vehicle vehicle, WorkOrder workOrder) {
-			workOrder._setVehicle(vehicle);
-			vehicle._getWorkOrders().add(workOrder);
-		}
+        public static void link(Vehicle vehicle, WorkOrder workOrder) {
+            workOrder._setVehicle(vehicle);
+            vehicle._getWorkOrders().add(workOrder);
+        }
 
-		public static void unlink(Vehicle vehicle, WorkOrder workOrder) {
-			vehicle._getWorkOrders().remove(workOrder);
-			workOrder._setVehicle(null);
-		}
-	}
+        public static void unlink(Vehicle vehicle, WorkOrder workOrder) {
+            vehicle._getWorkOrders().remove(workOrder);
+            workOrder._setVehicle(null);
+        }
+    }
 
-	public static class Bill {
+    public static class Bill {
 
-		public static void link(Invoice invoice, WorkOrder workOrder) {
-			workOrder._setInvoice(invoice);
-			invoice._getWorkOrders().add(workOrder);
-		}
+        public static void link(Invoice invoice, WorkOrder workOrder) {
+            workOrder._setInvoice(invoice);
+            invoice._getWorkOrders().add(workOrder);
+        }
 
-		public static void unlink(Invoice invoice, WorkOrder workOrder) {
-			invoice._getWorkOrders().remove(workOrder);
-			workOrder._setInvoice(null);
-		}
-	}
+        public static void unlink(Invoice invoice, WorkOrder workOrder) {
+            invoice._getWorkOrders().remove(workOrder);
+            workOrder._setInvoice(null);
+        }
+    }
 
-	public static class Settle {
+    public static class Settle {
 
-		public static void link(Invoice invoice, Charge cargo, PaymentMean mp) {
-			cargo._setInvoice(invoice);
-			cargo._setPaymentMean(mp);
-			
-			invoice._getCharges().add(cargo);
-			mp._getCharges().add(cargo);
-		}
+        public static void link(Invoice invoice, Charge cargo, PaymentMean mp) {
+            cargo._setInvoice(invoice);
+            cargo._setPaymentMean(mp);
 
-		public static void unlink(Charge cargo) {
-			
-			Invoice in = cargo.getInvoice();
-			PaymentMean mp = cargo.getPaymentMean();
-			
-			in._getCharges().remove(cargo);
-			mp._getCharges().remove(cargo);
-			
-			cargo._setInvoice(null);
-			cargo._setPaymentMean(null);
-		}
-	}
+            invoice._getCharges().add(cargo);
+            mp._getCharges().add(cargo);
+        }
 
-	public static class Assign {
+        public static void unlink(Charge cargo) {
 
-		public static void link(Mechanic mechanic, WorkOrder workOrder) {
-			workOrder._setMechanic(mechanic);
-			mechanic._getAssigned().add(workOrder);
-			
-		}
+            Invoice in = cargo.getInvoice();
+            PaymentMean mp = cargo.getPaymentMean();
 
-		public static void unlink(Mechanic mechanic, WorkOrder workOrder) {
-			mechanic._getAssigned().remove(workOrder);
-			workOrder._setMechanic(null);
-		}
-	}
+            in._getCharges().remove(cargo);
+            mp._getCharges().remove(cargo);
 
-	public static class Intervene {
+            cargo._setInvoice(null);
+            cargo._setPaymentMean(null);
+        }
+    }
 
-		public static void link(WorkOrder workOrder,
-				Intervention intervention, Mechanic mechanic) {
-			intervention._setMechanic(mechanic);
-			intervention._setWorkOrder(workOrder);
-			workOrder._getInterventions().add(intervention);
-			mechanic._getInterventions().add(intervention);
-		}
+    public static class Assign {
 
-		public static void unlink(Intervention intervention) {
-			intervention.getMechanic()._getInterventions().remove(intervention);
+        public static void link(Mechanic mechanic, WorkOrder workOrder) {
+            workOrder._setMechanic(mechanic);
+            mechanic._getAssigned().add(workOrder);
 
-			WorkOrder order = intervention.getWorkOrder();
-			order._getInterventions().remove(intervention);
-			
-			intervention._setMechanic(null);
-			intervention._setWorkOrder(null);
-		}
-	}
+        }
 
-	public static class Substitute {
+        public static void unlink(Mechanic mechanic, WorkOrder workOrder) {
+            mechanic._getAssigned().remove(workOrder);
+            workOrder._setMechanic(null);
+        }
+    }
+
+    public static class Intervene {
+
+        public static void link(WorkOrder workOrder, Intervention intervention,
+            Mechanic mechanic) {
+            intervention._setMechanic(mechanic);
+            intervention._setWorkOrder(workOrder);
+            workOrder._getInterventions().add(intervention);
+            mechanic._getInterventions().add(intervention);
+        }
+
+        public static void unlink(Intervention intervention) {
+            intervention.getMechanic()._getInterventions().remove(intervention);
+
+            WorkOrder order = intervention.getWorkOrder();
+            order._getInterventions().remove(intervention);
+
+            intervention._setMechanic(null);
+            intervention._setWorkOrder(null);
+        }
+    }
+
+    public static class Substitute {
 
         static void link(SparePart sparePart, Substitution substitution,
             Intervention intervention) {
@@ -149,41 +149,42 @@ public class Associations {
             substitution._setSparePart(null);
         }
     }
-	
-	public static class Supplies{
-		public static void link(SparePart sparePart,Supply supply,Provider provider) {
-			supply._setProvider(provider);
-			supply._setSparePart(sparePart);
-			
-			sparePart._getSupplies().add(supply);
-			provider._getSupplies().add(supply);
-		}
-		
-		public static void unlink(Supply supply) {
-			SparePart part = supply.getSparePart();
-			Provider prov = supply.getProvider();
-			
-			part._getSupplies().remove(supply);
-			prov._getSupplies().remove(supply);
-			
-			supply._setProvider(null);
-			supply._setSparePart(null);
-			
-		}
-	}
-	
-	public static class Deliver{
-		public static void link(Provider provider,Order order) {
-			order._setProvider(provider);
-			provider._getOrders().add(order);
-		}
-		
-		public static void unlink(Order order) {
-			Provider pr = order.getProvider();
-			pr._getOrders().remove(order);
-			
-			order._setProvider(null);
-		}
-	}
+
+    public static class Supplies {
+        public static void link(SparePart sparePart, Supply supply,
+            Provider provider) {
+            supply._setProvider(provider);
+            supply._setSparePart(sparePart);
+
+            sparePart._getSupplies().add(supply);
+            provider._getSupplies().add(supply);
+        }
+
+        public static void unlink(Supply supply) {
+            SparePart part = supply.getSparePart();
+            Provider prov = supply.getProvider();
+
+            part._getSupplies().remove(supply);
+            prov._getSupplies().remove(supply);
+
+            supply._setProvider(null);
+            supply._setSparePart(null);
+
+        }
+    }
+
+    public static class Deliver {
+        public static void link(Provider provider, Order order) {
+            order._setProvider(provider);
+            provider._getOrders().add(order);
+        }
+
+        public static void unlink(Order order) {
+            Provider pr = order.getProvider();
+            pr._getOrders().remove(order);
+
+            order._setProvider(null);
+        }
+    }
 
 }
