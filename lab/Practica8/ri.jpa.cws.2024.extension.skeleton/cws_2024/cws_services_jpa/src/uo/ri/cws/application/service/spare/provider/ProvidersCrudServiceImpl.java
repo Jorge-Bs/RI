@@ -16,37 +16,39 @@ import uo.ri.util.exception.BusinessException;
 
 public class ProvidersCrudServiceImpl implements ProvidersCrudService {
 
-	private CommandExecutor executor = Factories.executor.forExecutor();
-	
-	@Override
-	public ProviderDto add(ProviderDto dto) throws BusinessException {
-		return executor.execute(new AddProvider(dto));
-	}
+    private CommandExecutor executor = Factories.executor.forExecutor();
 
-	@Override
-	public void delete(String nif) throws BusinessException {
-		executor.execute(new DeleteProvider(nif));
+    @Override
+    public ProviderDto add(ProviderDto dto) throws BusinessException {
+        return executor.execute(new AddProvider(dto));
+    }
 
-	}
+    @Override
+    public void delete(String nif) throws BusinessException {
+        executor.execute(new DeleteProvider(nif));
 
-	@Override
-	public void update(ProviderDto dto) throws BusinessException {
-		executor.execute(new UpadteProvider(dto));
-	}
+    }
 
-	@Override
-	public Optional<ProviderDto> findByNif(String nif) throws BusinessException {
-		return executor.execute(new FindByNif(nif));
-	}
+    @Override
+    public void update(ProviderDto dto) throws BusinessException {
+        executor.execute(new UpadteProvider(dto));
+    }
 
-	@Override
-	public List<ProviderDto> findByName(String name) throws BusinessException {
-		return executor.execute(new FindByName(name));
-	}
+    @Override
+    public Optional<ProviderDto> findByNif(String nif)
+        throws BusinessException {
+        return executor.execute(new FindByNif(nif));
+    }
 
-	@Override
-	public List<ProviderDto> findBySparePartCode(String code) throws BusinessException {
-		return executor.execute(new FindBySparePartCode(code));
-	}
+    @Override
+    public List<ProviderDto> findByName(String name) throws BusinessException {
+        return executor.execute(new FindByName(name));
+    }
+
+    @Override
+    public List<ProviderDto> findBySparePartCode(String code)
+        throws BusinessException {
+        return executor.execute(new FindBySparePartCode(code));
+    }
 
 }

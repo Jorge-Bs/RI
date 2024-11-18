@@ -11,24 +11,23 @@ import uo.ri.cws.domain.WorkOrder;
 import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.exception.BusinessException;
 
-public class FindNotInvoicedWorkOrdersByClientNif implements Command<List<InvoicingWorkOrderDto>>{
-	
-	
-	private String nif;
-	
-	private WorkOrderRepository wr = Factories.repository.forWorkOrder();
-	
-	public FindNotInvoicedWorkOrdersByClientNif(String nif) {
-		ArgumentChecks.isNotNull(nif, "invalid nif");
-		this.nif = nif;
-	}
+public class FindNotInvoicedWorkOrdersByClientNif
+    implements Command<List<InvoicingWorkOrderDto>> {
 
-	@Override
-	public List<InvoicingWorkOrderDto> execute() throws BusinessException {
-		
-		
-		List<WorkOrder> lista = wr.findNotInvoicedByClientNif(nif);
-		return DtoAssembler.toInvoicingWorkOrderDtoList(lista);
-	}
+    private String nif;
+
+    private WorkOrderRepository wr = Factories.repository.forWorkOrder();
+
+    public FindNotInvoicedWorkOrdersByClientNif(String nif) {
+        ArgumentChecks.isNotNull(nif, "invalid nif");
+        this.nif = nif;
+    }
+
+    @Override
+    public List<InvoicingWorkOrderDto> execute() throws BusinessException {
+
+        List<WorkOrder> lista = wr.findNotInvoicedByClientNif(nif);
+        return DtoAssembler.toInvoicingWorkOrderDtoList(lista);
+    }
 
 }

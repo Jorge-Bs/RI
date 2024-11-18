@@ -11,28 +11,27 @@ import uo.ri.util.exception.BusinessChecks;
 import uo.ri.util.exception.BusinessException;
 
 public class DeleteSupply implements Command<Void> {
-	
-	private String nif;
-	private String code;
-	private SupplyRepository rep = Factories.repository.forSupply();
 
-	public DeleteSupply(String nif,String code) {
-		ArgumentChecks.isNotNull(nif, "invalid nif");
-		ArgumentChecks.isNotNull(code, "invalid code");
-		this.nif=nif;
-		this.code=code;
-	}
+    private String nif;
+    private String code;
+    private SupplyRepository rep = Factories.repository.forSupply();
 
-	@Override
-	public Void execute() throws BusinessException {
-		Optional<Supply> sup = rep.findByNifAndCode(nif, code);
-		
-		BusinessChecks.isTrue(sup.isPresent(),"no existe el supply");
-		
-		rep.remove(sup.get());
-		
-		return null;
-	}
-	
-	
+    public DeleteSupply(String nif, String code) {
+        ArgumentChecks.isNotNull(nif, "invalid nif");
+        ArgumentChecks.isNotNull(code, "invalid code");
+        this.nif = nif;
+        this.code = code;
+    }
+
+    @Override
+    public Void execute() throws BusinessException {
+        Optional<Supply> sup = rep.findByNifAndCode(nif, code);
+
+        BusinessChecks.isTrue(sup.isPresent(), "no existe el supply");
+
+        rep.remove(sup.get());
+
+        return null;
+    }
+
 }

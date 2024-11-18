@@ -13,19 +13,19 @@ import uo.ri.util.exception.BusinessException;
 
 public class FindByName implements Command<List<ProviderDto>> {
 
-	private String name;
-	private ProviderRepository pre = Factories.repository.forProvider();
-	
-	public FindByName(String name) {
-		ArgumentChecks.isNotNull(name);
-		this.name = name;
-	}
-	
-	@Override
-	public List<ProviderDto> execute() throws BusinessException {
-		List<Provider> providerList = pre.findByName(name);
-		
-		return DtoAssembler.toProvidersDtoList(providerList);
-	}
+    private String name;
+    private ProviderRepository pre = Factories.repository.forProvider();
+
+    public FindByName(String name) {
+        ArgumentChecks.isNotNull(name);
+        this.name = name;
+    }
+
+    @Override
+    public List<ProviderDto> execute() throws BusinessException {
+        List<Provider> providerList = pre.findByName(name);
+
+        return DtoAssembler.toProvidersDtoList(providerList);
+    }
 
 }

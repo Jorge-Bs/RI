@@ -23,13 +23,11 @@ public class SparePartJpaRepository
 
 	@Override
 	public List<SparePart> findUnderStockNotPending() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<SparePart> findByDescription(String description) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

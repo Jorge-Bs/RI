@@ -13,21 +13,23 @@ import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.exception.BusinessException;
 
 public class FindBySparePartCode implements Command<List<SupplyDto>> {
-	
-	private String code;
-	private SupplyRepository rep = Factories.repository.forSupply();
 
-	public FindBySparePartCode(String code) {
-		ArgumentChecks.isNotNull(code);
-		this.code = code;
-	}
+    private String code;
+    private SupplyRepository rep = Factories.repository.forSupply();
 
-	@Override
-	public List<SupplyDto> execute() throws BusinessException {
-		List<Supply> sup = rep.findBySparePartCode(code);
-		
-		if(sup.isEmpty()) return new ArrayList<>();
-		
-		return DtoAssembler.toSupplyDtoList(sup);
-	}
+    public FindBySparePartCode(String code) {
+        ArgumentChecks.isNotNull(code);
+        this.code = code;
+    }
+
+    @Override
+    public List<SupplyDto> execute() throws BusinessException {
+        List<Supply> sup = rep.findBySparePartCode(code);
+
+        if (sup.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return DtoAssembler.toSupplyDtoList(sup);
+    }
 }

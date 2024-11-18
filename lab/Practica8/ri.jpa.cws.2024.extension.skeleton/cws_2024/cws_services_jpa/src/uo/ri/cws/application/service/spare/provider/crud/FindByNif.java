@@ -12,24 +12,24 @@ import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.exception.BusinessException;
 
 public class FindByNif implements Command<Optional<ProviderDto>> {
-	
-	
-	private ProviderRepository pre = Factories.repository.forProvider();
-	private String nif;
-	
-	public FindByNif(String nif) {
-		ArgumentChecks.isNotNull(nif, "invalid");
-		this.nif=nif;
-	}
 
-	@Override
-	public Optional<ProviderDto> execute() throws BusinessException {
-		Optional<Provider> prov =pre.findByNif(nif);
-		
-		if(prov.isEmpty()) return Optional.ofNullable(null);
-		
-		return Optional.of(DtoAssembler.toDto(prov.get()));
-	}
+    private ProviderRepository pre = Factories.repository.forProvider();
+    private String nif;
 
+    public FindByNif(String nif) {
+        ArgumentChecks.isNotNull(nif, "invalid");
+        this.nif = nif;
+    }
+
+    @Override
+    public Optional<ProviderDto> execute() throws BusinessException {
+        Optional<Provider> prov = pre.findByNif(nif);
+
+        if (prov.isEmpty()) {
+            return Optional.ofNullable(null);
+        }
+
+        return Optional.of(DtoAssembler.toDto(prov.get()));
+    }
 
 }

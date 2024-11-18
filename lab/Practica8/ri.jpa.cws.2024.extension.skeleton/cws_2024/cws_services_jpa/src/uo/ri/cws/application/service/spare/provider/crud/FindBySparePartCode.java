@@ -11,21 +11,21 @@ import uo.ri.cws.domain.Provider;
 import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.exception.BusinessException;
 
-public class FindBySparePartCode implements Command<List<ProviderDto>>{
+public class FindBySparePartCode implements Command<List<ProviderDto>> {
 
-	private String code ;
-	private ProviderRepository pre = Factories.repository.forProvider();
-	
-	public FindBySparePartCode(String code) {
-		ArgumentChecks.isNotNull(code);
-		this.code = code;
-	}
-	
-	@Override
-	public List<ProviderDto> execute() throws BusinessException {
-		List<Provider> providerList = pre.findBySparePartCode(code);
-		
-		return DtoAssembler.toProvidersDtoList(providerList);
-	}
+    private String code;
+    private ProviderRepository pre = Factories.repository.forProvider();
+
+    public FindBySparePartCode(String code) {
+        ArgumentChecks.isNotNull(code);
+        this.code = code;
+    }
+
+    @Override
+    public List<ProviderDto> execute() throws BusinessException {
+        List<Provider> providerList = pre.findBySparePartCode(code);
+
+        return DtoAssembler.toProvidersDtoList(providerList);
+    }
 
 }

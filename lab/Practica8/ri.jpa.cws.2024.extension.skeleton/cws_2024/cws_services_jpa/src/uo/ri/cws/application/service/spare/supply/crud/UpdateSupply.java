@@ -13,35 +13,34 @@ import uo.ri.util.exception.BusinessException;
 
 public class UpdateSupply implements Command<Void> {
 
-	private SupplyDto dto;
-	private SupplyRepository repo = Factories.repository.forSupply();
-	
-	public UpdateSupply(SupplyDto dto) throws BusinessException {
-		ArgumentChecks.isNotNull(dto,"invalid dto");
-		ArgumentChecks.isNotNull(dto.provider, "invalid provider");
-		ArgumentChecks.isNotNull(dto.sparePart, "invalid sparepart");
-		
-		BusinessChecks.isTrue(dto.deliveryTerm>=0,"invalid delivery");
-		BusinessChecks.isTrue(dto.price>=0,"invalid delivery");
-		this.dto = dto;
-	}
-	
-	
-	@Override
-	public Void execute() throws BusinessException {
-		Optional<Supply> supply;
-		supply = repo.findByNifAndCode(dto.provider.nif, dto.sparePart.code);
-		
-		BusinessChecks.isTrue(supply.isPresent(),"no existe");
-		
-		Supply sup = supply.get();
-		
-		BusinessChecks.hasVersion(sup.getVersion(), dto.version);
-		
-		sup.setDeliveryTerm(dto.deliveryTerm);
-		sup.setPrice(dto.price);
-		
-		return null;
-	}
+    private SupplyDto dto;
+    private SupplyRepository repo = Factories.repository.forSupply();
+
+    public UpdateSupply(SupplyDto dto) throws BusinessException {
+        ArgumentChecks.isNotNull(dto, "invalid dto");
+        ArgumentChecks.isNotNull(dto.provider, "invalid provider");
+        ArgumentChecks.isNotNull(dto.sparePart, "invalid sparepart");
+
+        BusinessChecks.isTrue(dto.deliveryTerm >= 0, "invalid delivery");
+        BusinessChecks.isTrue(dto.price >= 0, "invalid delivery");
+        this.dto = dto;
+    }
+
+    @Override
+    public Void execute() throws BusinessException {
+        Optional<Supply> supply;
+        supply = repo.findByNifAndCode(dto.provider.nif, dto.sparePart.code);
+
+        BusinessChecks.isTrue(supply.isPresent(), "no existe");
+
+        Supply sup = supply.get();
+
+        BusinessChecks.hasVersion(sup.getVersion(), dto.version);
+
+        sup.setDeliveryTerm(dto.deliveryTerm);
+        sup.setPrice(dto.price);
+
+        return null;
+    }
 
 }

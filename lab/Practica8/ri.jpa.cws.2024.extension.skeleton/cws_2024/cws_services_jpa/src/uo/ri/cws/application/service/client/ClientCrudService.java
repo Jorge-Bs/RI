@@ -6,7 +6,7 @@ package uo.ri.cws.application.service.client;
  */
 public interface ClientCrudService {
 
-	// ...
+	
 
 	public static class ClientDto {
         public String id;

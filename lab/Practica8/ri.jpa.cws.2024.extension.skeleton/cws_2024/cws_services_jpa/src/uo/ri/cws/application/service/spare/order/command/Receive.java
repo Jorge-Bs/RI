@@ -14,25 +14,24 @@ import uo.ri.util.exception.BusinessException;
 
 public class Receive implements Command<OrderDto> {
 
-	private String code;
-	private OrderRepository rep = Factories.repository.forOrder();
-	
-	public Receive(String code) {
-		ArgumentChecks.isNotNull(code, "invalid code");
-		this.code=code;
-	}
-	
-	
-	@Override
-	public OrderDto execute() throws BusinessException {
-		Optional<Order> order =  rep.findByCode(code);
-		BusinessChecks.isFalse(order.isEmpty(),"no exist");
-		Order ord = order.get();
-		
-		BusinessChecks.isTrue(ord.isPending(),"no esta pendiente");
-		ord.receive();
-		
-		return DtoAssembler.toDto(ord);
-	}
+    private String code;
+    private OrderRepository rep = Factories.repository.forOrder();
+
+    public Receive(String code) {
+        ArgumentChecks.isNotNull(code, "invalid code");
+        this.code = code;
+    }
+
+    @Override
+    public OrderDto execute() throws BusinessException {
+        Optional<Order> order = rep.findByCode(code);
+        BusinessChecks.isFalse(order.isEmpty(), "no exist");
+        Order ord = order.get();
+
+        BusinessChecks.isTrue(ord.isPending(), "no esta pendiente");
+        ord.receive();
+
+        return DtoAssembler.toDto(ord);
+    }
 
 }

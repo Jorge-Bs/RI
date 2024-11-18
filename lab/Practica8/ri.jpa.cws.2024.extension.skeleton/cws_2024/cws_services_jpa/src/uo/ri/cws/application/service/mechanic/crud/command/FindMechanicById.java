@@ -11,27 +11,29 @@ import uo.ri.cws.domain.Mechanic;
 import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.exception.BusinessException;
 
-public class FindMechanicById implements Command<Optional<MechanicDto>>{
+public class FindMechanicById implements Command<Optional<MechanicDto>> {
 
-	private String id;
-	private MechanicRepository rep = Factories.repository.forMechanic();
+    private String id;
+    private MechanicRepository rep = Factories.repository.forMechanic();
 
-	public FindMechanicById(String id) {
-		ArgumentChecks.isNotNull(id, "invalid id");;
-		this.id = id;
-	}
+    public FindMechanicById(String id) {
+        ArgumentChecks.isNotNull(id, "invalid id");
+        ;
+        this.id = id;
+    }
 
-	public Optional<MechanicDto> execute() throws BusinessException {
+    @Override
+    public Optional<MechanicDto> execute() throws BusinessException {
 
-		Optional<Mechanic>  me = rep.findById(id);
-		
-		if(me.isEmpty()) {
-			return Optional.ofNullable(null);
-		}
-		
-		Mechanic m = me.get();
-		
-		return Optional.of(DtoAssembler.toDto(m));
-	}
+        Optional<Mechanic> me = rep.findById(id);
+
+        if (me.isEmpty()) {
+            return Optional.ofNullable(null);
+        }
+
+        Mechanic m = me.get();
+
+        return Optional.of(DtoAssembler.toDto(m));
+    }
 
 }

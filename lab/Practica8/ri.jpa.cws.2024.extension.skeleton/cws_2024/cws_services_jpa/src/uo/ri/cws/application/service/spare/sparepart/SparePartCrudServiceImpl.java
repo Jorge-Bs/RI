@@ -7,28 +7,25 @@ import uo.ri.util.exception.BusinessException;
 
 public class SparePartCrudServiceImpl implements SparePartCrudService {
 
-	@Override
-	public SparePartDto add(SparePartDto dto) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public SparePartDto add(SparePartDto dto) throws BusinessException {
+        return null;
+    }
 
-	@Override
-	public void delete(String code) throws BusinessException {
-		// TODO Auto-generated method stub
+    @Override
+    public void delete(String code) throws BusinessException {
 
-	}
+    }
 
-	@Override
-	public void update(SparePartDto dto) throws BusinessException {
-		// TODO Auto-generated method stub
+    @Override
+    public void update(SparePartDto dto) throws BusinessException {
 
-	}
+    }
 
-	@Override
-	public Optional<SparePartDto> findByCode(String code) throws BusinessException {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
+    @Override
+    public Optional<SparePartDto> findByCode(String code)
+        throws BusinessException {
+        return Optional.empty();
+    }
 
 }

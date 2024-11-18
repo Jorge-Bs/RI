@@ -13,20 +13,19 @@ import uo.ri.util.exception.BusinessException;
 
 public class FindByProviderNif implements Command<List<OrderDto>> {
 
-	private String nif;
-	private OrderRepository rep = Factories.repository.forOrder();
-	
-	public FindByProviderNif(String nif) {
-		ArgumentChecks.isNotNull(nif, "invalid nif");
-		this.nif=nif;
-	}
-	
-	
-	@Override
-	public List<OrderDto> execute() throws BusinessException {
-		
-		List<Order> lista =  rep.findByProviderNif(nif);
-		return DtoAssembler.toOrdersDtoList(lista);
-	}
+    private String nif;
+    private OrderRepository rep = Factories.repository.forOrder();
+
+    public FindByProviderNif(String nif) {
+        ArgumentChecks.isNotNull(nif, "invalid nif");
+        this.nif = nif;
+    }
+
+    @Override
+    public List<OrderDto> execute() throws BusinessException {
+
+        List<Order> lista = rep.findByProviderNif(nif);
+        return DtoAssembler.toOrdersDtoList(lista);
+    }
 
 }

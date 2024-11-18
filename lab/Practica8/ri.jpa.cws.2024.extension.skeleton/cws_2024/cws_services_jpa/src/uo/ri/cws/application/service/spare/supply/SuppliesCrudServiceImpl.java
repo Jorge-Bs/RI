@@ -16,39 +16,41 @@ import uo.ri.util.exception.BusinessException;
 
 public class SuppliesCrudServiceImpl implements SuppliesCrudService {
 
-	private CommandExecutor executor = Factories.executor.forExecutor();
+    private CommandExecutor executor = Factories.executor.forExecutor();
 
-	
-	@Override
-	public SupplyDto add(SupplyDto dto) throws BusinessException {
-		return executor.execute(new AddSupply(dto));
-	}
+    @Override
+    public SupplyDto add(SupplyDto dto) throws BusinessException {
+        return executor.execute(new AddSupply(dto));
+    }
 
-	@Override
-	public void delete(String nif, String code) throws BusinessException {
-		executor.execute(new DeleteSupply(nif, code));
+    @Override
+    public void delete(String nif, String code) throws BusinessException {
+        executor.execute(new DeleteSupply(nif, code));
 
-	}
+    }
 
-	@Override
-	public void update(SupplyDto dto) throws BusinessException {
-		executor.execute(new UpdateSupply(dto));
+    @Override
+    public void update(SupplyDto dto) throws BusinessException {
+        executor.execute(new UpdateSupply(dto));
 
-	}
+    }
 
-	@Override
-	public Optional<SupplyDto> findByNifAndCode(String nif, String code) throws BusinessException {
-		return executor.execute(new FindByNifAndCode(nif, code));
-	}
+    @Override
+    public Optional<SupplyDto> findByNifAndCode(String nif, String code)
+        throws BusinessException {
+        return executor.execute(new FindByNifAndCode(nif, code));
+    }
 
-	@Override
-	public List<SupplyDto> findByProviderNif(String nif) throws BusinessException {
-		return executor.execute(new FindByProviderNif(nif));
-	}
+    @Override
+    public List<SupplyDto> findByProviderNif(String nif)
+        throws BusinessException {
+        return executor.execute(new FindByProviderNif(nif));
+    }
 
-	@Override
-	public List<SupplyDto> findBySparePartCode(String code) throws BusinessException {
-		return executor.execute(new FindBySparePartCode(code));
-	}
+    @Override
+    public List<SupplyDto> findBySparePartCode(String code)
+        throws BusinessException {
+        return executor.execute(new FindBySparePartCode(code));
+    }
 
 }

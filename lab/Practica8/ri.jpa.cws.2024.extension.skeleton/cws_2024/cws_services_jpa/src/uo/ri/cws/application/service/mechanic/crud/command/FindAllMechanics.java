@@ -8,15 +8,15 @@ import uo.ri.cws.application.service.mechanic.MechanicCrudService.MechanicDto;
 import uo.ri.cws.application.service.mechanic.crud.DtoAssembler;
 import uo.ri.cws.application.util.command.Command;
 
-public class FindAllMechanics implements Command<List<MechanicDto>>{
+public class FindAllMechanics implements Command<List<MechanicDto>> {
 
-	private MechanicRepository repo = Factories.repository.forMechanic();
-	
-	public List<MechanicDto> execute() {
-		
-		return DtoAssembler.toMechanicDtoList(repo.findAll());
-		
-		
-	}
+    private MechanicRepository repo = Factories.repository.forMechanic();
+
+    @Override
+    public List<MechanicDto> execute() {
+
+        return DtoAssembler.toMechanicDtoList(repo.findAll());
+
+    }
 
 }

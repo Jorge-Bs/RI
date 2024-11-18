@@ -11,24 +11,26 @@ import uo.ri.cws.domain.Order;
 import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.exception.BusinessException;
 
-public class FindByCode implements Command<Optional<OrderDto>>{
-	
-	private OrderRepository re = Factories.repository.forOrder();
-	private String code;
-	
-	public FindByCode(String code) {
-		ArgumentChecks.isNotNull(code, "invalid code");
-		this.code=code;
-	}
+public class FindByCode implements Command<Optional<OrderDto>> {
 
-	@Override
-	public Optional<OrderDto> execute() throws BusinessException {
-		
-		Optional<Order> order =  re.findByCode(code);
-		
-		if(order.isEmpty()) return Optional.ofNullable(null);
-		
-		return Optional.ofNullable(DtoAssembler.toDto(order.get()));
-	}
+    private OrderRepository re = Factories.repository.forOrder();
+    private String code;
+
+    public FindByCode(String code) {
+        ArgumentChecks.isNotNull(code, "invalid code");
+        this.code = code;
+    }
+
+    @Override
+    public Optional<OrderDto> execute() throws BusinessException {
+
+        Optional<Order> order = re.findByCode(code);
+
+        if (order.isEmpty()) {
+            return Optional.ofNullable(null);
+        }
+
+        return Optional.ofNullable(DtoAssembler.toDto(order.get()));
+    }
 
 }

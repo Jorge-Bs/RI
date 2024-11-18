@@ -9,30 +9,25 @@ import uo.ri.cws.infrastructure.persistence.jpa.util.BaseJpaRepository;
 import uo.ri.cws.infrastructure.persistence.jpa.util.Jpa;
 
 public class OrderJpaRepository extends BaseJpaRepository<Order>
-	implements OrderRepository{
+    implements OrderRepository {
 
-	@Override
-	public Optional<Order> findByCode(String code) {
-		return Jpa.getManager()
-				.createNamedQuery("Order.findByCode", Order.class)
-				.setParameter(1, code)
-				.getResultList()
-				.stream()
-				.findFirst();
-	}
+    @Override
+    public Optional<Order> findByCode(String code) {
+        return Jpa.getManager()
+            .createNamedQuery("Order.findByCode", Order.class)
+            .setParameter(1, code).getResultList().stream().findFirst();
+    }
 
-	@Override
-	public List<Order> findByProviderNif(String nif) {
-		return Jpa.getManager()
-				.createNamedQuery("Order.findByNif", Order.class)
-				.setParameter(1, nif)
-				.getResultList();
-	}
+    @Override
+    public List<Order> findByProviderNif(String nif) {
+        return Jpa.getManager().createNamedQuery("Order.findByNif", Order.class)
+            .setParameter(1, nif).getResultList();
+    }
 
-	@Override
-	public List<Order> findBySparePartCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<Order> findBySparePartCode(String code) {
+
+        return null;
+    }
 
 }

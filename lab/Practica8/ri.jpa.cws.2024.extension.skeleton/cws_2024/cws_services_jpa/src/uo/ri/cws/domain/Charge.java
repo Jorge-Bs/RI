@@ -52,16 +52,6 @@ public class Charge extends BaseEntity {
             + ", paymentMean=" + paymentMean + "]";
     }
 
-    /**
-     * Unlinks this charge and restores the accumulated to the payment mean
-     * 
-     * @throws IllegalStateException if the invoice is already settled
-     */
-    public void rewind() {
-        // TODO
-        // asserts the invoice is not in PAID status
-        // decrements the payment mean accumulated ( paymentMean.pay( -amount) )
-        // unlinks invoice, this and paymentMean
-    }
+    
 
 }

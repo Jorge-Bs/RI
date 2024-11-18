@@ -41,9 +41,11 @@ public class OrderLine {
         return sparePart;
     }
 
+    
+
     @Override
     public int hashCode() {
-        return Objects.hash(sparePart);
+        return Objects.hash(price, quantity, sparePart);
     }
 
     @Override
@@ -58,7 +60,9 @@ public class OrderLine {
             return false;
         }
         OrderLine other = (OrderLine) obj;
-        return Objects.equals(sparePart, other.sparePart);
+        return Double.doubleToLongBits(price) == Double
+            .doubleToLongBits(other.price) && quantity == other.quantity
+            && Objects.equals(sparePart, other.sparePart);
     }
 
     @Override

@@ -13,21 +13,23 @@ import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.exception.BusinessException;
 
 public class FindByProviderNif implements Command<List<SupplyDto>> {
-	
-	private String nif;
-	private SupplyRepository rep = Factories.repository.forSupply();
 
-	public FindByProviderNif(String nif) {
-		ArgumentChecks.isNotNull(nif, "invalid nif");
-		this.nif = nif;
-	}
+    private String nif;
+    private SupplyRepository rep = Factories.repository.forSupply();
 
-	@Override
-	public List<SupplyDto> execute() throws BusinessException {
-		List<Supply> sup = rep.findByProviderNif(nif);
-		
-		if(sup.isEmpty()) return new ArrayList<>();
-		
-		return DtoAssembler.toSupplyDtoList(sup);
-	}
+    public FindByProviderNif(String nif) {
+        ArgumentChecks.isNotNull(nif, "invalid nif");
+        this.nif = nif;
+    }
+
+    @Override
+    public List<SupplyDto> execute() throws BusinessException {
+        List<Supply> sup = rep.findByProviderNif(nif);
+
+        if (sup.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return DtoAssembler.toSupplyDtoList(sup);
+    }
 }

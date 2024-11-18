@@ -12,28 +12,28 @@ import uo.ri.cws.application.util.command.CommandExecutor;
 import uo.ri.util.exception.BusinessException;
 
 public class OrdersServiceImpl implements OrdersService {
-	
-	private CommandExecutor executor = Factories.executor.forExecutor();
 
-	@Override
-	public List<OrderDto> generateOrders() throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    private CommandExecutor executor = Factories.executor.forExecutor();
 
-	@Override
-	public List<OrderDto> findByProviderNif(String nif) throws BusinessException {
-		return executor.execute(new FindByProviderNif(nif));
-	}
+    @Override
+    public List<OrderDto> generateOrders() throws BusinessException {
+        return null;
+    }
 
-	@Override
-	public Optional<OrderDto> findByCode(String code) throws BusinessException {
-		return executor.execute(new FindByCode(code));
-	}
+    @Override
+    public List<OrderDto> findByProviderNif(String nif)
+        throws BusinessException {
+        return executor.execute(new FindByProviderNif(nif));
+    }
 
-	@Override
-	public OrderDto receive(String code) throws BusinessException {
-		return executor.execute(new Receive(code));
-	}
+    @Override
+    public Optional<OrderDto> findByCode(String code) throws BusinessException {
+        return executor.execute(new FindByCode(code));
+    }
+
+    @Override
+    public OrderDto receive(String code) throws BusinessException {
+        return executor.execute(new Receive(code));
+    }
 
 }

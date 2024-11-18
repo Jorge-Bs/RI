@@ -11,33 +11,36 @@ import uo.ri.util.assertion.ArgumentChecks;
 import uo.ri.util.exception.BusinessChecks;
 import uo.ri.util.exception.BusinessException;
 
-public class UpdateMechanic implements Command<Void>{
+public class UpdateMechanic implements Command<Void> {
 
-	private MechanicDto dto;
-	private MechanicRepository mer = Factories.repository.forMechanic();
+    private MechanicDto dto;
+    private MechanicRepository mer = Factories.repository.forMechanic();
 
-	public UpdateMechanic(MechanicDto dto) {
-		ArgumentChecks.isNotNull(dto, "invalid dto");
-		ArgumentChecks.isNotBlank(dto.nif, "nvalid nif");
-		ArgumentChecks.isNotBlank(dto.name, "nvalid name");
-		ArgumentChecks.isNotBlank(dto.surname, "nvalid surnam");
-		this.dto = dto;
-	}
+    public UpdateMechanic(MechanicDto dto) {
+        ArgumentChecks.isNotNull(dto, "invalid dto");
+        ArgumentChecks.isNotBlank(dto.nif, "nvalid nif");
+        ArgumentChecks.isNotBlank(dto.name, "nvalid name");
+        ArgumentChecks.isNotBlank(dto.surname, "nvalid surnam");
+        this.dto = dto;
+    }
 
-	public Void execute() throws BusinessException {
-		//con los setter de mecanico y comprobar la version es correcta con busi...hasVersion
-		
-		Optional<Mechanic> m = mer.findById(dto.id);
-		
-		if(m.isEmpty()) throw new BusinessException("no existe el mecanico");
-		BusinessChecks.hasVersion(m.get().getVersion(), dto.version);
-		
-		Mechanic me = m.get();
-		
-		me.setSurname(dto.surname);
-		me.setName(dto.name);
-		
-		return null;
-	}
+    @Override
+    public Void execute() throws BusinessException {
+       
+
+        Optional<Mechanic> m = mer.findById(dto.id);
+
+        if (m.isEmpty()) {
+            throw new BusinessException("no existe el mecanico");
+        }
+        BusinessChecks.hasVersion(m.get().getVersion(), dto.version);
+
+        Mechanic me = m.get();
+
+        me.setSurname(dto.surname);
+        me.setName(dto.name);
+
+        return null;
+    }
 
 }
