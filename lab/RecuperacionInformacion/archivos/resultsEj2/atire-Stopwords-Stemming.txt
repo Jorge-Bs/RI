@@ -1,0 +1,7 @@
+Macro-averaged Precision: 0.069
+Macro-averaged Recall: 0.278
+Macro-averaged F1: 0.107
+
+Micro-averaged Precision: 0.069
+Micro-averaged Recall: 0.21
+Micro-averaged F1: 0.104

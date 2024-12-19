@@ -1,0 +1,9 @@
+Búsqueda Semántica:
+
+{'PLAIN-10': ['MED-2497', 'MED-2495', 'MED-4169', 'MED-3013', 'MED-2494', 'MED-3622', 'MED-4975', 'MED-1164', 'MED-4548', 'MED-1774']}
+{'macro_average_precision': 0.5, 'macro_average_recall': 0.063, 'macro_average_f1': 0.112, 'micro_average_precision': 0.5, 'micro_average_recall': 0.063, 'micro_average_f1': 0.112}
+
+
+Búsqueda con ReRanking:
+Valor de n:2 , Valor de m:5
+{'macro_average_precision': 0.5, 'macro_average_recall': 0.013, 'macro_average_f1': 0.025, 'micro_average_precision': 0.5, 'micro_average_recall': 0.013, 'micro_average_f1': 0.025}

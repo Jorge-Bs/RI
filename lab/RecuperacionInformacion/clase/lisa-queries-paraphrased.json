@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "query": "I'm curious about new ways computers are built and organized, like systems that can do many things at once. I'd also like to know about special memory systems that can quickly find information based on its content, not just its location."
+  },
+  {
+    "id": 2,
+    "query": "I want to learn about people who don't use libraries. Are there any studies that look into who these non-users are and why they don't use libraries? I'm particularly interested in how researchers studied this and what they found out."
+  },
+  {
+    "id": 3,
+    "query": "I'm looking for information on computer systems that organize and search through chemical patents. I'd be happy to learn about both publicly available systems and those used within companies."
+  },
+  {
+    "id": 4,
+    "query": "I'd like information on how people use magazines and journals in different types of libraries, both new and old issues. I'm also curious about how libraries have dealt with less money to spend on these publications."
+  },
+  {
+    "id": 5,
+    "query": "My project is about electronic news databases. I want to know what's available, what they contain, how broad they are, and how useful people find them. I'll also look at who uses them, both who they're meant for and who actually does. I'll briefly cover how these databases started, from the early days to the newest ones."
+  },
+  {
+    "id": 6,
+    "query": "My project is about how libraries in Sheffield reach out to the Chinese community. But I'm interested in how libraries connect with any cultural or ethnic groups, not just in Sheffield."
+  },
+  {
+    "id": 7,
+    "query": "I'd like to know about keeping information safe in computer databases. This includes privacy, secrecy, protecting data, and who's allowed to see what information."
+  },
+  {
+    "id": 8,
+    "query": "I'm interested in how librarians continue learning after they finish school. I'm especially curious about any training they get while working, rather than in library school. This could be general training or focused on specific areas like using computer search systems."
+  },
+  {
+    "id": 9,
+    "query": "I want to know about libraries charging for their services, especially public libraries but others too. I'm interested in any service they might charge for, particularly computer searches. I'd like to understand how they manage charging and the thinking behind whether services should be free or not."
+  },
+  {
+    "id": 10,
+    "query": "I'm looking for information on how different places, like university libraries or companies, keep people up-to-date with new information. I'm especially interested in services that send out personalized updates based on what each person is interested in."
+  },
+  {
+    "id": 11,
+    "query": "My project is about the history of a specific library in Liverpool where people paid to be members. I'd also like general information on libraries where people pay to join or borrow books."
+  },
+  {
+    "id": 12,
+    "query": "My project is about organizing and finding information in a collection of recorded interviews with older people in Sheffield. I'm comparing two ways of doing this: one using index cards, and another using a computer to automatically create an index."
+  },
+  {
+    "id": 13,
+    "query": "I'm studying a group of Christian librarians from a professional point of view. I'm looking for writings that show how Christian beliefs might influence library work, especially before 1973. I'm also interested in how this group has developed over time and what people think about religious views in the library profession."
+  },
+  {
+    "id": 14,
+    "query": "I'm curious about how people think when they use libraries. Are there studies that look at the psychology of finding and using information? For example, how do people decide what information is useful to them?"
+  },
+  {
+    "id": 15,
+    "query": "I'm interested in ways to search for specific parts of chemical structures in databases. I'm especially keen on learning about computer systems that can do this."
+  },
+  {
+    "id": 16,
+    "query": "My project is about sources of information for consumers in Sheffield. I'll be looking at TV, radio, various publications, and information available in libraries and advice centers. I want to know what helps people decide what to buy and understand their rights as consumers."
+  },
+  {
+    "id": 17,
+    "query": "I'm interested in how office computers help managers make decisions. This includes systems that provide information from within the company and from outside sources."
+  },
+  {
+    "id": 18,
+    "query": "I'd like information on how computers talk to each other over long and short distances. This includes big networks that cover wide areas and smaller networks within buildings or campuses."
+  },
+  {
+    "id": 19,
+    "query": "I'm interested in how countries plan and manage their information resources. This could include plans for science, technology, medicine, industry, or agriculture. I want to know about real actions, not just statements without follow-through."
+  },
+  {
+    "id": 20,
+    "query": "I'm looking for information on computer systems that can make decisions or provide expert knowledge, especially for finding information. These are sometimes called 'smart' systems or artificial intelligence."
+  },
+  {
+    "id": 21,
+    "query": "My project is about the current state of searching for information on computers. I'll be looking at how people create search strategies, how their education and experience affect their style and performance, and the importance of talking to the person who needs the information before starting the search."
+  },
+  {
+    "id": 22,
+    "query": "I'd like to know about ways public libraries involve their staff in decision-making. There's been some work done on this in national and university libraries, but I'm particularly interested in public libraries."
+  },
+  {
+    "id": 23,
+    "query": "I'm interested in systems that help managers make decisions, both with and without computers, especially in the UK. I want to know how these systems affect people's behavior and social interactions."
+  },
+  {
+    "id": 24,
+    "query": "I'm interested in how computers can automatically group similar documents together. This includes different ways to search these groups, how to create them, how to summarize what each group is about, and how well these methods work for finding information."
+  },
+  {
+    "id": 25,
+    "query": "One of my students is working on computer methods for finding the most similar documents to what someone is looking for. We're interested in how to measure how similar documents are and how to search using multiple keywords at once."
+  },
+  {
+    "id": 26,
+    "query": "My project is about how the inside design of libraries affects the people who use them. I might focus on how library interiors are changing as libraries take on new roles. I'll be looking at things like color, lighting, air flow, and furniture."
+  },
+  {
+    "id": 27,
+    "query": "I'm researching how teachers get information about using computers in the classroom. I'm looking at both national and local organizations in the UK that provide help with this. I'm also sending out a survey to schools in North Nottinghamshire to understand their needs."
+  },
+  {
+    "id": 28,
+    "query": "I'd like to know about computer programs that help find information in large amounts of text. I'm especially interested in programs for smaller computers and how these programs might work with systems that manage large sets of information."
+  },
+  {
+    "id": 29,
+    "query": "I'm interested in how developing countries handle information. This includes their current challenges and what problems they might face in the future, like with digital publishing. I want to know about their plans for managing information and what practical steps they might take to solve problems."
+  },
+  {
+    "id": 30,
+    "query": "I'm looking for information on how people learn to search for information on computers. I'm interested in both training programs that use computers to teach and in how to train people who will be doing their own searches."
+  },
+  {
+    "id": 31,
+    "query": "I'm working on ways to group similar words together when searching for information. This includes looking at parts of words, like beginnings and endings, and how to measure how similar words are to each other."
+  },
+  {
+    "id": 32,
+    "query": "I want to know about services in university and college libraries that help people search for information on computers. I'm particularly interested in how these services are run, especially in technical colleges."
+  },
+  {
+    "id": 33,
+    "query": "My project is about how technical colleges provide things like videos, audio recordings, and other non-book materials in their libraries. I'm planning to survey all 30 technical colleges and visit six of them. I'd also be interested in how other types of college and university libraries handle these materials."
+  },
+  {
+    "id": 34,
+    "query": "I'd like any information on how well a specific system for organizing library materials works. The system is called PRECIS, which stands for PREserved Context Index System."
+  },
+  {
+    "id": 35,
+    "query": "I'm interested in any information about services that provide health and safety information for workplaces. I'm looking for resources that both occupational health nurses and doctors might use."
+  }
+]
